@@ -1,0 +1,382 @@
+FORMAT: 1A
+# RetroGames
+
+This documents our RESTful API for our Retro Games Database.  
+We separated our HTML returns and our JSON returns by prepending /api, similar to Facebook's graph API. 
+
+Example: API endpoint for '/people' would be '/api/people'. 
+
+POST requests are used to create, while PUT requests are used to update endpoints.
+
+HTTP status codes as stated below are expected to be followed:
+
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.
+- 403 `Forbidden` - access denied.
+- 404 `Not Found` - resource was not found
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+
+# Group Games
+
+## Game Collection [/api/games]
+
+### List all games [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Metroid", 
+        "id": 1, 
+        "system": "NES",
+        }]
+
+### Add a game [POST]
+
++ Request (application/json)
+
+        {
+        "name": "Metroid",
+        "id": 1,
+        "system": "NES",
+        "release_date": "1986-08-06",
+        "genre": ["action-adventure", "side-scroller"],
+        "publisher": "Nintendo",
+        "developer": "Nintendo",
+        "synopsis": "Long text describing Metroid",
+        "copies_sold": "2.73 million",
+        "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "people": [1],
+        "companies": [1],
+        }
+        
++ Response 201 (application/json)
+
+        { id: 1 }
+        
+## Game [/api/games/{id}]
+
+### Get info for a specific game [GET]
+
++ Response 200 (application/json)
+
+        {
+        "name": "Metroid",
+        "id": 1,
+        "system": "NES",
+        "release_date": "1986-08-06",
+        "genre": ["action-adventure", "side-scroller"],
+        "publisher": "Nintendo",
+        "developer": "Nintendo",
+        "synopsis": "Long text describing Metroid",
+        "copies_sold": "2.73 million",
+        "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "people": [1],
+        "companies": [1],
+        }
+
+### Update an existing game [PUT]
+
++ Request (application/json)
+
+        {
+        "name": "Metroid",
+        "id": 1,
+        "system": "NES",
+        "release_date": "1986-08-06",
+        "genre": ["action-adventure", "side-scroller"],
+        "publisher": "Nintendo",
+        "developer": "Nintendo",
+        "synopsis": "Long text describing Metroid",
+        "copies_sold": "2.73 million",
+        "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "people": [1],
+        "companies": [1],
+        }
+
++ Response 204
+
+### Delete an existing game [DELETE]
+
++ Response 204
+
+## Company info relating to a specific game [/api/games/{id}/companies]
+
+### List all related companies [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "id": 1,
+        "name": "Nintendo",
+        "founded": "1889",
+        "location": "Kyoto, Japan",
+        "kind": ["publisher" , "developer"],
+        "description": "Long text description for Nintendo",
+        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+        "maps": ["http://goo.gl/maps/1KSBf"],
+        "external_links": ["http://www.nintendo.com/"],
+        "contact_info": {"name": "Nintendo",
+                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+                         "email": "None",
+                         "phone": "425-992-2040"}
+        }]
+
+## List all related people [/api/games/{id}/people]
+
+### List all related people [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }]
+
+# Group People
+
+## People Collection [/api/people]
+
+### List all people in the database [GET]
+
++ Response 200 (application/json)
+        
+        [{
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "job": {1: "Director"},
+        }]
+
+### Add a person [POST]
+
++ Request (application/json)
+
+        {
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }
+
++ Response 201 (application/json)
+        
+        { id: 1 }
+
+## People [/api/people/{id}]
+
+### Get info for a specific person [GET]
+
++ Response 200 (application/json)
+
+        {
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }
+
+### Update an existing person [PUT]
+
++ Request (application/json)
+
+        {
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }
+
++ Response 204
+
+### Delete an existing person [DELETE]
+
++ Response 204
+
+## Game info for a person [/api/people/{id}/games]
+
+### List all related people [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }]
+
+## Company info for a person [/api/people/{id}/companies]
+
+### List all related companies [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "id": 1,
+        "name": "Nintendo",
+        "founded": "1889",
+        "location": "Kyoto, Japan",
+        "kind": ["publisher" , "developer"],
+        "description": "Long text description for Nintendo",
+        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+        "maps": ["http://goo.gl/maps/1KSBf"],
+        "external_links": ["http://www.nintendo.com/"],
+        "contact_info": {"name": "Nintendo",
+                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+                         "email": "None",
+                         "phone": "425-992-2040"},
+        }]
+
+# Group Companies
+
+## Companies Collection [/api/companies]
+
+### List all companies in the database [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Nintendo",
+        "id": 1,
+        "kind": ["publisher" , "developer"],
+        }]
+
+### Add a company [POST]
+
++ Request (application/json)
+
+        {
+        "id": 1,
+        "name": "Nintendo",
+        "founded": "1889",
+        "location": "Kyoto, Japan",
+        "kind": ["publisher" , "developer"],
+        "description": "Long text description for Nintendo",
+        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+        "maps": ["http://goo.gl/maps/1KSBf"],
+        "external_links": ["http://www.nintendo.com/"],
+        "contact_info": {"name": "Nintendo",
+                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+                         "email": "None",
+                         "phone": "425-992-2040"},
+        }
+
++ Response 201 (application/json)
+
+        { id: 1 }
+
+## Companies [/api/companies/{id}]
+
+### Get info for a specific company [GET]
+
++ Response 200 (application/json)
+
+        {
+        "id": 1,
+        "name": "Nintendo",
+        "founded": "1889",
+        "location": "Kyoto, Japan",
+        "kind": ["publisher" , "developer"],
+        "description": "Long text description for Nintendo",
+        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+        "maps": ["http://goo.gl/maps/1KSBf"],
+        "external_links": ["http://www.nintendo.com/"],
+        "contact_info": {"name": "Nintendo",
+                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+                         "email": "None",
+                         "phone": "425-992-2040"},
+        }
+
+### Update an existing company [PUT]
+
++ Request (application/json)
+
+        {
+        "id": 1,
+        "name": "Nintendo",
+        "founded": "1889",
+        "location": "Kyoto, Japan",
+        "kind": ["publisher" , "developer"],
+        "description": "Long text description for Nintendo",
+        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+        "maps": ["http://goo.gl/maps/1KSBf"],
+        "external_links": ["http://www.nintendo.com/"],
+        "contact_info": {"name": "Nintendo",
+                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+                         "email": "None",
+                         "phone": "425-992-2040"},
+        }
+
++ Response 204
+
+### Delete an existing organization [DELETE]
+
++ Response 204
+
+## Game info for a Company [/api/companies/{id}/games]
+
+### List all related games [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Metroid",
+        "id": 1,
+        "system": "NES",
+        "release_date": "1986-08-06",
+        "genre": ["action-adventure", "side-scroller"],
+        "publisher": "Nintendo",
+        "developer": "Nintendo",
+        "synopsis": "Long text describing Metroid",
+        "copies_sold": "2.73 million",
+        "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "people": [1],
+        "companies": [1],
+        }]
+
+## People info for a Company [/api/companies/{id}/people]
+
+### List all related people [GET]
+
++ Response 200 (application/json)
+
+        [{
+        "name": "Yoshio Sakamoto",
+        "id": 1,
+        "DOB": "1959-07-23",
+        "location": "Kyoto, Japan",
+        "job": {1: "Director"},
+        "description": "Long text description for Al Gore",
+        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "games": [1],
+        "companies": [1],
+        }]
