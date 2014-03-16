@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url('^home/', 'idb.videogames.views.home', name='home'),
-    url('^$', 'idb.videogames.views.home', name='home')
+    url('^home/', 'idb.views.home', name='home'),
+    url('^$', 'idb.views.home', name='home')
 )

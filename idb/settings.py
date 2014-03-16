@@ -27,7 +27,6 @@ TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = [
     os.path.join(DIRNAME, 'templates')
 ]
-
 ALLOWED_HOSTS = ['*']
 
 
