@@ -74,5 +74,23 @@ Companies
 "people": [2],
 "games": [2],
 }
+{
+"id": 3,
+"name": "Naughty Dog",
+"founded": "1989",
+"location": "Santa Monica, California",
+"kind": ["developer"]
+"description": "Long text desctiption for Naughty Dog",
+"images": [http://www.343industries.org/forum/uploads/66dec10cfa9ab2bae49bddeea517888e.jpg],
+"maps": [https://goo.gl/maps/mv8gV],
+"external_links": [http://www.naughtydog.com/],
+"people": [3],
+"games": [3],
+}
+
+
+
+
+
 
 
