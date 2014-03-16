@@ -61,3 +61,18 @@ Companies
 "people": [1],
 "games": [1],
 }
+{
+"id": 2,
+"name": "Sega",
+"founded": "1940",
+"location: "Honolulu, Hawaii",
+"kind" : ["publisher" , "developer"],
+"description": "Long text description for Sega",
+"images": ["http://upload.wikimedia.org/wikipedia/commons/4/41/SEGA_logo.png"],
+"maps": ["https://goo.gl/maps/V2Nph"],
+"external_links": ["http://www.sega.com/"],
+"people": [2],
+"games": [2],
+}
+
+
