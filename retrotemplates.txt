@@ -1,0 +1,47 @@
+
+Games
+{
+"name": "Metroid",
+"id": 1,
+"system": "NES",
+"release_date": "1986-08-06",
+"genre": ["action-adventure", "side-scroller"],
+"publisher": "Nintendo",
+"developer": "Nintendo",
+"synopsis": "Long text describing Metroid",
+"copies_sold": 2730000,
+"images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+"gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid",
+"videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"],
+"people": [1],
+"companies": [1],
+}
+
+People
+{
+"name": "Yoshio Sakamoto",
+"id": 1,
+"DOB": "1959-07-23",
+"location": "Kyoto, Japan",
+"job": {1: "Director"},
+"description": "Long text description for Yoshio",
+"images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+"videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"],
+"games": [1],
+"companies": [1],
+}
+
+Companies
+{
+"id": 1,
+"name": "Nintendo",
+"founded": "1889",
+"location": "Kyoto, Japan",
+"kind": ["publisher" , "developer"],
+"description": "Long text description for Nintendo",
+"images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
+"maps": ["http://goo.gl/maps/1KSBf"],
+"external_links": ["http://www.nintendo.com/"],
+"people": [1],
+"games": [1],
+}

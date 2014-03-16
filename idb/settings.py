@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DIRNAME = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -23,7 +24,9 @@ SECRET_KEY = 'h#tb420ho@#ob%u&a=rc&t2e6*m!4s-e-m538zzywi9k^8xcz@'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
+TEMPLATE_DIRS = [
+    os.path.join(DIRNAME, 'templates')
+]
 ALLOWED_HOSTS = ['*']
 
 
