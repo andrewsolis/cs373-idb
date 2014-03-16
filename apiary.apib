@@ -39,14 +39,17 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Metroid",
-        "id": 1,"system": "NES",
-        "releaseDate": "1986-08-06",
+        "id": 1,
+        "system": "NES",
+        "release_date": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copiesSold": "2.73 million",
+        "copies_sold": 2730000,
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid",
+        "videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"],
         "people": [1],
         "companies": [1],
         }
@@ -65,13 +68,15 @@ HTTP status codes as stated below are expected to be followed:
         "name": "Metroid",
         "id": 1,
         "system": "NES",
-        "releaseDate": "1986-08-06",
+        "release_date": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copiesSold": "2.73 million",
+        "copies_sold": 2730000,
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid",
+        "videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"],
         "people": [1],
         "companies": [1],
         }
@@ -84,13 +89,15 @@ HTTP status codes as stated below are expected to be followed:
         "name": "Metroid",
         "id": 1,
         "system": "NES",
-        "releaseDate": "1986-08-06",
+        "release_date": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copiesSold": "2.73 million",
+        "copies_sold": 2730000,
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
+        "gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid",
+        "videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"],
         "people": [1],
         "companies": [1],
         }
@@ -110,20 +117,7 @@ HTTP status codes as stated below are expected to be followed:
         [{
         "id": 1,
         "name": "Nintendo",
-        "founded": "1889",
-        "location": "Kyoto, Japan",
         "kind": ["publisher" , "developer"],
-        "description": "Long text description for Nintendo",
-        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
-        "maps": ["http://goo.gl/maps/1KSBf"],
-        "external_links": ["http://www.nintendo.com/"],
-        "contact_info": 
-        {
-        "name": "Nintendo",
-        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-        "email": "None",
-        "phone": "425-992-2040"
-        }
         }]
 
 ## List all related people [/api/games/{id}/people]
@@ -135,13 +129,7 @@ HTTP status codes as stated below are expected to be followed:
         [{
         "name": "Yoshio Sakamoto",
         "id": 1,
-        "DOB": "1959-07-23",
-        "location": "Kyoto, Japan",
         "job": {1: "Director"},
-        "description": "Long text description for Al Gore",
-        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
-        "games": [1],
-        "companies": [1],
         }]
 
 # Group People
@@ -168,11 +156,13 @@ HTTP status codes as stated below are expected to be followed:
         "DOB": "1959-07-23",
         "location": "Kyoto, Japan",
         "job": {1: "Director"},
-        "description": "Long text description for Al Gore",
+        "description": "Long text description for Yoshio",
         "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"],
         "games": [1],
         "companies": [1],
         }
+
 
 + Response 201 (application/json)
         
@@ -190,11 +180,13 @@ HTTP status codes as stated below are expected to be followed:
         "DOB": "1959-07-23",
         "location": "Kyoto, Japan",
         "job": {1: "Director"},
-        "description": "Long text description for Al Gore",
+        "description": "Long text description for Yoshio",
         "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"],
         "games": [1],
         "companies": [1],
         }
+
 
 ### Update an existing person [PUT]
 
@@ -206,11 +198,13 @@ HTTP status codes as stated below are expected to be followed:
         "DOB": "1959-07-23",
         "location": "Kyoto, Japan",
         "job": {1: "Director"},
-        "description": "Long text description for Al Gore",
+        "description": "Long text description for Yoshio",
         "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
+        "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"],
         "games": [1],
         "companies": [1],
         }
+
 
 + Response 204
 
@@ -220,20 +214,14 @@ HTTP status codes as stated below are expected to be followed:
 
 ## Game info for a person [/api/people/{id}/games]
 
-### List all related people [GET]
+### List all related games [GET]
 
 + Response 200 (application/json)
 
         [{
-        "name": "Yoshio Sakamoto",
-        "id": 1,
-        "DOB": "1959-07-23",
-        "location": "Kyoto, Japan",
-        "job": {1: "Director"},
-        "description": "Long text description for Al Gore",
-        "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"],
-        "games": [1],
-        "companies": [1],
+        "name": "Metroid", 
+        "id": 1, 
+        "system": "NES",
         }]
 
 ## Company info for a person [/api/people/{id}/companies]
@@ -245,17 +233,7 @@ HTTP status codes as stated below are expected to be followed:
         [{
         "id": 1,
         "name": "Nintendo",
-        "founded": "1889",
-        "location": "Kyoto, Japan",
         "kind": ["publisher" , "developer"],
-        "description": "Long text description for Nintendo",
-        "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
-        "maps": ["http://goo.gl/maps/1KSBf"],
-        "external_links": ["http://www.nintendo.com/"],
-        "contact_info": {"name": "Nintendo",
-                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-                         "email": "None",
-                         "phone": "425-992-2040"},
         }]
 
 # Group Companies
@@ -286,13 +264,8 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": 
-        {
-        "name": "Nintendo",
-        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-        "email": "None",
-        "phone": "425-992-2040"
-        },
+        "people": [1],
+        "games": [1],
         }
 
 + Response 201 (application/json)
@@ -315,13 +288,8 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": 
-        {
-        "name": "Nintendo",
-        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-        "email": "None",
-        "phone": "425-992-2040"
-        },
+        "people": [1],
+        "games": [1],
         }
 
 ### Update an existing company [PUT]
