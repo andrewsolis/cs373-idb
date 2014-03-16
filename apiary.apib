@@ -39,14 +39,13 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Metroid",
-        "id": 1,
-        "system": "NES",
-        "release_date": "1986-08-06",
+        "id": 1,"system": "NES",
+        "releaseDate": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copies_sold": "2.73 million",
+        "copiesSold": "2.73 million",
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
         "people": [1],
         "companies": [1],
@@ -66,12 +65,12 @@ HTTP status codes as stated below are expected to be followed:
         "name": "Metroid",
         "id": 1,
         "system": "NES",
-        "release_date": "1986-08-06",
+        "releaseDate": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copies_sold": "2.73 million",
+        "copiesSold": "2.73 million",
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
         "people": [1],
         "companies": [1],
@@ -85,12 +84,12 @@ HTTP status codes as stated below are expected to be followed:
         "name": "Metroid",
         "id": 1,
         "system": "NES",
-        "release_date": "1986-08-06",
+        "releaseDate": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copies_sold": "2.73 million",
+        "copiesSold": "2.73 million",
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
         "people": [1],
         "companies": [1],
@@ -118,10 +117,13 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": {"name": "Nintendo",
-                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-                         "email": "None",
-                         "phone": "425-992-2040"}
+        "contact_info": 
+        {
+        "name": "Nintendo",
+        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+        "email": "None",
+        "phone": "425-992-2040"
+        }
         }]
 
 ## List all related people [/api/games/{id}/people]
@@ -284,10 +286,13 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": {"name": "Nintendo",
-                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-                         "email": "None",
-                         "phone": "425-992-2040"},
+        "contact_info": 
+        {
+        "name": "Nintendo",
+        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+        "email": "None",
+        "phone": "425-992-2040"
+        },
         }
 
 + Response 201 (application/json)
@@ -310,10 +315,13 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": {"name": "Nintendo",
-                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-                         "email": "None",
-                         "phone": "425-992-2040"},
+        "contact_info": 
+        {
+        "name": "Nintendo",
+        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+        "email": "None",
+        "phone": "425-992-2040"
+        },
         }
 
 ### Update an existing company [PUT]
@@ -330,10 +338,13 @@ HTTP status codes as stated below are expected to be followed:
         "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"],
         "maps": ["http://goo.gl/maps/1KSBf"],
         "external_links": ["http://www.nintendo.com/"],
-        "contact_info": {"name": "Nintendo",
-                         "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
-                         "email": "None",
-                         "phone": "425-992-2040"},
+        "contact_info": 
+        {
+        "name": "Nintendo",
+        "address": "11-1 Kamitoba Hokodatechō, Minami-ku, Kyōto-shi, Kyōto-fu 601-8116, Japan "
+        "email": "None",
+        "phone": "425-992-2040"
+        },
         }
 
 + Response 204
@@ -352,12 +363,12 @@ HTTP status codes as stated below are expected to be followed:
         "name": "Metroid",
         "id": 1,
         "system": "NES",
-        "release_date": "1986-08-06",
+        "releaseDate": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
         "publisher": "Nintendo",
         "developer": "Nintendo",
         "synopsis": "Long text describing Metroid",
-        "copies_sold": "2.73 million",
+        "copiesSold": "2.73 million",
         "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
         "people": [1],
         "companies": [1],
