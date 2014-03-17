@@ -46,7 +46,17 @@ People
 "games": [1],
 "companies": [1],
 }
-
+{
+"name": "Andy Gavin",
+"id": 3,
+"DOB": "1970-06-11",
+"location": "Santa Monica, California",
+"job": {1: "Chief Technology Officer", 2: "Novelist"},
+"description": "Long text description for Andy",
+"images": [https://pbs.twimg.com/profile_images/795892704/Andy2007HeadShotSmall.jpg],
+"videos": [],
+"games": [3],
+"companies": [3],
 Companies
 {
 "id": 1,
@@ -61,3 +71,36 @@ Companies
 "people": [1],
 "games": [1],
 }
+{
+"id": 2,
+"name": "Sega",
+"founded": "1940",
+"location: "Honolulu, Hawaii",
+"kind" : ["publisher" , "developer"],
+"description": "Long text description for Sega",
+"images": ["http://upload.wikimedia.org/wikipedia/commons/4/41/SEGA_logo.png"],
+"maps": ["https://goo.gl/maps/V2Nph"],
+"external_links": ["http://www.sega.com/"],
+"people": [2],
+"games": [2],
+}
+{
+"id": 3,
+"name": "Naughty Dog",
+"founded": "1989",
+"location": "Santa Monica, California",
+"kind": ["developer"]
+"description": "Long text desctiption for Naughty Dog",
+"images": [http://www.343industries.org/forum/uploads/66dec10cfa9ab2bae49bddeea517888e.jpg],
+"maps": [https://goo.gl/maps/mv8gV],
+"external_links": [http://www.naughtydog.com/],
+"people": [3],
+"games": [3],
+}
+
+
+
+
+
+
+
