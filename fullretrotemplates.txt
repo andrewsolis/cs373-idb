@@ -21,16 +21,32 @@ Games
 "id": 2,
 "system": "Sega Genisis",
 "release_date": "1991-06-23",
-"genre": ["platforming", "side-scroller"],
-"publisher": "Nintendo",
-"developer": "Nintendo",
+"genre": ["platforming", "side-scroller", "puzzle", "racing"],
+"publisher": "Sega",
+"developer": "Sega",
 "synopsis": "Long text describing SMB3.",
-"copies_sold": 2730000,
-"images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"],
-"gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid",
-"videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"],
-"people": [1],
-"companies": [1], 
+"copies_sold": 15000000,
+"images": ["http://upload.wikimedia.org/wikipedia/en/6/6d/Sonic1.png"],
+"gameFAQ" : "http://www.gamefaqs.com/genesis/454495-sonic-the-hedgehog",
+"videos": ["http://www.youtube.com/watch?v=cIIagVIQEpg"],
+"people": [2],
+"companies": [2], 
+}
+{
+"name": "Crash Bandicoot",
+"id": 3,
+"system": "Playstation",
+"release_date": "1996-08-31",
+"genre": ["platforming", "racing", "party"],
+"publisher": "Sony",
+"developer": "Naughty Dog",
+"synopsis": "Long text describing Crash Bandicoot.",
+"copies_sold": 6800000,
+"images": ["http://upload.wikimedia.org/wikipedia/en/6/6d/Sonic1.png"],
+"gameFAQ" : "http://www.gamefaqs.com/ps/196986-crash-bandicoot/faqs",
+"videos": ["http://www.youtube.com/watch?v=_9duLa-mixQ"],
+"people": [3],
+"companies": [3], 
 }
 
 People
@@ -45,6 +61,19 @@ People
 "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"],
 "games": [1],
 "companies": [1],
+}
+
+{
+"name": "Naoto Oshima",
+"id": 2,
+"DOB": "1964-01-26",
+"location": "Japan",
+"job": {1: "Game Designer"},
+"description": "Long text description for Naoto",
+"images": ["http://img3.wikia.nocookie.net/__cb20090824035850/sonic/images/1/17/Yuji_naka.jpg"],
+"videos": ["http://www.youtube.com/watch?v=tF-gQxcdfyo"],
+"games": [2],
+"companies": [2],
 }
 
 Companies
