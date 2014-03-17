@@ -57,6 +57,7 @@ People
 "videos": [],
 "games": [3],
 "companies": [3],
+}
 Companies
 {
 "id": 1,
