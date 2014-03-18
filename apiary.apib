@@ -39,7 +39,6 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Metroid",
-        "id": 1,
         "system": "NES",
         "release_date": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
@@ -56,7 +55,7 @@ HTTP status codes as stated below are expected to be followed:
         
 + Response 201 (application/json)
 
-        { id: 1 }
+        { "id": 1 }
         
 ## Game [/api/games/{id}]
 
@@ -87,7 +86,6 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Metroid",
-        "id": 1,
         "system": "NES",
         "release_date": "1986-08-06",
         "genre": ["action-adventure", "side-scroller"],
@@ -115,8 +113,8 @@ HTTP status codes as stated below are expected to be followed:
 + Response 200 (application/json)
 
         [{
-        "id": 1,
         "name": "Nintendo",
+        "id": 1,
         "kind": ["publisher" , "developer"],
         }]
 
@@ -129,7 +127,7 @@ HTTP status codes as stated below are expected to be followed:
         [{
         "name": "Yoshio Sakamoto",
         "id": 1,
-        "job": {1: "Director"},
+        "job": "Director",
         }]
 
 # Group People
@@ -152,7 +150,6 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Yoshio Sakamoto",
-        "id": 1,
         "DOB": "1959-07-23",
         "location": "Kyoto, Japan",
         "job": {1: "Director"},
@@ -166,7 +163,7 @@ HTTP status codes as stated below are expected to be followed:
 
 + Response 201 (application/json)
         
-        { id: 1 }
+        { "id": 1 }
 
 ## People [/api/people/{id}]
 
@@ -194,7 +191,6 @@ HTTP status codes as stated below are expected to be followed:
 
         {
         "name": "Yoshio Sakamoto",
-        "id": 1,
         "DOB": "1959-07-23",
         "location": "Kyoto, Japan",
         "job": {1: "Director"},
@@ -231,8 +227,8 @@ HTTP status codes as stated below are expected to be followed:
 + Response 200 (application/json)
 
         [{
-        "id": 1,
         "name": "Nintendo",
+        "id": 1,
         "kind": ["publisher" , "developer"],
         }]
 
@@ -255,7 +251,6 @@ HTTP status codes as stated below are expected to be followed:
 + Request (application/json)
 
         {
-        "id": 1,
         "name": "Nintendo",
         "founded": "1889",
         "location": "Kyoto, Japan",
@@ -270,7 +265,7 @@ HTTP status codes as stated below are expected to be followed:
 
 + Response 201 (application/json)
 
-        { id: 1 }
+        { "id": 1 }
 
 ## Companies [/api/companies/{id}]
 
@@ -279,8 +274,8 @@ HTTP status codes as stated below are expected to be followed:
 + Response 200 (application/json)
 
         {
-        "id": 1,
         "name": "Nintendo",
+        "id": 1,
         "founded": "1889",
         "location": "Kyoto, Japan",
         "kind": ["publisher" , "developer"],
@@ -297,7 +292,6 @@ HTTP status codes as stated below are expected to be followed:
 + Request (application/json)
 
         {
-        "id": 1,
         "name": "Nintendo",
         "founded": "1889",
         "location": "Kyoto, Japan",
@@ -337,5 +331,4 @@ HTTP status codes as stated below are expected to be followed:
         [{
         "name": "Yoshio Sakamoto",
         "id": 1,
-        "job": {1: "Director"},
         }]
