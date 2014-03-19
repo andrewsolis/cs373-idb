@@ -13,7 +13,7 @@ from ast import literal_eval
 
 endpoint = "http://idb1.apiary.io/api/"
 
-game_long = { "name": "Metroid", "system": "NES", "release_date": "1986-08-06", "genre": ["action-adventure", "side-scroller"], "synopsis": "Long text describing Metroid", "copies_sold": 2730000, "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"], "gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid", "videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"], "people": [1], "companies": [1], }
+game_full = { "name": "Metroid", "system": "NES", "release_date": "1986-08-06", "genre": ["action-adventure", "side-scroller"], "synopsis": "Long text describing Metroid", "copies_sold": 2730000, "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"], "gameFAQ" : "http://www.gamefaqs.com/nes/519689-metroid", "videos": ["https://www.youtube.com/watch?v=WT4pW6n7-rg"], "people": [1], "companies": [1], }
 game_short = [{ "name": "Metroid", "id": 1, "system": "NES", }]
 
 people_full = { "name": "Yoshio Sakamoto", "DOB": "1959-07-23", "location": "Kyoto, Japan", "job": {1: "Director"}, "description": "Long text description for Yoshio", "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_Developers_Conference_2010_-_Day_3_%282%29_cropped.jpg"], "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"], "games": [1], "companies": [1], }
@@ -34,7 +34,7 @@ class TestGames (unittest.TestCase):
         self.assertTrue(response.getcode() == 200)
 
     def test_add_game(self):
-        values = dumps(game_long)
+        values = dumps(game_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "games", data=values, headers=headers)
         response = urlopen(request)
@@ -48,11 +48,11 @@ class TestGames (unittest.TestCase):
         response_body = literal_eval(response.read())
         self.assertTrue(response_body.get("id") == 1)
         response_body.pop("id", 1)
-        self.assertTrue(response_body == game_long)
+        self.assertTrue(response_body == game_full)
         self.assertTrue(response.getcode() == 200)
 
     def test_update_game(self):
-        values = dumps(game_long)
+        values = dumps(game_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "games/{id}", data=values, headers=headers)
         request.get_method = lambda: 'PUT'
