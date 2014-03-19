@@ -6,11 +6,11 @@ class Media(models.Model):
 	other_id = models.IntegerField()
 	other_type = models.CharField(choices=[('GM', 'Game'), ('PPL', 'People'), ('CP', 'Company')])
 
-class Images(models.Model):
+class Images(Media):
 	#id, link 
 	pass
 
-class Videos(models.Model):
+class Videos(Media):
 	#id, link 
 	pass
 
