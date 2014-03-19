@@ -10,5 +10,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url('^home/', 'idb.views.home', name='home'),
-    url('^$', 'idb.views.home', name='home')
+    url('^$', 'idb.views.home', name='home'),
+    url('^metroid/', 'idb.views.metroid', name='metroid'),
 )
