@@ -31,3 +31,12 @@ def sega(request):
 
 def naughtydog(request):
 	return render_to_response('naughtydog.html', {}, RequestContext(request))
+
+def games_index(request):
+	return render_to_response('games_index.html', {}, RequestContext(request))
+
+def people_index(request):
+	return render_to_response('people_index.html', {}, RequestContext(request))
+
+def companies_index(request):
+	return render_to_response('companies_index.html', {}, RequestContext(request))

@@ -50,21 +50,24 @@
 			font-family: Lato;
 
 			}
+		html,body {
+			background: url("/static/images/bg.jpg") no-repeat center center fixed;
+		}
 	</style>
 	
-	  	<nav class="navbar navbar-pills navbar-default" role="navigation" style="max-height: 75px;background-color: rgba(176,176,176,1.0);">
+	  	<nav class="navbar navbar-pills navbar-default" role="navigation" style="height: 65px;background-color: rgba(176,176,176,1.0);">
 	  		<div class="container-fluid">
-	  			<h3 class="col-md-6" style="font-family: Lato; ">ITSAFEATURE</h3>
+	  			<h3 class="col-md-1" style="font-family: Lato; margin: 10px; float: left;"><a style="color: #" href="{% url 'home' %}"> RETROGAMES </a></h3>
 
-	  			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		  			<!-- <ul class="nav navbar-nav" style= "text-align: center;list-style: none; float: right; margin: 30px;">
+	  			<div class="col-md-6" style="float: right;" id="">
+		  			<ul class="nav navbar-nav" style= "text-align: center;list-style: none; float: right; margin: 10px;">
 		  				<div class="row">
-			  				<li class="btn btn-primary" > <a style="color: #ffffff" href="#"> Home </a> </li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="#"> Members </a></li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="#"> Games </a></li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="#"> Companies </a></li>
+			  				<li class="btn btn-primary" > <a style="color: #ffffff" href="{% url 'home' %}"> Home </a> </li>
+			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'people_index' %}"> People </a></li>
+			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'games_index' %}"> Games </a></li>
+			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'companies_index' %}"> Companies </a></li>
 		  				</div>
-		  			</ul> -->
+		  			</ul>
 		  		</div>
 	  		</div>
 	  		
