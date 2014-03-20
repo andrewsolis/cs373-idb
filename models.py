@@ -2,32 +2,55 @@
 from django.db import models
 
 class Media(models.Model):
+"""
+A generic store for links to media, both local and remote.
+link is the URL
+We had to use this type of model because Django does not handle polymorphism
+"""
 	link = models.URLField()
 	other_id = models.IntegerField()
 	other_type = models.CharField(choices=[('GM', 'Game'), ('PPL', 'People'), ('CP', 'Company')])
 
 class Images(Media):
+"""
+A Media table for storing images
+"""
 	#id, link 
 	pass
 
 class Videos(Media):
+"""
+A Media table for storing videos
+"""
 	#id, link 
 	pass
 
 class Genre(model.Model):
+"""
+A store for holding Genre names
+"""
 	#id, #types
 	types = models.CharField(max_length=25)
 
 class Job(models.Model):
+"""
+A store for holding Job names
+"""
 	#id, #profession
 	profession = models.CharField(max_length=25);
 
 class System(models.Model):
+"""
+A store for holding system names
+"""
 	#id, #platform
 	platform = models.CharField(max_length=25);
 
 
 class Game(models.Model):
+"""
+A store for holding info on a game
+"""
 	# name, id, system, release_date, genre, publisher, 
 	# developer, synopsis, copies_sold, images, videos, People, Companies.
 	name = models.CharField(max_length=25)
@@ -49,6 +72,9 @@ class Game(models.Model):
 		return results.objects
 
 class Person(models.Model):
+"""
+A store for holding info for a Person
+"""
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=25)
 	DOB = models.DateTimeField('date born')
@@ -68,6 +94,9 @@ class Person(models.Model):
 		return results.objects
 
 class Company(models.Model):
+"""
+A store for holding info for a Company
+"""
 	# name, id, founded, location, kind, description, 
 	# images, maps, external_links, contact_info, Games. 
 	name = models.CharField(max_length=25)
