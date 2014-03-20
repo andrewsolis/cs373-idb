@@ -1,9 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2.7
 
+import io
 import unittest
-from json import dumps
-from urllib.request import Request, urlopen
+import sys
+from json import dumps, loads
+from urllib2 import Request, urlopen
 from ast import literal_eval
+
+# --------
+# Test API
+# --------
 
 endpoint = "http://idb1.apiary.io/api/"
 
@@ -16,48 +22,43 @@ company_full = { "name": "Nintendo", "founded": "1889", "location": "Kyoto, Japa
 company_short = [{ "name": "Nintendo", "id": 1, }]
 
 id_dic = { "id": 1 }
-no_content = b''
 
-# --------
-# Test API
-# --------
 
 class TestGames (unittest.TestCase):
     
     def test_list_all_games(self):
         request = Request(endpoint + "games")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == game_short)
         self.assertTrue(response.getcode() == 200)
 
     def test_add_game(self):
-        values = dumps(game_full).encode('utf-8')
+        values = dumps(game_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "games", data=values, headers=headers)
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == id_dic)
         self.assertTrue(response.getcode() == 201)
 
     def test_game_info(self):
         request = Request(endpoint + "games/{id}")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body.get("id") == 1)
         response_body.pop("id", 1)
         self.assertTrue(response_body == game_full)
         self.assertTrue(response.getcode() == 200)
 
     def test_update_game(self):
-        values = dumps(game_full).encode('utf-8')
+        values = dumps(game_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "games/{id}", data=values, headers=headers)
         request.get_method = lambda: 'PUT'
         response = urlopen(request)
         response_body = response.read()
-        # print(response_body)
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_delete_game(self):
@@ -65,20 +66,20 @@ class TestGames (unittest.TestCase):
         request.get_method = lambda: 'DELETE'
         response = urlopen(request)
         response_body = response.read()
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_list_companies_by_game(self):
         request = Request(endpoint + "games/{id}/companies")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == company_short)
         self.assertTrue(response.getcode() == 200)
         
     def test_list_people_by_game(self):
         request = Request(endpoint + "games/{id}/people")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == [{"name": "Yoshio Sakamoto", "id": 1, "job": "Director", }])
         self.assertTrue(response.getcode() == 200)
 
@@ -87,36 +88,36 @@ class TestPeople(unittest.TestCase):
     def test_list_all_people(self):
         request = Request(endpoint + "people")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == [{"name": "Yoshio Sakamoto", "id": 1, "job": {1: "Director"}, }])
         self.assertTrue(response.getcode() == 200)
 
     def test_add_person(self):
-        values = dumps(people_full).encode('utf-8')
+        values = dumps(people_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "people", data=values, headers=headers)
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == id_dic)
         self.assertTrue(response.getcode() == 201)
 
     def test_people_info(self):
         request = Request(endpoint + "people/{id}")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body.get("id") == 1)
         response_body.pop("id", 1)
         self.assertTrue(response_body == people_full)
         self.assertTrue(response.getcode() == 200)
 
     def test_update_people(self):
-        values = dumps(people_full).encode('utf-8')
+        values = dumps(people_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "people/{id}", data=values, headers=headers)
         request.get_method = lambda: 'PUT'
         response = urlopen(request)
         response_body = response.read()
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_delete_people(self):
@@ -124,20 +125,20 @@ class TestPeople(unittest.TestCase):
         request.get_method = lambda: 'DELETE'
         response = urlopen(request)
         response_body = response.read()
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_list_games_by_people(self):
         request = Request(endpoint + "people/{id}/games")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == game_short)
         self.assertTrue(response.getcode() == 200)
 
     def test_list_companies_by_people(self):
         request = Request(endpoint + "people/{id}/companies")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == company_short)
         self.assertTrue(response.getcode() == 200)
 
@@ -146,36 +147,36 @@ class TestCompanies(unittest.TestCase):
     def test_list_all_companies(self):
         request = Request(endpoint + "companies")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == company_short)
         self.assertTrue(response.getcode() == 200)
 
     def test_add_company(self):
-        values = dumps(company_full).encode('utf-8')
+        values = dumps(company_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "companies", data=values, headers=headers)
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == id_dic)
         self.assertTrue(response.getcode() == 201)
 
     def test_company_info(self):
         request = Request(endpoint + "companies/{id}")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body.get("id") == 1)
         response_body.pop("id", 1)
         self.assertTrue(response_body == company_full)
         self.assertTrue(response.getcode() == 200)
 
     def test_update_company(self):
-        values = dumps(company_full).encode('utf-8')
+        values = dumps(company_full)
         headers = {"Content-Type": "application/json"}
         request = Request(endpoint + "companies/{id}", data=values, headers=headers)
         request.get_method = lambda: 'PUT'
         response = urlopen(request)
         response_body = response.read()
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_delete_company(self):
@@ -183,20 +184,20 @@ class TestCompanies(unittest.TestCase):
         request.get_method = lambda: 'DELETE'
         response = urlopen(request)
         response_body = response.read()
-        self.assertTrue(response_body == no_content)
+        self.assertTrue(response_body == '')
         self.assertTrue(response.getcode() == 204)
 
     def test_list_games_by_company(self):
         request = Request(endpoint + "companies/{id}/games")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == game_short)
         self.assertTrue(response.getcode() == 200)
 
     def test_list_people_by_company(self):
         request = Request(endpoint + "companies/{id}/people")
         response = urlopen(request)
-        response_body = literal_eval(response.read().decode('utf-8'))
+        response_body = literal_eval(response.read())
         self.assertTrue(response_body == [{"name": "Yoshio Sakamoto", "id": 1, }])
         self.assertTrue(response.getcode() == 200)
 
