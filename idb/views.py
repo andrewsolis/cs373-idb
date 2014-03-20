@@ -14,6 +14,12 @@ def metroid(request):
 def yoshio_sakamoto(request):
 	return render_to_response('yoshio_sakamoto.html', {}, RequestContext(request))
 
+def naoto_oshima(request):
+	return render_to_response('naoto_oshima.html', {}, RequestContext(request))
+
+def andy_gavin(request):
+	return render_to_response('andy_gavin.html', {}, RequestContext(request))
+
 def crash_bandicoot(request):
 	return render_to_response('crash_bandicoot.html', {}, RequestContext(request))
 
