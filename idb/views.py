@@ -8,3 +8,6 @@ def home(request):
 
 def metroid(request):
 	return render_to_response('metroid.html', {}, RequestContext(request))
+
+def nintendo(request):
+	return render_to_response('nintendo.html', {}, RequestContext(request))

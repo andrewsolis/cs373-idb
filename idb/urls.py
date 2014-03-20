@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url('^home/', 'idb.views.home', name='home'),
     url('^$', 'idb.views.home', name='home'),
     url('^metroid/', 'idb.views.metroid', name='metroid'),
+    url('^nintendo/', 'idb.views.nintendo', name='nintendo'),
 )
