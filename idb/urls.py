@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url('^nintendo/', 'idb.views.nintendo', name='nintendo'),
     url('^sonic/', 'idb.views.sonic', name='sonic'),
     url('^sega/', 'idb.views.sega', name='sega'),
+    url('^naughtydog/', 'idb.views.naughtydog', name='naughtydog'),
 )
