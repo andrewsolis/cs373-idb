@@ -8,3 +8,6 @@ def home(request):
 
 def metroid(request):
 	return render_to_response('metroid.html', {}, RequestContext(request))
+
+def yoshio_sakamoto(request):
+	return render_to_response('yoshio_sakamoto.html', {}, RequestContext(request))
