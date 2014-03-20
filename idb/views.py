@@ -11,3 +11,6 @@ def metroid(request):
 
 def nintendo(request):
 	return render_to_response('nintendo.html', {}, RequestContext(request))
+
+def sonic(request):
+	return render_to_response('sonic.html', {}, RequestContext(request))
