@@ -8,3 +8,7 @@ def home(request):
 
 def metroid(request):
 	return render_to_response('metroid.html', {}, RequestContext(request))
+
+
+def sonic(request):
+	return render_to_response('sonic.html', {}, RequestContext(request))
