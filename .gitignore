@@ -53,3 +53,5 @@ staticfiles
 
 # Sphinx documentation
 docs/_build/
+
+.DS_Store
