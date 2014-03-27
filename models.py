@@ -2,65 +2,65 @@
 from django.db import models
 
 class Media(models.Model):
-"""
-A generic store for links to media, both local and remote.
-link is the URL
-We had to use this type of model because Django does not handle polymorphism
-"""
+	"""
+	A generic store for links to media, both local and remote.
+	link is the URL
+	We had to use this type of model because Django does not handle polymorphism
+	"""
 	link = models.URLField()
 	other_id = models.IntegerField()
-	other_type = models.CharField(choices=[('GM', 'Game'), ('PPL', 'People'), ('CP', 'Company')])
+	other_type = models.CharField(max_length=25, choices=[('GM', 'Game'), ('PPL', 'People'), ('CP', 'Company')])
 
 class Images(Media):
-"""
-A Media table for storing images
-"""
+	"""
+	A Media table for storing images
+	"""
 	#id, link 
 	pass
 
 class Videos(Media):
-"""
-A Media table for storing videos
-"""
+	"""
+	A Media table for storing videos
+	"""
 	#id, link 
 	pass
 
-class Genre(model.Model):
-"""
-A store for holding Genre names
-"""
+class Genre(models.Model):
+	"""
+	A store for holding Genre names
+	"""
 	#id, #types
 	types = models.CharField(max_length=25)
 
 class Job(models.Model):
-"""
-A store for holding Job names
-"""
+	"""
+	A store for holding Job names
+	"""
 	#id, #profession
 	profession = models.CharField(max_length=25);
 
 class System(models.Model):
-"""
-A store for holding system names
-"""
+	"""
+	A store for holding system names
+	"""
 	#id, #platform
 	platform = models.CharField(max_length=25);
 
 
 class Game(models.Model):
-"""
-A store for holding info on a game
-"""
+	"""
+	A store for holding info on a game
+	"""
 	# name, id, system, release_date, genre, publisher, 
 	# developer, synopsis, copies_sold, images, videos, People, Companies.
 	name = models.CharField(max_length=25)
-	system = models.ForeignKey(System)
-	genre = models.ManyToManyField(Genre)
+	system = models.ForeignKey('System')
+	genre = models.ManyToManyField('Genre')
 	synopsis = models.CharField(max_length=1000)
 	copies = models.IntegerField(default=0)
-	release_date = models.DateTimeField('date published')
-	company = models.ForeignKey(Company)
-	people = models.ManyToManyField(Person)
+	release_date = models.DateTimeField('Date Published')
+	company = models.ForeignKey('Company')
+	people = models.ManyToManyField('Person')
 	gamefaq = models.URLField()
 
 	def images(self):
@@ -72,17 +72,17 @@ A store for holding info on a game
 		return results.objects
 
 class Person(models.Model):
-"""
-A store for holding info for a Person
-"""
+	"""
+	A store for holding info for a Person
+	"""
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=25)
-	DOB = models.DateTimeField('date born')
+	DOB = models.DateTimeField('Date Born')
 	title = models.CharField(max_length=25)
-	jobs = models.ManyToMany(Job)
+	jobs = models.ManyToManyField('Job')
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
-	companies = models.ManyToMany(Company)
+	companies = models.ManyToManyField('Company')
 	twitter = models.URLField(max_length=50)
 	# games = models.ManyToMany(Game)
 	
@@ -96,13 +96,13 @@ A store for holding info for a Person
 
 
 class Company(models.Model):
-"""
-A store for holding info for a Company
-"""
+	"""
+	A store for holding info for a Company
+	"""
 	# name, id, founded, location, kind, description, 
 	# images, maps, external_links, contact_info, Games. 
 	name = models.CharField(max_length=25)
-	founded = models.DateTimeField('date founded')
+	founded = models.DateTimeField('Date Founded')
 	description = models.CharField(max_length=1000)
 	location = models.CharField(max_length=50)
 	mapimage = models.URLField()
