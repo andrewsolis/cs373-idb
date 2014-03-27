@@ -83,6 +83,7 @@ A store for holding info for a Person
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
 	companies = models.ManyToMany(Company)
+	twitter = models.URLField(max_length=50)
 	# games = models.ManyToMany(Game)
 	
 	def images(self):
@@ -92,6 +93,7 @@ A store for holding info for a Person
 	def videos(self):
 		results = Videos(other_id = self.id, other_type = 'PPL')
 		return results.objects
+
 
 class Company(models.Model):
 """
