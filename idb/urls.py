@@ -25,4 +25,12 @@ urlpatterns = patterns('',
     url(r'^naughtydog/', 'idb.views.naughtydog', name='naughtydog'),
 
     url(r'^games/', 'idb.views.games', name='games_index'),
+    url(r'^api/games/', 'idb.api.views.games', name='games_index'),
+
+    url(r'^people/', 'idb.views.people', name='people_index'),
+    url(r'^api/people/', 'idb.api.views.people', name='people_index'),
+
+    url(r'^companies/', 'idb.views.companies', name='companies_index'),
+    url(r'^api/companies/', 'idb.api.views.companies', name='companies_index'),
+
 )
