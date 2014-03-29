@@ -18,9 +18,10 @@ urlpatterns = patterns('',
     url(r'^crash_bandicoot/', 'idb.views.crash_bandicoot', name='crash_bandicoot'),
     url(r'^nintendo/', 'idb.views.nintendo', name='nintendo'),
     url(r'^sonic/', 'idb.views.sonic', name='sonic'),
-    url(r'^games_index/', 'idb.views.games_index', name='games_index'),
     url(r'^people_index/', 'idb.views.people_index', name='people_index'),
     url(r'^companies_index/', 'idb.views.companies_index', name='companies_index'),
     url(r'^sega/', 'idb.views.sega', name='sega'),
     url(r'^naughtydog/', 'idb.views.naughtydog', name='naughtydog'),
+
+    url(r'^games/', 'idb.views.games', name='games_index'),
 )
