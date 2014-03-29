@@ -135,7 +135,21 @@
 			"people": [?],
 			"companies": [?],
 		},
-
+		{ "name": "John Madden Football '92",
+			"id": 10,
+			"system": "Sega Genisis",
+			"release_date": "1992-1-1",
+			"genre": ["sports"], 
+			"publisher": "EA",
+			"developer": "High Score Entertainment",
+			"synopsis": "Long text describing JMF",
+			"copies_sold": 1700000,
+			"images": ["http://upload.wikimedia.org/wikipedia/en/0/05/John_Madden_Football_%2792_Coverart.png"],
+			"gameFAQ" : "http://www.gamefaqs.com/genesis/366816-john-madden-football-92",
+			"videos": ["www.youtube.com/embed/f_H5UqkNcZQ"],
+			"people": [?],
+			"companies": [?],
+		},
 	],
 	"People":
 	[
