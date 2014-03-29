@@ -1,0 +1,13 @@
+1) Should bootstrap be in static? Why 2 copies?
+
+2) Can we shrink static?
+
+3) What is idb/?
+
+4) What is /idb/videogames?
+
+5) Under idb/ should we have a games/person/company folder?
+
+6) Where exactly is the heroku part of repo?
+
+7) if we back up our static pages, could we wipe idb and recreate it(many files in worng place, etc)
