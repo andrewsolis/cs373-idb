@@ -78,7 +78,8 @@ class Person(models.Model):
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=25)
 	DOB = models.DateTimeField('Date Born')
-	title = models.CharField(max_length=25)
+#we need to remove title!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#	title = models.CharField(max_length=25)
 	jobs = models.ManyToManyField('Job')
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
