@@ -17,6 +17,9 @@ def games(request):
 #	return HttpResponse(str(x), content_type="plain/text")
 
 def games_id(request, id):
+	games_list = []
+	if(request.method == 'GET'):
+		games_list = serializers.serialize("json",Game.objects.order_by('-id').all())
 	return HttpResponse([], content_type="application/json")
 
 def games_people(request, id):
