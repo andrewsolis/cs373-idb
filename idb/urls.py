@@ -27,14 +27,15 @@ urlpatterns = patterns('',
     url(r'^games/', 'idb.views.games', name='games_index'),
     url(r'^api/games/', 'idb.api.views.games', name='games_index'),
 
-    url(r'^games/(\d+)/', 'idb.api.views.games', name='games_index'),
-    url(r'^api/games/(\d+)/', 'idb.api.views.games', name='games_index'),
+    url(r'^games/(\d+)/', 'idb.views.games_id', name='games_index'),
+    url(r'^api/games/(\d+)/', 'idb.api.views.games_id', name='games_index'),
 
-    url(r'^games/(\d+)/people/', 'idb.api.views.games', name='games_index'),
-    url(r'^api/games/(\d+)/people/', 'idb.api.views.games', name='games_index'),
+    url(r'^games/(\d+)/people/', 'idb.views.games_people', name='games_index'),
+    url(r'^api/games/(\d+)/people/', 'idb.api.views.games_people', name='games_index'),
 
-    url(r'^games/(\d+)/companies/', 'idb.api.views.games', name='games_index'),
-    url(r'^api/games/(\d+)/companies/', 'idb.api.views.games', name='games_index'),
+    url(r'^games/(\d+)/companies/', 'idb.views.games_companies', name='games_index'),
+    url(r'^api/games/(\d+)/companies/', 'idb.api.views.games_companies', name='games_index'),
+
 
 
     url(r'^people/', 'idb.views.people', name='people_index'),
