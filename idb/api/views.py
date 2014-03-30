@@ -70,10 +70,19 @@ def api_people_id(request, people_id):
 	return HttpResponse(response, content_type = "application/json")
 
 def api_people_games(request, people_id):
-	return HttpResponse([], content_type = "application/json")
+	response = "empty"
+	games = Game.objects.filter(people = people_id)
+	if games is not None:
+		response = serializers.serialize("json", games) 
+	return HttpResponse(response, content_type = "application/json")
 
 def api_people_companies(request, people_id):
-	return HttpResponse([], content_type = "application/json")
+	response = "empty"
+	person_dictionary = Person.objects.filter(pk = int(people_id)).values('companies')[0]
+	company_id = person_dictionary.get('companies')
+	if company_id is not None:
+		response = serializers.serialize("json", Company.objects.filter(pk = int(company_id))) 
+	return HttpResponse(response, content_type = "application/json")
 
 @csrf_exempt
 def api_companies(request):
@@ -96,7 +105,15 @@ def api_companies_id(request, company_id):
 	return HttpResponse(company, content_type = "application/json")
 
 def api_companies_games(request, company_id):
-	return HttpResponse([], content_type = "application/json")
+	response = "empty"
+	games = Game.objects.filter(company = company_id)
+	if games is not None:
+		response = serializers.serialize("json", games) 
+	return HttpResponse(response, content_type = "application/json")
 
 def api_companies_people(request, company_id):
-	return HttpResponse([], content_type = "application/json")
+	response = "empty"
+	people = Person.objects.filter(companies = company_id)
+	if people is not None:
+		response = serializers.serialize("json", people) 
+	return HttpResponse(response, content_type = "application/json")

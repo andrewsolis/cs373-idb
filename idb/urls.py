@@ -27,9 +27,16 @@ urlpatterns = patterns('',
     # missing some intersections
     url(r'^games/(\d+)/people/', 'idb.views.games_people', name='games_people'),
     url(r'^games/(\d+)/companies/', 'idb.views.games_companies', name='games_companies'),
+    url(r'^people/(\d+)/games/', 'idb.views.people_games', name='people_games'),
+    url(r'^people/(\d+)/companies/', 'idb.views.people_companies', name='people_companies'),
+    url(r'^companies/(\d+)/games/', 'idb.views.companies_games', name='companies_games'),
+    url(r'^companies/(\d+)/people/', 'idb.views.companies_people', name='companies_people'),
     url(r'^api/games/(\d+)/people/', 'idb.api.views.api_games_people', name='api_games_people'),
     url(r'^api/games/(\d+)/companies/', 'idb.api.views.api_games_companies', name='api_games_companies'),
-
+    url(r'^api/people/(\d+)/games/', 'idb.api.views.api_people_games', name='api_people_games'),
+    url(r'^api/people/(\d+)/companies/', 'idb.api.views.api_people_companies', name='api_people_companies'),
+    url(r'^api/companies/(\d+)/games/', 'idb.api.views.api_companies_games', name='api_companies_games'),
+    url(r'^api/companies/(\d+)/people/', 'idb.api.views.api_companies_people', name='api_companies_people'),
 
     url(r'^games/(\d+)/', 'idb.views.games_id', name='games_id'),
     url(r'^people/(\d+)/', 'idb.views.people_id', name='people_id'),
