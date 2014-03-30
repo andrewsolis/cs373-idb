@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<style type="text/css">
+		html,body {
+			/*background: url("http://www.gamestm.co.uk/wp-content/uploads/2010/09/Yoshio-Sakamoto.jpg")  repeat top center fixed;*/
+		}
+	</style>
+
+<div class="row">
+	<h1 style="color: white; text-align: center">
+	{{ name }}
+</h1>
+	<div id="attributes" class="col-md-4" style="text-align: center;">
+		
+		<ul style="list-style-type: none;">
+			<li>job: {{ jobs }}</li>
+			<li>DOB: {{ DOB }}</li>
+			<li>location: {{ residence }}</li>
+			<li>description: {{ description }}</li>
+			<li> images:
+				 <!-- <ul style="list-style-type: none">
+					<li><a href="http://www.gamestm.co.uk/wp-content/uploads/2010/09/Yoshio-Sakamoto.jpg">Image 1</a></li>
+				</ul> --> 
+			</li>
+			<!-- <li>video <iframe width="560" height="315" src="//www.youtube.com/embed/eBuWOKsK2JE" frameborder="0" allowfullscreen></iframe></li> -->
+		</ul>
+	</div>
+
+	<div id="companies" class="col-md-4"  style="text-align: center;">
+		<ul style="list-style-type: none">
+	<!-- 		<li><h3 >Companies</h3></li>
+			<li><a href="{% url 'nintendo' %}">{{ companies }}</a></li> -->
+		</ul>
+	</div>
+
+	<div id="game" class="col-md-4" style="text-align: center;">
+		<ul style="list-style-type: none">
+<!-- 			<li><h3 >Games</h3></li>
+			<li><a href="{% url 'metroid' %}">{{ games }}</a></li> -->
+		</ul>
+	</div>
+</div>
+
+{% endblock %}
