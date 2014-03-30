@@ -49,28 +49,61 @@ def companies_index(request):
 
 
 def games(request):
-	x = Game.objects.order_by('-name')[:]
-	if len(x):
-		games_list = json.dumps(x)
-	else:
-		games_list = {}
+	games_list = []
+	if(request.method == 'GET'):
+		games_list = serializers.serialize("json",Game.objects.order_by('-id').all())
+	elif(request.method == 'POST'):
+		pass
 
 	return HttpResponse(games_list, content_type="application/json")
 
+def games_id(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def games_people(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def games_companies(request, id):
+	return HttpResponse([], content_type="application/json")
+
 def people(request):
-	x = Person.objects.order_by('-id')[:]
-	if len(x):
-		people_list = json.dumps(x)
-	else:
-		people_list = {}
+	people_list = []
+	if(request.method == 'GET'):
+		people_list = serializers.serialize("json",Game.objects.order_by('-id').all())
+	elif(request.method == 'POST'):
+		pass
 
 	return HttpResponse(people_list, content_type="application/json")
 
+def people_id(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def people_games(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def people_companies(request, id):
+	return HttpResponse([], content_type="application/json")
+
+
 def companies(request):
-	x = Company.objects.order_by('-id')[:]
-	if len(x):
-		company_list = json.dumps(x)
-	else:
-		company_list = {}
+	companies_list = []
+	if(request.method == 'GET'):
+		companies_list = serializers.serialize("json",Game.objects.order_by('-id').all())
+	elif(request.method == 'POST'):
+		pass
 
 	return HttpResponse(company_list, content_type="application/json")
+
+
+def companies_id(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def companies_games(request, id):
+	return HttpResponse([], content_type="application/json")
+
+def companies_people(request, id):
+	return HttpResponse([], content_type="application/json")
+
+
+
+
