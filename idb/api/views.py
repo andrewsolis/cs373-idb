@@ -35,16 +35,15 @@ def games_id(request, game_id):
 
 def games_people(request, game_id):
 	response = "empty"
-	people_dictionary = Game.objects.filter(pk = int(game_id)).values('people')[0] # output: {'people': None}
-	people_list = people_dictionary.get('people')
-	if people_list is not None:
-		for person_id in people_list:
-			response.append(serializers.serialize("json", Person.objects.filter(pk = int(person_id)))) 
+	people_dictionary = Game.objects.filter(pk = int(game_id)).values('people')[0]
+	person_id = people_dictionary.get('people')
+	if person_id is not None:
+		response = serializers.serialize("json", Person.objects.filter(pk = int(person_id))) 
 	return HttpResponse(response, content_type = "application/json")
 
 def games_companies(request, game_id):
 	response = "empty"
-	company_dictionary = Game.objects.filter(pk = int(game_id)).values('company')[0] # output: {'company': 1}
+	company_dictionary = Game.objects.filter(pk = int(game_id)).values('company')[0]
 	company_id = company_dictionary.get('company')
 	if company_id is not None:
 		response = serializers.serialize("json", Company.objects.filter(pk = int(company_id)))
