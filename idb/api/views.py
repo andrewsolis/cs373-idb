@@ -40,15 +40,22 @@ def games_companies(request, id):
 def people(request):
 	people_list = []
 	if(request.method == 'GET'):
-		people_list = serializers.serialize("json",People.objects.order_by('-id').all())
+		people_list = serializers.serialize("json",Person.objects.order_by('-id').all())
 	elif(request.method == 'POST'):
 		pass
 
 	return HttpResponse(people_list, content_type="application/json")
 #	return HttpResponse(str(x), content_type="plain/text")
 
-def people_id(request, id):
-	return HttpResponse([], content_type="application/json")
+def people_id(request, people_id):
+	if(request.method == 'GET'):
+		person = serializers.serialize("json",[Person.objects.get(pk = int(people_id))])
+	elif(request.method == 'PUT'):
+		pass
+	elif(request.method == 'DELETE'):
+		pass
+
+	return HttpResponse(person, content_type="application/json")
 
 def people_games(request, id):
 	return HttpResponse([], content_type="application/json")
@@ -59,15 +66,22 @@ def people_companies(request, id):
 def companies(request):
 	companies_list = []
 	if(request.method == 'GET'):
-		companies_list = serializers.serialize("json",Companies.objects.order_by('-id').all())
+		companies_list = serializers.serialize("json",Company.objects.order_by('-id').all())
 	elif(request.method == 'POST'):
 		pass
 
 	return HttpResponse(companies_list, content_type="application/json")
 #	return HttpResponse(str(x), content_type="plain/text")
 
-def companies_id(request, id):
-	return HttpResponse([], content_type="application/json")
+def companies_id(request, company_id):
+	if(request.method == 'GET'):
+		company = serializers.serialize("json",[Company.objects.get(pk = int(company_id))])
+	elif(request.method == 'PUT'):
+		pass
+	elif(request.method == 'DELETE'):
+		pass
+
+	return HttpResponse(company, content_type="application/json")
 
 def companies_games(request, id):
 	return HttpResponse([], content_type="application/json")
