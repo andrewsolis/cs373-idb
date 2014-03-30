@@ -24,29 +24,31 @@ def games(request):
 
 @csrf_exempt
 def games_id(request, game_id):
-	game = ""
+	response = "empty"
 	if(request.method == 'GET'):
-		game = serializers.serialize("json", [Game.objects.get(pk = int(game_id))])
+		response = serializers.serialize("json", [Game.objects.get(pk = int(game_id))])
 	elif(request.method == 'PUT'):
 		pass
 	elif(request.method == 'DELETE'):
 		Game.objects.get(pk = int(game_id)).delete()
-	return HttpResponse(game, content_type = "application/json")
+	return HttpResponse(response, content_type = "application/json")
 
 def games_people(request, game_id):
 	response = "empty"
-	game = Game.objects.filter(pk = int(game_id)).values('people')[0] # output: {'people': None}
-	people_list = game.get('people')
+	people_dictionary = Game.objects.filter(pk = int(game_id)).values('people')[0] # output: {'people': None}
+	people_list = people_dictionary.get('people')
 	if people_list is not None:
-		for p in people_list:
-			response.append(serializers.serialize("json", Person.objects.filter(pk = int(p)))) 
+		for person_id in people_list:
+			response.append(serializers.serialize("json", Person.objects.filter(pk = int(person_id)))) 
 	return HttpResponse(response, content_type = "application/json")
 
 def games_companies(request, game_id):
-	companies_list = []
-	if (request.method == 'GET'):
-		companies_list = serializers.serialize("json", Company.objects.all())
-	return HttpResponse(companies_list, content_type = "application/json")
+	response = "empty"
+	company_dictionary = Game.objects.filter(pk = int(game_id)).values('company')[0] # output: {'company': 1}
+	company_id = company_dictionary.get('company')
+	if company_id is not None:
+		response = serializers.serialize("json", Company.objects.filter(pk = int(company_id)))
+	return HttpResponse(response, content_type = "application/json")
 
 @csrf_exempt
 def people(request):
