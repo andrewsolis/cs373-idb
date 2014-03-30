@@ -1,0 +1,105 @@
+
+
+Commands worth knowing:
+
+ObjectName.objects.all().values() - displays the entire table in the form of a dictionary
+
+
+varName.attributeName - displays a regular attribute for a record
+
+
+varName.ManyToManyFieldAttribureName.values() - displays all of the fields associated to the record in the form of a dictionary
+
+varName.ForegnKeyAttributeName - returns the object associated from this record from the 'Foreign' table. You can assign this to a new varName and inspect it.
+
+
+
+
+
+Assignment/retrieval of specific record:
+
+	varName1=Company.objects.get(id=int)
+	varName1.save()
+
+	varName2=Game.objects.get(id=int)
+	varName2.save()
+
+	varName3=Person.objects.get(id=int)
+	varname3.save()
+
+				OR
+
+	varName4=Game.objects.get(name='text')
+	varname4.save()
+
+	(retreival can be done using any attribute)
+
+
+
+
+
+Create Record:
+
+
+	
+	COMPANY:
+		Company(name='text', founded='YYYY-MM-DD', description='text', location='text', mapimage='text', webpage='text').save()
+
+	PERSON:
+
+		JOB:
+			Job.objects.create(profession='text')
+
+
+	    Person(name='text', DOB='YYYY-MM-DD', description='TEXT', residence='text').save()
+
+	    then add ManyToManyField attributes(companies, jobs) in the same manner described in the Update Record Section
+
+
+
+	GAME:
+
+
+		Game objects are unique in that they have two ForeignKey attributes (system, company). These MUST contain a value of the correct type on creation. Company and System must be created beforehand.
+
+
+		SYSTEM:
+			System.objects.create(platform='text')
+
+		Game:
+			 Game(name='text', system=System Object, synopsis='text', copies=int, release_date='YYYY-MM-DD', company=Company Object, gamefaq='text').save()
+
+
+			 then add ManyToManyField attributes(genre, people) in the same manner described in the Update Record Section
+
+
+
+
+Update Record:
+
+	ManyToManyField attribute:
+
+		Person.objects.get(id=int).companies.add(Company Object)
+				OR
+		varName3.companies.add(Company Object)
+
+		Person.objects.get(id=int).jobs.add(Job Object)
+
+   		Game.objects.get(id=int).genre.add(Genre Object)
+    
+   		Game.objects.get(id=int).people.add(Person Object)
+
+
+
+   	All other attributes
+
+   		Objectname.attribute=appropriate object
+   		
+
+
+   	IMPORTANT!!!!!
+   		after every single change made to a record, run Objectname.save()
+
+		
+		
+		
