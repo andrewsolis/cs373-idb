@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^sega/', 'idb.views.sega', name='sega'),
     url(r'^naughtydog/', 'idb.views.naughtydog', name='naughtydog'),
 
-# missing some intersections
+    # missing some intersections
     url(r'^games/(\d+)/people/', 'idb.views.games_people', name='games_people'),
     url(r'^games/(\d+)/companies/', 'idb.views.games_companies', name='games_companies'),
     url(r'^api/games/(\d+)/people/', 'idb.api.views.games_people', name='api_games_people'),
