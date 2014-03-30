@@ -10,7 +10,7 @@ def validate_game_json(game_object) :
 	return true
 
 @csrf_exempt
-def games(request):
+def api_games(request):
 	games_list = []
 	if(request.method == 'GET'):
 		games_list = serializers.serialize("json", Game.objects.all())
@@ -23,7 +23,7 @@ def games(request):
 	return HttpResponse(games_list, content_type = "application/json")
 
 @csrf_exempt
-def games_id(request, game_id):
+def api_games_id(request, game_id):
 	response = "empty"
 	if(request.method == 'GET'):
 		response = serializers.serialize("json", [Game.objects.get(pk = int(game_id))])
@@ -33,7 +33,7 @@ def games_id(request, game_id):
 		Game.objects.get(pk = int(game_id)).delete()
 	return HttpResponse(response, content_type = "application/json")
 
-def games_people(request, game_id):
+def api_games_people(request, game_id):
 	response = "empty"
 	people_dictionary = Game.objects.filter(pk = int(game_id)).values('people')[0]
 	person_id = people_dictionary.get('people')
@@ -41,7 +41,7 @@ def games_people(request, game_id):
 		response = serializers.serialize("json", Person.objects.filter(pk = int(person_id))) 
 	return HttpResponse(response, content_type = "application/json")
 
-def games_companies(request, game_id):
+def api_games_companies(request, game_id):
 	response = "empty"
 	company_dictionary = Game.objects.filter(pk = int(game_id)).values('company')[0]
 	company_id = company_dictionary.get('company')
@@ -50,7 +50,7 @@ def games_companies(request, game_id):
 	return HttpResponse(response, content_type = "application/json")
 
 @csrf_exempt
-def people(request):
+def api_people(request):
 	people_list = []
 	if(request.method == 'GET'):
 		people_list = serializers.serialize("json", Person.objects.all())
@@ -59,7 +59,7 @@ def people(request):
 	return HttpResponse(people_list, content_type = "application/json")
 
 @csrf_exempt
-def people_id(request, people_id):
+def api_people_id(request, people_id):
 	response = ""
 	if(request.method == 'GET'):
 		response = serializers.serialize("json", [Person.objects.get(pk = int(people_id))])
@@ -69,14 +69,14 @@ def people_id(request, people_id):
 		Person.objects.get(pk = int(people_id)).delete()
 	return HttpResponse(response, content_type = "application/json")
 
-def people_games(request, people_id):
+def api_people_games(request, people_id):
 	return HttpResponse([], content_type = "application/json")
 
-def people_companies(request, people_id):
+def api_people_companies(request, people_id):
 	return HttpResponse([], content_type = "application/json")
 
 @csrf_exempt
-def companies(request):
+def api_companies(request):
 	companies_list = []
 	if(request.method == 'GET'):
 		companies_list = serializers.serialize("json",Company.objects.all())
@@ -85,7 +85,7 @@ def companies(request):
 	return HttpResponse(companies_list, content_type = "application/json")
 
 @csrf_exempt
-def companies_id(request, company_id):
+def api_companies_id(request, company_id):
 	company = ""
 	if(request.method == 'GET'):
 		company = serializers.serialize("json",[Company.objects.get(pk = int(company_id))])
@@ -95,8 +95,8 @@ def companies_id(request, company_id):
 		Company.objects.get(pk = int(company_id)).delete()
 	return HttpResponse(company, content_type = "application/json")
 
-def companies_games(request, company_id):
+def api_companies_games(request, company_id):
 	return HttpResponse([], content_type = "application/json")
 
-def companies_people(request, company_id):
+def api_companies_people(request, company_id):
 	return HttpResponse([], content_type = "application/json")
