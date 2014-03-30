@@ -6,19 +6,26 @@ from json import dumps
 
 from idb.videogames.models import *
 
+def validate_game_json(game_object):
+	return true
+
 def games(request):
 	games_list = []
 	if(request.method == 'GET'):
-		games_list = serializers.serialize("json",Game.objects.order_by('-id').all())
+		games_list = serializers.serialize("json", Game.objects.order_by('-id').all())
 	elif(request.method == 'POST'):
-		pass
+		request_data = requset.POST
+		for deserialized_object in serializers.deserialize("json", request_data) :
+			if (validate_game_json(deserialized_object)):
+				pass
+				# deserialized_object.save()
 
 	return HttpResponse(games_list, content_type="application/json")
-#	return HttpResponse(str(x), content_type="plain/text")
+	# return HttpResponse(str(x), content_type="plain/text")
 
 def games_id(request, game_id):
 	if(request.method == 'GET'):
-		game = serializers.serialize("json",[Game.objects.get(pk = int(game_id))])
+		game = serializers.serialize("json", [Game.objects.get(pk = int(game_id))])
 	elif(request.method == 'PUT'):
 		pass
 	elif(request.method == 'DELETE'):
@@ -40,7 +47,7 @@ def games_companies(request, id):
 def people(request):
 	people_list = []
 	if(request.method == 'GET'):
-		people_list = serializers.serialize("json",Person.objects.order_by('-id').all())
+		people_list = serializers.serialize("json", Person.objects.order_by('-id').all())
 	elif(request.method == 'POST'):
 		pass
 
@@ -49,7 +56,7 @@ def people(request):
 
 def people_id(request, people_id):
 	if(request.method == 'GET'):
-		person = serializers.serialize("json",[Person.objects.get(pk = int(people_id))])
+		person = serializers.serialize("json", [Person.objects.get(pk = int(people_id))])
 	elif(request.method == 'PUT'):
 		pass
 	elif(request.method == 'DELETE'):

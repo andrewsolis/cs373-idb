@@ -19,7 +19,6 @@ def sonic(request):
 	return render_to_response('sonic.html', {}, RequestContext(request))
 
 def yoshio_sakamoto(request):
-
 	return render_to_response('yoshio_sakamoto.html', {}, RequestContext(request))
 
 def naoto_oshima(request):
