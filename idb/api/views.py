@@ -65,8 +65,7 @@ def people_id(request, people_id):
 	elif(request.method == 'PUT'):
 		pass
 	elif(request.method == 'DELETE'):
-		pass
-	#	Person.objects.get(pk = int(people_id)).delete()
+		Person.objects.get(pk = int(people_id)).delete()
 	return HttpResponse(response, content_type = "application/json")
 
 def people_games(request, people_id):
