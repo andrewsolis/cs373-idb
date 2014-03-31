@@ -41,7 +41,7 @@ def people_id(request, id):
 	person = api_people_id(request,id)
 	person_content = json.loads(person.content.decode("utf-8"))
 	content = person_content[0]["fields"]
-	person_content[0]["fields"]["DOB"] = person_content[0]["DOB"][:10]
+	person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
 	return render_to_response('person.html', content)
 
 def people_games(request, id):
@@ -61,7 +61,7 @@ def companies_id(request, id):
 	company = api_companies_id(request,id)
 	company_content = json.loads(company.content.decode("utf-8"))
 	content = company_content[0]["fields"]
-	company_content[0]["fields"]["founded"] = company_content[0]["founded"][:10]
+	company_content[0]["fields"]["founded"] = company_content[0]["fields"]["founded"][:10]
 	return render_to_response('company.html', content)
 
 def companies_games(request, id):
