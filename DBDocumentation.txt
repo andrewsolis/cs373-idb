@@ -45,6 +45,7 @@ Create Record:
 	COMPANY:
 		Company(name='text', founded='YYYY-MM-DD', description='text', location='text', mapimage='text', webpage='text').save()
 
+		Company(name='', founded='--', description='', location='', mapimage='', webpage='')
 	PERSON:
 
 		JOB:
@@ -52,6 +53,7 @@ Create Record:
 
 
 	    Person(name='text', DOB='YYYY-MM-DD', description='TEXT', residence='text').save()
+	    Person(name='', DOB='--', description='', residence='')
 
 	    then add ManyToManyField attributes(companies, jobs) in the same manner described in the Update Record Section
 
@@ -67,8 +69,9 @@ Create Record:
 			System.objects.create(platform='text')
 
 		Game:
-			 Game(name='text', system=System Object, synopsis='text', copies=int, release_date='YYYY-MM-DD', company=Company Object, gamefaq='text').save()
+			Game(name='text', system=System Object, synopsis='text', copies=int, release_date='YYYY-MM-DD', company=Company Object, gamefaq='text').save()
 
+			Game(name='', system=, synopsis='', copies=, release_date='--', company=, gamefaq='')
 
 			 then add ManyToManyField attributes(genre, people) in the same manner described in the Update Record Section
 
