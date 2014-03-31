@@ -33,18 +33,8 @@ def api_games(request):
 	response = ""
 	response_code = 400
 	if(request.method == 'GET'):
-		try:
-			game_object = Game.objects.get(pk = int(game_id))
-			game = literal_eval(serializers.serialize("json",[game_object]))
-			genre_list = game[0]["fields"]["genre"]
-			game[0]["fields"]["system"] = game_object.system.platform
-			game[0]["fields"]["genre"] = [Genre.objects.get(pk = int(genre)).types for genre in genre_list]
-			#images = game_object.images()
-			#videos = game_object.videos()
-			response = dumps(game)
-			response_code = 200
-		except:
-			response_code = 404
+		response = serializers.serialize("json", Game.objects.all())
+		response_code = 200
 	elif(request.method == 'POST'):
 		try:
 			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
