@@ -29,10 +29,14 @@ def games_companies(request, id):
 
 def people(request):
 	people_list = api_people(request)
-	return render_to_response('cgp_index.html', people_list)
+	result = serializers.deserialize("json", people_list.content)
+	return render_to_response('cgp_index.html', {'items': result})
 
 def people_id(request, id):
-	return HttpResponse([], content_type="application/json")
+	person = api_people_id(request,id)
+	person_content = json.loads(person.content.decode("utf-8"))
+	content = person_content[0]["fields"]
+	return render_to_response('person.html', content)
 
 def people_games(request, id):
 	return HttpResponse([], content_type="application/json")
@@ -43,11 +47,15 @@ def people_companies(request, id):
 
 def companies(request):
 	companies_list = api_companies(request)
-	return render_to_response('cgp_index.html', companies_list)
+	result = serializers.deserialize("json", companies_list.content)
+	return render_to_response('cgp_index.html', {'items': result})
 
 
 def companies_id(request, id):
-	return HttpResponse([], content_type="application/json")
+	company = api_companies_id(request,id)
+	company_content = json.loads(company.content.decode("utf-8"))
+	content = company_content[0]["fields"]
+	return render_to_response('company.html', content)
 
 def companies_games(request, id):
 	return HttpResponse([], content_type="application/json")
