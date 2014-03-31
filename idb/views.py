@@ -19,6 +19,10 @@ def games_id(request, id):
 	game = api_games_id(request,id)
 	game_content = json.loads(game.content.decode("utf-8"))
 	content = game_content[0]["fields"]
+	genres = ""
+	for genre in content['genre']:
+		genres = genres + genre + ", "
+	content['genre'] = genres[:-2]
 	return render_to_response('game.html', content)
 
 def games_people(request, id):
