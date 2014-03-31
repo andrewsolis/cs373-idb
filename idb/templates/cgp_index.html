@@ -4,12 +4,10 @@
 <div class="row">
 
 	<ul class="col-md-6 col-md-offset-5" style="list-style-type: none">
-		<li><h2> </h2></li>
+
+		{% for item in items %}
+			<li><a href="{{ item.object.pk }}/"><h2> game: {{ item.object.name }} </h2></a></li>
+		{% endfor %}
 	</ul>
 </div>
-
-<script type="text/javascript">
-	var items [];
-
-</script>
 {% endblock %}
