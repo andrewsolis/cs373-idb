@@ -71,19 +71,25 @@ def api_games_id(request, game_id):
 			response_code = 404
 	elif(request.method == 'PUT'):
 		try:
-			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
+			game_object = Game.objects.get(pk =int(game_id))
+			game = literal_eval(serializers.serialize("json",[game_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
+			request_data["system"] = game_object.system.pk
+			genre_list = request_data["genre"]
+			request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in genre_list]
 			for k in request_data:
 				if k in game[0]["fields"]:
 					game[0]["fields"][k] = request_data[k]
 			game = dumps(game)
 			for deserialized_object in serializers.deserialize("json", game):
 				deserialized_object.save()
-				response_code = 204
+			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
+			raise
 		except:
 			response_code = 400
+			raise
 	elif(request.method == 'DELETE'):
 		try:
 			Game.objects.get(pk = int(game_id)).delete()
