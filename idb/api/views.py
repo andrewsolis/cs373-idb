@@ -2,6 +2,7 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from django.http import HttpResponse, HttpRequest
+from django.db import models
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import *
 from idb.videogames.models import *
@@ -32,8 +33,18 @@ def api_games(request):
 	response = ""
 	response_code = 400
 	if(request.method == 'GET'):
-		response = serializers.serialize("json", Game.objects.all())
-		response_code = 200
+		try:
+			game_object = Game.objects.get(pk = int(game_id))
+			game = literal_eval(serializers.serialize("json",[game_object]))
+			genre_list = game[0]["fields"]["genre"]
+			game[0]["fields"]["system"] = game_object.system.platform
+			game[0]["fields"]["genre"] = [Genre.objects.get(pk = int(genre)).types for genre in genre_list]
+			#images = game_object.images()
+			#videos = game_object.videos()
+			response = dumps(game)
+			response_code = 200
+		except:
+			response_code = 404
 	elif(request.method == 'POST'):
 		try:
 			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
@@ -57,7 +68,14 @@ def api_games_id(request, game_id):
 	response_code = 400
 	if(request.method == 'GET'):
 		try:
-			response = serializers.serialize("json",[Game.objects.get(pk = int(game_id))])
+			game_object = Game.objects.get(pk = int(game_id))
+			game = literal_eval(serializers.serialize("json",[game_object]))
+			genre_list = game[0]["fields"]["genre"]
+			game[0]["fields"]["system"] = game_object.system.platform
+			game[0]["fields"]["genre"] = [Genre.objects.get(pk = int(genre)).types for genre in genre_list]
+			#images = game_object.images()
+			#videos = game_object.videos()
+			response = dumps(game)
 			response_code = 200
 		except:
 			response_code = 404
