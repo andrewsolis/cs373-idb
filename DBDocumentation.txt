@@ -45,14 +45,16 @@ Create Record:
 	COMPANY:
 		Company(name='text', founded='YYYY-MM-DD', description='text', location='text', mapimage='text', webpage='text').save()
 
-		Company(name='', founded='--', description='', location='', mapimage='', webpage='')
+		Company(name='', founded='--', description='', location='', mapimage='', webpage='').save()
 	PERSON:
 
 		JOB:
 			Job.objects.create(profession='text')
+			Job.objects.create(profession='')
 
 
 	    Person(name='text', DOB='YYYY-MM-DD', description='TEXT', residence='text').save()
+
 	    Person(name='', DOB='--', description='', residence='')
 
 	    then add ManyToManyField attributes(companies, jobs) in the same manner described in the Update Record Section
@@ -67,6 +69,8 @@ Create Record:
 
 		SYSTEM:
 			System.objects.create(platform='text')
+
+			System.objects.create(platform='')
 
 		Game:
 			Game(name='text', system=System Object, synopsis='text', copies=int, release_date='YYYY-MM-DD', company=Company Object, gamefaq='text').save()
