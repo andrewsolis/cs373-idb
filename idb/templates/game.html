@@ -41,6 +41,9 @@
 	<div id="people" class="col-md-4" style="text-align: center;">
 		<ul style="list-style-type: none">
 			<li><h3 >People</h3></li>
+			{% for item in people %}
+			<li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+		{% endfor %}
 		</ul>
 	</div>
 </div>

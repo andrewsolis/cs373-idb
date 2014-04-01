@@ -26,10 +26,14 @@ def games_id(request, id):
 	game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
 	company_content = api_games_companies(request, id)
 	company_content = serializers.deserialize("json", company_content.content)
-
 	game_content[0]["fields"]["company"] = list(company_content)[0]
+	
+	people_content = api_games_people(request, id)
+	people_content = serializers.deserialize("json", people_content.content)
+	game_content[0]["fields"]["people"] = list(people_content)
+	
 	return render_to_response('game.html', content)
-	# return HttpResponse(content["company"][0].object.name, content_type="application/json")
+	# return HttpResponse(content["people"], content_type="application/json")
 
 
 def games_people(request, id):
