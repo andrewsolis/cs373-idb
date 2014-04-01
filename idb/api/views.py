@@ -62,12 +62,13 @@ def api_games_id(request, game_id):
 			genre_list = game[0]["fields"]["genre"]
 			game[0]["fields"]["system"] = game_object.system.platform
 			game[0]["fields"]["genre"] = [Genre.objects.get(pk = int(genre)).types for genre in genre_list]
-			#images = game_object.images()
-			#videos = game_object.videos()
+			game[0]["fields"]["images"] = [image.link for image in game_object.images()]
+			game[0]["fields"]["videos"] = [video.link for video in game_object.videos()]
 			response = dumps(game)
 			response_code = 200
 		except:
 			response_code = 404
+			raise
 	elif(request.method == 'PUT'):
 		try:
 			game_object = Game.objects.get(pk =int(game_id))
