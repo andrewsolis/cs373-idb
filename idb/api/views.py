@@ -121,7 +121,7 @@ def api_people(request):
 	response_code = 400
 	new_person_saved = False
 	if(request.method == 'GET'):
-		response = serializers.serialize("json", Person.objects.all())
+		response = serializers.serialize("json", Person.objects.all(), fields=("name"))
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
@@ -201,7 +201,7 @@ def api_companies(request):
 	response = ""
 	response_code = 400
 	if(request.method == 'GET'):
-		response = serializers.serialize("json",Company.objects.all())
+		response = serializers.serialize("json",Company.objects.all(), fields=("name"))
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
