@@ -8,36 +8,34 @@
 			/*background: url("http://upload.wikimedia.org/wikipedia/en/4/44/Crash_Bandicoot_Cover.png") repeat center center fixed;*/
 		}
 	</style>
-
-<div class="row">
-	<h1 style="color: white; text-align: center">
+<h1 style="color: white; text-align: center">
 	{{ name }}
 </h1>
-	<div id="attributes" class="col-md-4" style="text-align: center;">
+<div class="row col-md-offset-2">
+	
+	<div id="attributes" class="col-md-4 col-md-offset0" style="text-align: left;">
 		
 		<ul style="list-style-type: none;">
 			<li><h3 >About</h3></li>
-			<li> name: {{ name }} </li>
-			<li> system: {{ system }} </li>
-			<li> release date: {{ release_date }} </li>
-			<li> genre: {{ genre }} </li>
-			<li> synopsis: {{ synopsis }} </li>
-			<li> copies sold: {{ copies }} </li>
-			<li> images:
-			</li>
-			<li> <a href={{ gamefaq }}>GameFAQ link</a> </li>
-			<li> videos:
+			<li> Name: {{ name }} </li>
+			<li> System: {{ system }} </li>
+			<li> Release date: {{ release_date }} </li>
+			<li> Genre: {{ genre }} </li>
+			<li> Synopsis: {{ synopsis }} </li>
+			<li> Copies sold: {{ copies }} </li>
+			<li> External Links: <a href={{ gamefaq }}>GameFAQ link</a> </li>
+			<li> Videos:
 			</li>
 		</ul>
 	</div>
 
-	<div id="companies" class="col-md-4"  style="text-align: center;">
+	<div id="companies" class="col-md-4"  style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >Companies</h3></li>
 		</ul>
 	</div>
 
-	<div id="people" class="col-md-4" style="text-align: center;">
+	<div id="people" class="col-md-4" style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >People</h3></li>
 		</ul>

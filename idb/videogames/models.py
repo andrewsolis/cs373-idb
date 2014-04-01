@@ -15,14 +15,14 @@ class Images(Media):
 	"""
 	A Media table for storing images
 	"""
-	#id, link 
+	#id, name, link 
 	pass
 
 class Videos(Media):
 	"""
 	A Media table for storing videos
 	"""
-	#id, link 
+	#id, name, link 
 	pass
 
 class Genre(models.Model):
