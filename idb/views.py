@@ -24,7 +24,13 @@ def games_id(request, id):
 		genres = genres + genre + ", "
 	content['genre'] = genres[:-2]
 	game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
+	company_content = api_games_companies(request, id)
+	company_content = serializers.deserialize("json", company_content.content)
+
+	game_content[0]["fields"]["company"] = list(company_content)[0]
 	return render_to_response('game.html', content)
+	# return HttpResponse(content["company"][0].object.name, content_type="application/json")
+
 
 def games_people(request, id):
 	return HttpResponse([], content_type="application/json")
