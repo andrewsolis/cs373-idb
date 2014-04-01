@@ -78,8 +78,7 @@ class Person(models.Model):
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=25)
 	DOB = models.DateTimeField('date born')
-	# title = models.CharField(max_length=25)
-	# jobs = models.ManyToManyField('Job')
+	twitter = models.CharField(max_length=50)
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
 	companies = models.ManyToManyField('Company')
