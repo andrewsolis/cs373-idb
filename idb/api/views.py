@@ -33,8 +33,7 @@ def api_games(request):
 	response = ""
 	response_code = 400
 	if(request.method == 'GET'):
-		response = serializers.serialize("json", Game.objects.all())
-		response_code = 200
+		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
 	elif(request.method == 'POST'):
 		try:
 			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
@@ -63,12 +62,13 @@ def api_games_id(request, game_id):
 			genre_list = game[0]["fields"]["genre"]
 			game[0]["fields"]["system"] = game_object.system.platform
 			game[0]["fields"]["genre"] = [Genre.objects.get(pk = int(genre)).types for genre in genre_list]
-			#images = game_object.images()
-			#videos = game_object.videos()
+			game[0]["fields"]["images"] = [image.link for image in game_object.images()]
+			game[0]["fields"]["videos"] = [video.link for video in game_object.videos()]
 			response = dumps(game)
 			response_code = 200
 		except:
 			response_code = 404
+			raise
 	elif(request.method == 'PUT'):
 		try:
 			game_object = Game.objects.get(pk =int(game_id))
@@ -99,26 +99,18 @@ def api_games_id(request, game_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_games_people(request, game_id):
-	response = ""
 	response_code = 400
 	try:
-		people_dictionary = Game.objects.get(pk = int(game_id)).values('people')[0]
-		person_id = people_dictionary.get('people')
-		if person_id is not None:
-			response = serializers.serialize("json", Person.objects.get(pk = int(person_id))) 
+		response = serializers.serialize("json", Game.objects.get(pk = int(game_id)).people.all(), fields=("name"))
 		response_code = 200
 	except: 
 		response_code = 404
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_games_companies(request, game_id):
-	response = ""
 	response_code = 400
 	try:
-		company_dictionary = Game.objects.get(pk = int(game_id)).values('company')[0]
-		company_id = company_dictionary.get('company')
-		if company_id is not None:
-			response = serializers.serialize("json", Company.objects.get(pk = int(company_id)))
+		response = serializers.serialize("json", [Game.objects.get(pk = int(game_id)).company], fields=("name"))
 		response_code = 200
 	except:
 		response_code = 404	
@@ -130,7 +122,7 @@ def api_people(request):
 	response_code = 400
 	new_person_saved = False
 	if(request.method == 'GET'):
-		response = serializers.serialize("json", Person.objects.all())
+		response = serializers.serialize("json", Person.objects.all(), fields=("name"))
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
@@ -188,25 +180,18 @@ def api_people_id(request, people_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_people_games(request, people_id):
-	response = ""
 	response_code = 400
 	try:
-		games = Game.objects.get(people = people_id)
-		if games is not None:
-			response = serializers.serialize("json", games)
+		response = serializers.serialize("json", Game.objects.filter(people = people_id).all(), fields=("name"))
 		response_code = 200
 	except:
-		response_code = 404 
+		response_code = 404
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_people_companies(request, people_id):
-	response = ""
 	response_code = 400
 	try:
-		person_dictionary = Person.objects.get(pk = int(people_id)).values('companies')[0]
-		company_id = person_dictionary.get('companies')
-		if company_id is not None:
-			response = serializers.serialize("json", Company.objects.get(pk = int(company_id))) 
+		response = serializers.serialize("json", Person.objects.get(pk = int(people_id)).companies.all(), fields=("name"))
 		response_code = 200
 	except:
 		response_code = 404
@@ -217,7 +202,7 @@ def api_companies(request):
 	response = ""
 	response_code = 400
 	if(request.method == 'GET'):
-		response = serializers.serialize("json",Company.objects.all())
+		response = serializers.serialize("json",Company.objects.all(), fields=("name"))
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
@@ -264,24 +249,20 @@ def api_companies_id(request, company_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_companies_games(request, company_id):
-	response = ""
 	response_code = 400
 	try:
-		games = Game.objects.get(company = company_id)
-		if games is not None:
-			response = serializers.serialize("json", games) 
+		response = serializers.serialize("json", Game.objects.filter(company = company_id), fields=("name"))
 		response_code = 200
 	except:
 		response_code = 404
+		raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_companies_people(request, company_id):
 	response = ""
 	response_code = 400
 	try:
-		people = Person.objects.get(companies = company_id)
-		if people is not None:
-			response = serializers.serialize("json", people) 
+		response = serializers.serialize("json", Person.objects.filter(companies = company_id), fields=("name"))
 		response_code = 200
 	except:
 		response_code = 404

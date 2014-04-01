@@ -64,12 +64,10 @@ class Game(models.Model):
 	gamefaq = models.URLField()
 
 	def images(self):
-		results = Images(other_id = self.id, other_type = 'GM')
-		return results.objects
+		return Images.objects.filter(other_id = self.id, other_type = 'GM')
 
 	def videos(self):
-		results = Videos(other_id = self.id, other_type = 'GM')
-		return results.objects
+		return Videos.objects.filter(other_id = self.id, other_type = 'GM')
 
 class Person(models.Model):
 	"""
@@ -78,20 +76,16 @@ class Person(models.Model):
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=25)
 	DOB = models.DateTimeField('date born')
-	# title = models.CharField(max_length=25)
-	# jobs = models.ManyToManyField('Job')
+	twitter = models.CharField(max_length=50)
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
 	companies = models.ManyToManyField('Company')
 	# games = models.ManyToMany(Game)
 	
 	def images(self):
-		results = Images(other_id = self.id, other_type = 'PPL')
-		return results.objects
-
+		return Images.objects.filter(other_id = self.id, other_type = 'PPL')
 	def videos(self):
-		results = Videos(other_id = self.id, other_type = 'PPL')
-		return results.objects
+		return Videos.objects.filter(other_id = self.id, other_type = 'PPL')
 
 class Company(models.Model):
 	"""
@@ -109,8 +103,7 @@ class Company(models.Model):
 	# people = models.ManyToMany(Person)
 
 	def images(self):
-		results = Images(other_id = self.id, other_type = 'CP')
-		return results.objects
+		return Images.objects.filter(other_id = self.id, other_type = 'CP')
 
 	def videos(self):
-		return QuerySet.none().objects
+		return Videos.objects.filter(other_id = self.id, other_type = 'CP')

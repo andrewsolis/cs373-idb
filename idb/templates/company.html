@@ -33,12 +33,18 @@
 	<div id="companies" class="col-md-4"  style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >People</h3></li>
+			{% for item in people %}
+				<li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</div>
 
 	<div id="people" class="col-md-4" style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >Games</h3></li>
+			{% for item in games %}
+				<li><a href="/games/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</div>
 </div>

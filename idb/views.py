@@ -24,7 +24,19 @@ def games_id(request, id):
 		genres = genres + genre + ", "
 	content['genre'] = genres[:-2]
 	game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
+	content['images'] = content['images'][0]
+
+	company_content = api_games_companies(request, id)
+	company_content = serializers.deserialize("json", company_content.content)
+	game_content[0]["fields"]["company"] = list(company_content)[0]
+	
+	people_content = api_games_people(request, id)
+	people_content = serializers.deserialize("json", people_content.content)
+	game_content[0]["fields"]["people"] = list(people_content)
+	
 	return render_to_response('game.html', content)
+	# return HttpResponse(content["images"], content_type="application/json")
+
 
 def games_people(request, id):
 	return HttpResponse([], content_type="application/json")
@@ -42,7 +54,18 @@ def people_id(request, id):
 	person_content = json.loads(person.content.decode("utf-8"))
 	content = person_content[0]["fields"]
 	person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
+	
+	company_content = api_people_companies(request, id)
+	company_content = serializers.deserialize("json", company_content.content)
+	person_content[0]["fields"]["companies"] = list(company_content)
+
+	game_content = api_people_games(request, id)
+	game_content = serializers.deserialize("json", game_content.content)
+	person_content[0]["fields"]["games"] = list(game_content)
+
 	return render_to_response('person.html', content)
+	# return HttpResponse(content["companies"], content_type="application/json")
+
 
 def people_games(request, id):
 	return HttpResponse([], content_type="application/json")
@@ -62,6 +85,14 @@ def companies_id(request, id):
 	company_content = json.loads(company.content.decode("utf-8"))
 	content = company_content[0]["fields"]
 	company_content[0]["fields"]["founded"] = company_content[0]["fields"]["founded"][:10]
+	
+	people_content = api_companies_people(request, id)
+	people_content = serializers.deserialize("json", people_content.content)
+	company_content[0]["fields"]["people"] = list(people_content)
+
+	game_content = api_companies_games(request, id)
+	game_content = serializers.deserialize("json", game_content.content)
+	company_content[0]["fields"]["games"] = list(game_content)
 	return render_to_response('company.html', content)
 
 def companies_games(request, id):

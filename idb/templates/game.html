@@ -5,7 +5,7 @@
 
 <style type="text/css">
 		html,body {
-			/*background: url("http://upload.wikimedia.org/wikipedia/en/4/44/Crash_Bandicoot_Cover.png") repeat center center fixed;*/
+			background: url("{{images}}") repeat center center fixed;
 		}
 	</style>
 <h1 style="color: white; text-align: center">
@@ -31,13 +31,17 @@
 
 	<div id="companies" class="col-md-4"  style="text-align: left;">
 		<ul style="list-style-type: none">
-			<li><h3 >Companies</h3></li>
+			<li><h3>Companies</h3></li>
+			<li><a href="/companies/{{company.object.pk}}/">{{ company.object.name }}</a></li>
 		</ul>
 	</div>
 
 	<div id="people" class="col-md-4" style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >People</h3></li>
+			{% for item in people %}
+			<li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+		{% endfor %}
 		</ul>
 	</div>
 </div>
