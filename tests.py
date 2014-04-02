@@ -5,20 +5,38 @@ from json import dumps
 from urllib.request import Request, urlopen
 from ast import literal_eval
 
-machine_name = "oh-henry"
-port = "5009"
+machine_name = "salt-water-taffy"
+port = "7050"
 endpoint = "http://" + machine_name + ":" + port + "/api/"
 
+#game IO
 game_example = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid", "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"], "people": [1], "release_date": "1986-08-06T00:00:00Z", "system": "NES", "copies": 273000, "gamefaq": "http://www.gamefaqs.com/nes/519689-metroid", "synopsis": "description for metroid", "videos": ["www.youtube.com/embed/WT4pW6n7-rg"], "genre": ["Side Scroller"], "company": 1}}]
-full_game_list = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}, {"pk": 2, "model": "videogames.game", "fields": {"name": "Sonic the Hedgehog"}}, {"pk": 3, "model": "videogames.game", "fields": {"name": "Crash Bandicoot"}}, {"pk": 4, "model": "videogames.game", "fields": {"name": "Super Mario Bros. 3"}}, {"pk": 5, "model": "videogames.game", "fields": {"name": "Bomberman"}}, {"pk": 6, "model": "videogames.game", "fields": {"name": "Super Street Fighter II"}}, {"pk": 7, "model": "videogames.game", "fields": {"name": "The Legend of Zelda: A Link to the Past"}}, {"pk": 8, "model": "videogames.game", "fields": {"name": "Donkey Kong Country"}}, {"pk": 9, "model": "videogames.game", "fields": {"name": "Mortal Kombat II"}}]
+full_game_list = [{'pk': 1, 'model': 'videogames.game', 'fields': {'name': 'Metroid'}}, {'pk': 2, 'model': 'videogames.game', 'fields': {'name': 'Sonic the Hedgehog'}}, {'pk': 3, 'model': 'videogames.game', 'fields': {'name': 'Crash Bandicoot'}}, {'pk': 4, 'model': 'videogames.game', 'fields': {'name': 'Super Mario Bros. 3'}}, {'pk': 5, 'model': 'videogames.game', 'fields': {'name': 'Bomberman'}}, {'pk': 6, 'model': 'videogames.game', 'fields': {'name': 'Super Street Fighter II'}}, {'pk': 7, 'model': 'videogames.game', 'fields': {'name': 'The Legend of Zelda: A Link to the Past'}}, {'pk': 8, 'model': 'videogames.game', 'fields': {'name': 'Donkey Kong Country'}}, {'pk': 9, 'model': 'videogames.game', 'fields': {'name': 'Mortal Kombat II'}}, {'pk': 10, 'model': 'videogames.game', 'fields': {'name': "John Madden Football '92"}}, {'pk': 11, 'model': 'videogames.game', 'fields': {'name': 'Final Fantasy'}}, {'pk': 12, 'model': 'videogames.game', 'fields': {'name': 'The Lion King'}}]
 
+#intersections
+game_company = [{"pk": 1, "model": "videogames.company", "fields": {"name": "Nintendo"}}]
+game_people = [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto"}}]
+
+
+#people IO
 people_example = [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto", "videos": ["https://www.youtube.com/watch?v=eBuWOKsK2JE"], "DOB": "1959-07-23T00:00:00Z", "residence": "Kyoto, Japan", "twitter": "", "companies": [1], "images": ["http://upload.wikimedia.org/wikipedia/commons/3/3d/Yoshio_Sakamoto_-_Game_companys_Conference_2010_-_Day_3_%282%29_cropped.jpg"], "description": "description for Yoshio"}}]
-full_people_list = [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto"}}, {"pk": 2, "model": "videogames.person", "fields": {"name": "Naoto Oshima"}}, {"pk": 3, "model": "videogames.person", "fields": {"name": "Andy Gavin"}}, {"pk": 4, "model": "videogames.person", "fields": {"name": "Shigeru Miyamoto"}}, {"pk": 5, "model": "videogames.person", "fields": {"name": "Takahashi"}}, {"pk": 6, "model": "videogames.person", "fields": {"name": "Kenzo Tsujimoto"}}, {"pk": 7, "model": "videogames.person", "fields": {"name": "Daniel Owsen"}}, {"pk": 8, "model": "videogames.person", "fields": {"name": "Ed Boon"}}]
+full_people_list = [{'pk': 1, 'model': 'videogames.person', 'fields': {'name': 'Yoshio Sakamoto'}}, {'pk': 2, 'model': 'videogames.person', 'fields': {'name': 'Naoto Oshima'}}, {'pk': 3, 'model': 'videogames.person', 'fields': {'name': 'Andy Gavin'}}, {'pk': 4, 'model': 'videogames.person', 'fields': {'name': 'Shigeru Miyamoto'}}, {'pk': 5, 'model': 'videogames.person', 'fields': {'name': 'Takahashi'}}, {'pk': 6, 'model': 'videogames.person', 'fields': {'name': 'Kenzo Tsujimoto'}}, {'pk': 7, 'model': 'videogames.person', 'fields': {'name': 'Daniel Owsen'}}, {'pk': 8, 'model': 'videogames.person', 'fields': {'name': 'Ed Boon'}}, {'pk': 9, 'model': 'videogames.person', 'fields': {'name': 'Nasir Gebelli'}}, {'pk': 10, 'model': 'videogames.person', 'fields': {'name': 'Frank Klepacki'}}, {'pk': 11, 'model': 'videogames.person', 'fields': {'name': 'John Madden'}}]
 
+
+#intersections
+people_game = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}]
+people_company = [{"pk": 1, "model": "videogames.company", "fields": {"name": "Nintendo"}}]
+
+#company IO
 company_example = [{"pk": 1, "model": "videogames.company", "fields": {"mapimage": "http://goo.gl/maps/1KSBf", "description": "description for nintendo", "webpage": "http://www.nintendo.com/", "founded": "1889-01-01T00:00:00Z", "location": "Kyoto, Japan", "images": ["http://ugrgaming.com/wp-content/uploads/2013/01/Nintendo-Logo.jpg"], "name": "Nintendo"}}]
 full_company_list = [{"pk": 1, "model": "videogames.company", "fields": {"name": "Nintendo"}}, {"pk": 2, "model": "videogames.company", "fields": {"name": "Sega"}}, {"pk": 3, "model": "videogames.company", "fields": {"name": "Naughty Dog"}}, {"pk": 4, "model": "videogames.company", "fields": {"name": "Hudson Soft"}}, {"pk": 5, "model": "videogames.company", "fields": {"name": "Capcom"}}, {"pk": 6, "model": "videogames.company", "fields": {"name": "Rare"}}, {"pk": 7, "model": "videogames.company", "fields": {"name": "Midway"}}, {"pk": 8, "model": "videogames.company", "fields": {"name": "Electronic Arts"}}, {"pk": 9, "model": "videogames.company", "fields": {"name": "Square"}}, {"pk": 10, "model": "videogames.company", "fields": {"name": "Westwood Studios"}}]
 company_added = {"mapimage": "http://goo.gl/maps/1KSBf", "description": "description for nintendo", "webpage": "http://www.nintendo.com/", "founded": "1889-01-01T00:00:00Z", "location": "Kyoto, Japan", "images": ["http://work.com"], "name": "Mitchendo"}
 full_company_added = [{"pk": 11, "model": "videogames.company", "fields": {"mapimage": "http://goo.gl/maps/1KSBf", "description": "description for nintendo", "webpage": "http://www.nintendo.com/", "founded": "1889-01-01T00:00:00Z", "location": "Kyoto, Japan", "images": ["http://work.com"], "name": "Mitchendo"}}]
+
+#intersections
+company_game = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}, {"pk": 4, "model": "videogames.game", "fields": {"name": "Super Mario Bros. 3"}}, {"pk": 7, "model": "videogames.game", "fields": {"name": "The Legend of Zelda: A Link to the Past"}}]
+company_people = [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto"}}, {"pk": 4, "model": "videogames.person", "fields": {"name": "Shigeru Miyamoto"}}]
+
 
 no_content = b''
 
@@ -30,13 +48,11 @@ class TestGames (unittest.TestCase):
     
     def test_list_all_games(self):
         
-        request = Request(endpoint + "games")
+        request = Request(endpoint + "games/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
         self.assertTrue(response_body == full_game_list)
         self.assertTrue(response.getcode() == 200)
-        
-
 
 #     def test_add_game(self):
 #         values = dumps(game_example).encode('utf-8')
@@ -78,14 +94,14 @@ class TestGames (unittest.TestCase):
         request = Request(endpoint + "games/1/companies/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.company", "fields": {"name": "Nintendo"}}])
+        self.assertTrue(response_body == game_company)
         self.assertTrue(response.getcode() == 200)
         
     def test_list_people_by_game(self):
         request = Request(endpoint + "games/1/people/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto"}}])
+        self.assertTrue(response_body == game_people)
         self.assertTrue(response.getcode() == 200)
 
 class TestPeople(unittest.TestCase):
@@ -94,6 +110,7 @@ class TestPeople(unittest.TestCase):
         request = Request(endpoint + "people")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
+#        print(str(response_body))
         self.assertTrue(response_body == full_people_list)
         self.assertTrue(response.getcode() == 200)
 
@@ -136,14 +153,14 @@ class TestPeople(unittest.TestCase):
         request = Request(endpoint + "people/1/games/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}])
+        self.assertTrue(response_body == people_game)
         self.assertTrue(response.getcode() == 200)
 
     def test_list_companies_by_people(self):
         request = Request(endpoint + "people/1/companies/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.company", "fields": {"name": "Nintendo"}}])
+        self.assertTrue(response_body == people_company)
         self.assertTrue(response.getcode() == 200)
 
 class TestCompanies(unittest.TestCase):
@@ -202,14 +219,14 @@ class TestCompanies(unittest.TestCase):
         request = Request(endpoint + "companies/1/games/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}, {"pk": 4, "model": "videogames.game", "fields": {"name": "Super Mario Bros. 3"}}, {"pk": 7, "model": "videogames.game", "fields": {"name": "The Legend of Zelda: A Link to the Past"}}])
+        self.assertTrue(response_body == company_game)
         self.assertTrue(response.getcode() == 200)
 
     def test_list_people_by_company(self):
         request = Request(endpoint + "companies/1/people/")
         response = urlopen(request)
         response_body = literal_eval(response.read().decode('utf-8'))
-        self.assertTrue(response_body == [{"pk": 1, "model": "videogames.person", "fields": {"name": "Yoshio Sakamoto"}}, {"pk": 4, "model": "videogames.person", "fields": {"name": "Shigeru Miyamoto"}}])
+        self.assertTrue(response_body == company_people)
         self.assertTrue(response.getcode() == 200)
 
 print("tests.py")
