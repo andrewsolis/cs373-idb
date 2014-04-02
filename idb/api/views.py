@@ -33,7 +33,7 @@ def validate_person_data(request_data):
 def validate_game_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
 		raise
-	if len(request_data["people"]) == 0:
+	if (len(request_data["people"]) == 0):
 		raise
 	for person in request_data["people"]:
 		Person.objects.get(pk = int(person))

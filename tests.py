@@ -12,10 +12,10 @@ from json import dumps
 from ast import literal_eval
 from idb.api.views import *
 
-base_company_input = { "mapimage": "http:/map.com", "description": "description", "webpage": "http://company.com/", "founded": "1889-01-01T00:00:00Z", "location": "TX", "images": ["http://image.com"], "name": "Company" }
+base_company_input = {"mapimage": "http:/map.com", "description": "description", "webpage": "http://company.com/", "founded": "1889-01-01T00:00:00Z", "location": "TX", "images": ["http://image.com"], "name": "Company"}
 base_company = base_company_input.copy()
 base_company.pop("images")
-updated_company_input = { "mapimage": "http:/map2.com", "description": "description2", "webpage": "http://company2.com/", "founded": "2001-01-01T00:00:00Z", "location": "TX2", "images": ["http://image2.com"], "name": "Company2" }
+updated_company_input = {"mapimage": "http:/map2.com", "description": "description2", "webpage": "http://company2.com/", "founded": "2001-01-01T00:00:00Z", "location": "TX2", "images": ["http://image2.com"], "name": "Company2"}
 updated_company = updated_company_input.copy()
 updated_company.pop("images")
 
@@ -25,16 +25,14 @@ base_person.pop("images")
 base_person.pop("videos")
 base_person_companies = base_person.pop("companies")
 
-base_game_input = {"name": "Metroid", "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"], "people": [1], "release_date": "1986-08-06T00:00:00Z", "system": "NES", "copies": 273000, "gamefaq": "http://www.gamefaqs.com/nes/519689-metroid", "synopsis": "description for metroid", "videos": ["www.youtube.com/embed/WT4pW6n7-rg"], "genre": ["Side Scroller"], "company": 1}
-
 base_system = {"platform" : "NES"}
 base_genre = {"types" : "Side Scroller"}
 
-base_game = {"name": "Metroid", "release_date": "1986-08-06T00:00:00Z", "copies": 273000, "gamefaq": "http://www.gamefaqs.com/nes/519689-metroid", "synopsis": "description for metroid", "system": System.objects.get(pk=1), "company": Company.objects.get(pk=1)}
+base_game_input = {"name": "game", "images": ["http://image.com"], "people": [1], "release_date": "1986-08-06T00:00:00Z", "system": "NES", "copies": 273000, "gamefaq": "http://www.gamefaqs.com", "synopsis": "description", "videos": ["www.video.com"], "genre": ["Side Scroller"], "company": 1}
+base_game = {"name": "game", "release_date": "1986-08-06T00:00:00Z", "copies": 273000, "gamefaq": "http://www.gamefaqs.com", "synopsis": "description", "system": System.objects.get(pk=1), "company": Company.objects.get(pk=1)}
 base_game_people = [1]
-base_game_company = 1
-base_game_system = 1
 base_game_genre = [1]
+base_game_output = {"name": "game", "release_date": "1986-08-06T00:00:00Z", "copies": 273000, "gamefaq": "http://www.gamefaqs.com", "synopsis": "description", "system": 1, "company": 1, "people": [1], "genre": [1]}
 
 id_1 = {"id": 1}
 
@@ -43,7 +41,23 @@ id_1 = {"id": 1}
 # --------
 
 class TestGames (TestCase):
-    pass
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_POST_game(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        response_content = literal_eval(response.content.decode('utf-8'))
+        db_query = literal_eval(serializers.serialize("json",[Game.objects.get(pk = 1)]))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response_content, id_1)
+        self.assertEqual(db_query[0]["fields"], base_game_output)
 
 class TestPeople (TestCase):
     pass
