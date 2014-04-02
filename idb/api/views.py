@@ -151,7 +151,12 @@ def api_people_id(request, people_id):
 	response_code = 400
 	if(request.method == 'GET'):
 		try:
+			people_object = Person.objects.get(pk = int(people_id))
+			person = literal_eval(serializers.serialize("json",[people_object]))
+			person[0]["fields"]["images"] = [image.link for image in people_object.images()]
+			person[0]["fields"]["videos"] = [video.link for video in people_object.videos()]
 			response = serializers.serialize("json",[Person.objects.get(pk = int(people_id))])
+			response = dumps(person)
 			response_code = 200
 		except:
 			response_code = 404
