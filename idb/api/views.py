@@ -232,13 +232,12 @@ def api_companies(request):
 			new_company.save()
 			company_added = True
 			Images(link=image_link, other_id=new_company.pk, other_type='CP').save()
+			response = dumps({"id" : new_company.pk})
 			response_code = 201
 		except:
 			if company_added:
 				new_company.delete()
 			response_code = 400
-
-			raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 @csrf_exempt
