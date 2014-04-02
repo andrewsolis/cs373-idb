@@ -35,6 +35,8 @@ def api_games(request):
 	if(request.method == 'GET'):
 		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
 	elif(request.method == 'POST'):
+		#Images(link=request_data["images"][0], other_id=int(game_id), other_type='GM').save()
+		#Videos(link=request_data["videos"][0], other_id=int(game_id), other_type='GM').save()
 		try:
 			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
 			request_data = literal_eval(request.read().decode('utf-8'))
@@ -66,7 +68,7 @@ def api_games_id(request, game_id):
 			game[0]["fields"]["videos"] = [video.link for video in game_object.videos()]
 			response = dumps(game)
 			response_code = 200
-		except:
+		except:  
 			response_code = 404
 			raise
 	elif(request.method == 'PUT'):
@@ -83,16 +85,25 @@ def api_games_id(request, game_id):
 			game = dumps(game)
 			for deserialized_object in serializers.deserialize("json", game):
 				deserialized_object.save()
+			image_object = game_object.images()[0]
+			image_object.link = request_data["images"][0]
+			image_object.save()
+			video_object = game_object.videos()[0]
+			video_object.link = request_data["videos"][0]
+			video_object.save()
 			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
-			raise
 		except:
 			response_code = 400
-			raise
 	elif(request.method == 'DELETE'):
 		try:
-			Game.objects.get(pk = int(game_id)).delete()
+			game_object = Game.objects.get(pk = int(game_id))
+			for image in game_object.images():
+				image.delete()
+			for video in game_object.videos():
+				video.delete()
+			game_object.delete()
 			response_code = 204
 		except:
 			response_code = 404
