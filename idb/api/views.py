@@ -22,36 +22,63 @@ def validate_person_data(request_data):
 	if len(request_data["companies"]) == 0:
 		raise
 	for company in request_data["companies"]:
-		Company.objects.get(pk = int(company))	
-
+		Company.objects.get(pk = int(company))
 
 def validate_game_data(request_data):
-	raise
+	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
+		raise
+	if len(request_data["people"]) == 0:
+		raise
+	for person in request_data["people"]:
+		Person.objects.get(pk = int(person))
 
 @csrf_exempt
 def api_games(request):
 	response = ""
 	response_code = 400
+	new_game_saved = False
+	new_image_saved = False
 	if(request.method == 'GET'):
 		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
 		response_code = 200
 	elif(request.method == 'POST'):
-		#Images(link=request_data["images"][0], other_id=int(game_id), other_type='GM').save()
-		#Videos(link=request_data["videos"][0], other_id=int(game_id), other_type='GM').save()
 		try:
-			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
 			request_data = literal_eval(request.read().decode('utf-8'))
-			for k in request_data:
-				if k in game[0]["fields"]:
-					game[0]["fields"][k] = request_data[k]
-			game = dumps(game)
-			for deserialized_object in serializers.deserialize("json", game):
-				deserialized_object.save()
-				response_code = 204
+			# validates game and throws exception
+			validate_game_data(request_data)
+			people_list = request_data.pop("people")
+			image_link = request_data.pop("images")[0]
+			video_link = request_data.pop("videos")[0]
+			genre_list = request_data.pop("genre")
+			request_data["company"] = Company.objects.get(pk=int(request_data["company"]))
+			request_data["system"] = System.objects.get(platform=request_data["system"])
+			genre_list = [Genre.objects.get(types = genre).pk for genre in genre_list]
+			new_game = Game(**request_data)
+			new_game.save()
+			new_game_saved = True
+			for person in people_list:
+				new_game.people.add(int(person))
+			for genre in genre_list:
+				new_game.genre.add(genre)
+			new_image = Images(link=image_link, other_id=new_game.pk, other_type='GM').save()
+			new_image_saved = True
+			Videos(link=video_link, other_id=new_game.pk, other_type='GM').save()
+			response = dumps({"id" : new_game.pk})
+			response_code = 201
 		except ObjectDoesNotExist:
+			if new_game_saved:
+				new_game.delete()
+			if new_image_saved:
+				new_image.delete()
 			response_code = 404
+			raise
 		except:
+			if new_game_saved:
+				new_game.delete()
+			if new_image_saved:
+				new_image.delete()
 			response_code = 400
+			raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 @csrf_exempt
@@ -78,8 +105,7 @@ def api_games_id(request, game_id):
 			game = literal_eval(serializers.serialize("json",[game_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
 			request_data["system"] = game_object.system.pk
-			genre_list = request_data["genre"]
-			request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in genre_list]
+			request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in request_data["genre"]]
 			for k in request_data:
 				if k in game[0]["fields"]:
 					game[0]["fields"][k] = request_data[k]
@@ -142,13 +168,12 @@ def api_people(request):
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates person and throws exception
 			validate_person_data(request_data)
-			company_list = request_data["companies"]
-			request_data.pop("companies")
+			company_list = request_data.pop("companies")
 			image_link = request_data.pop("images")
 			video_link = request_data.pop("videos")
 			new_person = Person(**request_data)
-			new_person_saved = True
 			new_person.save()
+			new_person_saved = True
 			for company in company_list:
 				new_person.companies.add(int(company))
 			new_image = Images(link=image_link, other_id=new_person.pk, other_type='PPL').save()
@@ -161,8 +186,12 @@ def api_people(request):
 				new_person.delete()
 			if new_image_saved:
 				new_image.delete()
-			response_code = 400
+			response_code = 404
 		except:
+			if new_person_saved:
+				new_person.delete()
+			if new_image_saved:
+				new_image.delete()
 			response_code = 400
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
@@ -234,7 +263,7 @@ def api_people_companies(request, people_id):
 def api_companies(request):
 	response = ""
 	response_code = 400
-	company_added = False
+	new_company_saved = False
 	if(request.method == 'GET'):
 		response = serializers.serialize("json",Company.objects.all(), fields=("name"))
 		response_code = 200
@@ -246,12 +275,12 @@ def api_companies(request):
 			image_link = request_data.pop("images")
 			new_company = Company(**request_data)
 			new_company.save()
-			company_added = True
+			new_company_saved = True
 			Images(link=image_link, other_id=new_company.pk, other_type='CP').save()
 			response = dumps({"id" : new_company.pk})
 			response_code = 201
 		except:
-			if company_added:
+			if new_company_saved:
 				new_company.delete()
 			response_code = 400
 	return HttpResponse(response, content_type = "application/json", status = response_code)
