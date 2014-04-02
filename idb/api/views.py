@@ -34,6 +34,7 @@ def api_games(request):
 	response_code = 400
 	if(request.method == 'GET'):
 		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
+		response_code = 200
 	elif(request.method == 'POST'):
 		try:
 			game = literal_eval(serializers.serialize("json",[Game.objects.get(pk =int(game_id))]))
