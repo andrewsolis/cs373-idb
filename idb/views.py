@@ -13,7 +13,9 @@ def home(request):
 def games(request):
 	games_list = api_games(request)
 	result = serializers.deserialize("json", games_list.content)
+	result = list(result)
 	return render_to_response('cgp_index.html', {'items': result})
+	# return HttpResponse(type(result[0].object), content_type="application/json")
 
 def games_id(request, id):
 	game = api_games_id(request,id)
@@ -36,7 +38,6 @@ def games_id(request, id):
 	game_content[0]["fields"]["people"] = list(people_content)
 	
 	return render_to_response('game.html', content)
-	# return HttpResponse(content["images"], content_type="application/json")
 
 
 def games_people(request, id):
