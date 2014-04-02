@@ -5,7 +5,9 @@ from json import dumps
 from urllib.request import Request, urlopen
 from ast import literal_eval
 
-endpoint = "http://oh-henry:5009/api/"
+machine_name = "oh-henry"
+port = "5009"
+endpoint = "http://" + machine_name + ":" + port + "/api/"
 
 game_example = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid", "images": ["http://upload.wikimedia.org/wikipedia/en/5/5d/Metroid_boxart.jpg"], "people": [1], "release_date": "1986-08-06T00:00:00Z", "system": "NES", "copies": 273000, "gamefaq": "http://www.gamefaqs.com/nes/519689-metroid", "synopsis": "description for metroid", "videos": ["www.youtube.com/embed/WT4pW6n7-rg"], "genre": ["Side Scroller"], "company": 1}}]
 full_game_list = [{"pk": 1, "model": "videogames.game", "fields": {"name": "Metroid"}}, {"pk": 2, "model": "videogames.game", "fields": {"name": "Sonic the Hedgehog"}}, {"pk": 3, "model": "videogames.game", "fields": {"name": "Crash Bandicoot"}}, {"pk": 4, "model": "videogames.game", "fields": {"name": "Super Mario Bros. 3"}}, {"pk": 5, "model": "videogames.game", "fields": {"name": "Bomberman"}}, {"pk": 6, "model": "videogames.game", "fields": {"name": "Super Street Fighter II"}}, {"pk": 7, "model": "videogames.game", "fields": {"name": "The Legend of Zelda: A Link to the Past"}}, {"pk": 8, "model": "videogames.game", "fields": {"name": "Donkey Kong Country"}}, {"pk": 9, "model": "videogames.game", "fields": {"name": "Mortal Kombat II"}}]
