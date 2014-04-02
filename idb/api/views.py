@@ -218,6 +218,7 @@ def api_people_companies(request, people_id):
 def api_companies(request):
 	response = ""
 	response_code = 400
+	company_added = False
 	if(request.method == 'GET'):
 		response = serializers.serialize("json",Company.objects.all(), fields=("name"))
 		response_code = 200
@@ -226,10 +227,18 @@ def api_companies(request):
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates company and throws exception
 			validate_company_data(request_data)
-			Company(**request_data).save()
+			image_link = request_data.pop("images")
+			new_company = Company(**request_data)
+			new_company.save()
+			company_added = True
+			Images(link=image_link, other_id=new_company.pk, other_type='CP').save()
 			response_code = 201
 		except:
+			if company_added:
+				new_company.delete()
 			response_code = 400
+
+			raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 @csrf_exempt
@@ -247,7 +256,8 @@ def api_companies_id(request, company_id):
 			response_code = 404
 	elif(request.method == 'PUT'):
 		try:
-			company = literal_eval(serializers.serialize("json",[Company.objects.get(pk =int(company_id))]))
+			company_object = Company.objects.get(pk =int(company_id))
+			company = literal_eval(serializers.serialize("json",[company_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
 			for k in request_data:
 				if k in company[0]["fields"]:
@@ -255,14 +265,20 @@ def api_companies_id(request, company_id):
 			company = dumps(company)
 			for deserialized_object in serializers.deserialize("json", company):
 				deserialized_object.save()
-				response_code = 204
+			image_object = company_object.images()[0]
+			image_object.link = request_data["images"][0]
+			image_object.save()
+			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
 		except:
 			response_code = 400
 	elif(request.method == 'DELETE'):
 		try:
-			Company.objects.get(pk = int(company_id)).delete()
+			company_object = Company.objects.get(pk = int(company_id))
+			for image in company_object.images():
+				image.delete()
+			company_object.delete()
 			response_code = 204
 		except:
 			response_code = 404
