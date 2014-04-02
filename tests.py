@@ -36,10 +36,7 @@ base_game_company = 1
 base_game_system = 1
 base_game_genre = [1]
 
-
-
 id_1 = {"id": 1}
-id_2 = {"id": 2}
 
 # --------
 # Test API
