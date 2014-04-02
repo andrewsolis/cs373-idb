@@ -105,5 +105,3 @@ class Company(models.Model):
 	def images(self):
 		return Images.objects.filter(other_id = self.id, other_type = 'CP')
 
-	def videos(self):
-		return Videos.objects.filter(other_id = self.id, other_type = 'CP')
