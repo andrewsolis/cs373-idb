@@ -143,11 +143,16 @@ def api_people(request):
 			validate_person_data(request_data)
 			company_list = request_data["companies"]
 			request_data.pop("companies")
+			image_link = request_data.pop("images")
+			video_link = request_data.pop("videos")
 			new_person = Person(**request_data)
 			new_person_saved = True
 			new_person.save()
 			for company in company_list:
 				new_person.companies.add(int(company))
+			Images(link=image_link, other_id=new_person.pk, other_type='PPL').save()
+			Videos(link=video_link, other_id=new_person.pk, other_type='PPL').save()
+			response = dumps({"id" : new_person.pk})
 			response_code = 201
 		except ObjectDoesNotExist:
 			if new_person_saved:
@@ -174,7 +179,8 @@ def api_people_id(request, people_id):
 			response_code = 404
 	elif(request.method == 'PUT'):
 		try:
-			person = literal_eval(serializers.serialize("json",[Person.objects.get(pk =int(people_id))]))
+			person_object = Person.objects.get(pk =int(people_id))
+			person = literal_eval(serializers.serialize("json",[person_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
 			validate_person_data(request_data)
 			for k in request_data:
@@ -183,7 +189,13 @@ def api_people_id(request, people_id):
 			person = dumps(person)
 			for deserialized_object in serializers.deserialize("json", person): 
 				deserialized_object.save()
-				response_code = 204
+			image_object = person_object.images()[0]
+			image_object.link = request_data["images"][0]
+			image_object.save()
+			video_object = person_object.videos()[0]
+			video_object.link = request_data["videos"][0]
+			video_object.save()
+			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
 		except:
