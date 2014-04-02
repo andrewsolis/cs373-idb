@@ -133,6 +133,7 @@ def api_people(request):
 	response = ""
 	response_code = 400
 	new_person_saved = False
+	new_image_saved = False
 	if(request.method == 'GET'):
 		response = serializers.serialize("json", Person.objects.all(), fields=("name"))
 		response_code = 200
@@ -150,13 +151,16 @@ def api_people(request):
 			new_person.save()
 			for company in company_list:
 				new_person.companies.add(int(company))
-			Images(link=image_link, other_id=new_person.pk, other_type='PPL').save()
+			new_image = Images(link=image_link, other_id=new_person.pk, other_type='PPL').save()
+			new_image_saved = True
 			Videos(link=video_link, other_id=new_person.pk, other_type='PPL').save()
 			response = dumps({"id" : new_person.pk})
 			response_code = 201
 		except ObjectDoesNotExist:
 			if new_person_saved:
 				new_person.delete()
+			if new_image_saved:
+				new_image.delete()
 			response_code = 400
 		except:
 			response_code = 400
