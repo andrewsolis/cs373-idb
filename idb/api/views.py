@@ -15,6 +15,8 @@ def non_empty_string(string):
 def validate_company_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
 		raise
+	if (len(request_data["images"]) == 0):
+		raise
 
 def validate_person_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
@@ -23,6 +25,10 @@ def validate_person_data(request_data):
 		raise
 	for company in request_data["companies"]:
 		Company.objects.get(pk = int(company))
+	if (len(request_data["images"]) == 0):
+		raise
+	if (len(request_data["videos"]) == 0):
+		raise
 
 def validate_game_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
@@ -31,6 +37,10 @@ def validate_game_data(request_data):
 		raise
 	for person in request_data["people"]:
 		Person.objects.get(pk = int(person))
+	if (len(request_data["images"]) == 0):
+		raise
+	if (len(request_data["videos"]) == 0):
+		raise
 
 @csrf_exempt
 def api_games(request):
@@ -303,6 +313,8 @@ def api_companies_id(request, company_id):
 			company_object = Company.objects.get(pk =int(company_id))
 			company = literal_eval(serializers.serialize("json",[company_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
+			# validates company and throws exception
+			validate_company_data(request_data)
 			for k in request_data:
 				if k in company[0]["fields"]:
 					company[0]["fields"][k] = request_data[k]
