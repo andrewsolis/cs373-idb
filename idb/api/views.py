@@ -341,20 +341,26 @@ def api_companies_id(request, company_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_companies_games(request, company_id):
+	response = ""
 	response_code = 400
 	try:
-		response = serializers.serialize("json", Game.objects.filter(company = company_id), fields=("name"))
+		result = serializers.serialize("json", Game.objects.filter(company = company_id), fields=("name"))
+		if (result == "[]"):
+			raise
+		response = result
 		response_code = 200
 	except:
 		response_code = 404
-		raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_companies_people(request, company_id):
 	response = ""
 	response_code = 400
 	try:
-		response = serializers.serialize("json", Person.objects.filter(companies = company_id), fields=("name"))
+		result = serializers.serialize("json", Person.objects.filter(companies = company_id), fields=("name"))
+		if (result == "[]"):
+			raise
+		response = result
 		response_code = 200
 	except:
 		response_code = 404
