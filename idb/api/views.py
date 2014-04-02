@@ -226,7 +226,11 @@ def api_companies_id(request, company_id):
 	response_code = 400
 	if(request.method == 'GET'):
 		try:
-			response = serializers.serialize("json",[Company.objects.get(pk = int(company_id))])
+			company_object = Company.objects.get(pk = int(company_id))
+			company = literal_eval(serializers.serialize("json",[company_object]))
+			company[0]["fields"]["images"] = [image.link for image in company_object.images()]
+			company[0]["fields"]["videos"] = [video.link for video in company_object.videos()]
+			response = dumps(company)
 			response_code = 200
 		except:
 			response_code = 404
