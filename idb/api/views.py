@@ -34,6 +34,7 @@ def api_games(request):
 	response_code = 400
 	if(request.method == 'GET'):
 		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
+		response_code = 200
 	elif(request.method == 'POST'):
 		#Images(link=request_data["images"][0], other_id=int(game_id), other_type='GM').save()
 		#Videos(link=request_data["videos"][0], other_id=int(game_id), other_type='GM').save()
@@ -162,7 +163,12 @@ def api_people_id(request, people_id):
 	response_code = 400
 	if(request.method == 'GET'):
 		try:
+			people_object = Person.objects.get(pk = int(people_id))
+			person = literal_eval(serializers.serialize("json",[people_object]))
+			person[0]["fields"]["images"] = [image.link for image in people_object.images()]
+			person[0]["fields"]["videos"] = [video.link for video in people_object.videos()]
 			response = serializers.serialize("json",[Person.objects.get(pk = int(people_id))])
+			response = dumps(person)
 			response_code = 200
 		except:
 			response_code = 404
@@ -232,7 +238,11 @@ def api_companies_id(request, company_id):
 	response_code = 400
 	if(request.method == 'GET'):
 		try:
-			response = serializers.serialize("json",[Company.objects.get(pk = int(company_id))])
+			company_object = Company.objects.get(pk = int(company_id))
+			company = literal_eval(serializers.serialize("json",[company_object]))
+			company[0]["fields"]["images"] = [image.link for image in company_object.images()]
+			company[0]["fields"]["videos"] = [video.link for video in company_object.videos()]
+			response = dumps(company)
 			response_code = 200
 		except:
 			response_code = 404

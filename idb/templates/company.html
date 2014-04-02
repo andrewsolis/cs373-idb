@@ -9,12 +9,12 @@
 			background-size: 400px auto;*/
 		}
 	</style>
-
-<div class="row">
-	<h1 style="color: white; text-align: center">
+<h1 style="color: white; text-align: center">
 	{{ name }}
 </h1>
-	<div id="attributes" class="col-md-4" style="text-align: center;">
+<div class="row col-md-offset-2">
+	
+	<div id="attributes" class="col-md-4" style="text-align: left;">
 		
 		<ul style="list-style-type: none;">
 			<li><h3 >Attributes</h3></li>
@@ -30,17 +30,31 @@
 		</ul>
 	</div>
 
-	<div id="companies" class="col-md-4"  style="text-align: center;">
+	<div id="companies" class="col-md-4"  style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >People</h3></li>
+			{% for item in people %}
+				<li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</div>
 
-	<div id="people" class="col-md-4" style="text-align: center;">
+	<div id="people" class="col-md-4" style="text-align: left;">
 		<ul style="list-style-type: none">
 			<li><h3 >Games</h3></li>
+			{% for item in games %}
+				<li><a href="/games/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</div>
 </div>
+
+<div class="row">
+	<div class="" style="text-align: center">
+		<a href="https://twitter.com/twitterapi" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @twitterapi</a>
+	</div>
+</div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 {% endblock %}

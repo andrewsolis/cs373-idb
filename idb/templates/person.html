@@ -5,17 +5,18 @@
 
 <style type="text/css">
 		html,body {
-			/*background: url("http://www.gamestm.co.uk/wp-content/uploads/2010/09/Yoshio-Sakamoto.jpg")  repeat top center fixed;*/
+			background: url("{{images}}")  repeat top center fixed;
 		}
 	</style>
-
-<div class="row">
-	<h1 style="color: white; text-align: center">
+<h1 style="color: white; text-align: center">
 	{{ name }}
 </h1>
-	<div id="attributes" class="col-md-4" style="text-align: center;">
+<div class="row col-md-offset-2">
+	
+	<div id="attributes" class="col-md-4" style="text-align: left;">
 		
 		<ul style="list-style-type: none;">
+			<li><h3 >Person</h3></li>
 			<li><h3> Profile </h3></li>
 			<li>DOB: {{ DOB }}</li>
 			<li>residence: {{ residence }}</li>
@@ -30,16 +31,16 @@
 		</ul>
 	</div>
 
-	<div id="companies" class="col-md-4"  style="text-align: center;">
+	<div id="companies" class="col-md-4"  style="text-align: left;">
 		<ul style="list-style-type: none">
-			<li><h3 >Companies</h3></li>
+	 		<li><h3 >Companies</h3></li>
 			{% for item in companies %}
 				<li><a href="/companies/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
 			{% endfor %}
 		</ul>
 	</div>
 
-	<div id="game" class="col-md-4" style="text-align: center;">
+	<div id="game" class="col-md-4" style="text-align: left;">
 		<ul style="list-style-type: none">
  			<li><h3 >Games</h3></li>
  			{% for item in games %}
@@ -47,6 +48,7 @@
 			{% endfor %}
 		</ul>
 	</div>
+</div> 
 </div>
 
 {% endblock %}
