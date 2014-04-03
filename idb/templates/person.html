@@ -55,14 +55,18 @@
 		<iframe style="margin: 0 auto" width="560" height="315" src="//{{videos}}" frameborder="0" allowfullscreen></iframe>
 	</div>
 </div>
+</br>
 
-<div class="row">
-	<div class="" style="text-align: center">
-		<a href="https://twitter.com/twitterapi" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @twitterapi</a>
+{% if twitter %}
+
+	<div class="row">
+		<div class="" style="text-align: center">
+			<a href="https://twitter.com{{twitter}}" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @twitterapi</a>
+		</div>
 	</div>
-</div>
 
 
 
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endif %}
 {% endblock %}

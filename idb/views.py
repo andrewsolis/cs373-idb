@@ -61,6 +61,7 @@ def people_id(request, id):
 		content['images'] = content['images'][0]
 	if len(content['videos']) != 0:
 		content['videos'] = content['videos'][0]
+	content['twitter'] = person_content[0]["fields"]["twitter"]
 	person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
 	
 	company_content = api_people_companies(request, id)
