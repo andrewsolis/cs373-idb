@@ -81,14 +81,12 @@ def api_games(request):
 			if new_image_saved:
 				new_image.delete()
 			response_code = 404
-			raise
 		except:
 			if new_game_saved:
 				new_game.delete()
 			if new_image_saved:
 				new_image.delete()
 			response_code = 400
-			raise
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 @csrf_exempt
@@ -108,7 +106,6 @@ def api_games_id(request, game_id):
 			response_code = 200
 		except:  
 			response_code = 404
-			raise
 	elif(request.method == 'PUT'):
 		try:
 			game_object = Game.objects.get(pk =int(game_id))
