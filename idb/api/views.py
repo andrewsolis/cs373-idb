@@ -41,6 +41,8 @@ def validate_game_data(request_data):
 		raise
 	if (len(request_data["videos"]) == 0):
 		raise
+	if (len(request_data["genre"]) == 0):
+		raise
 
 @csrf_exempt
 def api_games(request):
