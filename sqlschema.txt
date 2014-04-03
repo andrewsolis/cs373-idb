@@ -1,0 +1,87 @@
+BEGIN;
+CREATE TABLE "videogames_media" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "link" varchar(200) NOT NULL,
+    "other_id" integer NOT NULL,
+    "other_type" varchar(25) NOT NULL
+)
+;
+CREATE TABLE "videogames_images" (
+    "media_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "videogames_media" ("id")
+)
+;
+CREATE TABLE "videogames_videos" (
+    "media_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "videogames_media" ("id")
+)
+;
+CREATE TABLE "videogames_genre" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "types" varchar(25) NOT NULL
+)
+;
+CREATE TABLE "videogames_system" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "platform" varchar(25) NOT NULL
+)
+;
+CREATE TABLE "videogames_game_people" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "game_id" integer NOT NULL,
+    "person_id" integer NOT NULL,
+    UNIQUE ("game_id", "person_id")
+)
+;
+CREATE TABLE "videogames_game_genre" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "game_id" integer NOT NULL,
+    "genre_id" integer NOT NULL REFERENCES "videogames_genre" ("id"),
+    UNIQUE ("game_id", "genre_id")
+)
+;
+CREATE TABLE "videogames_game" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(25) NOT NULL,
+    "system_id" integer NOT NULL REFERENCES "videogames_system" ("id"),
+    "synopsis" varchar(1000) NOT NULL,
+    "copies" integer NOT NULL,
+    "release_date" datetime NOT NULL,
+    "company_id" integer NOT NULL,
+    "gamefaq" varchar(200) NOT NULL
+)
+;
+CREATE TABLE "videogames_person_companies" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "person_id" integer NOT NULL,
+    "company_id" integer NOT NULL,
+    UNIQUE ("person_id", "company_id")
+)
+;
+CREATE TABLE "videogames_person" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(25) NOT NULL,
+    "DOB" datetime NOT NULL,
+    "twitter" varchar(50) NOT NULL,
+    "description" varchar(1000) NOT NULL,
+    "residence" varchar(50) NOT NULL
+)
+;
+CREATE TABLE "videogames_company" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "name" varchar(25) NOT NULL,
+    "founded" datetime NOT NULL,
+    "description" varchar(1000) NOT NULL,
+    "location" varchar(50) NOT NULL,
+    "mapimage" varchar(200) NOT NULL,
+    "webpage" varchar(200) NOT NULL
+)
+;
+CREATE INDEX "videogames_game_people_65e12249" ON "videogames_game_people" ("game_id");
+CREATE INDEX "videogames_game_people_16f39487" ON "videogames_game_people" ("person_id");
+CREATE INDEX "videogames_game_genre_65e12249" ON "videogames_game_genre" ("game_id");
+CREATE INDEX "videogames_game_genre_33e6008b" ON "videogames_game_genre" ("genre_id");
+CREATE INDEX "videogames_game_f81e80d8" ON "videogames_game" ("system_id");
+CREATE INDEX "videogames_game_0316dde1" ON "videogames_game" ("company_id");
+CREATE INDEX "videogames_person_companies_16f39487" ON "videogames_person_companies" ("person_id");
+CREATE INDEX "videogames_person_companies_0316dde1" ON "videogames_person_companies" ("company_id");
+
+COMMIT;
