@@ -156,6 +156,7 @@ def api_games_id(request, game_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_games_people(request, game_id):
+	response = ""
 	response_code = 400
 	try:
 		response = serializers.serialize("json", Game.objects.get(pk = int(game_id)).people.all(), fields=("name"))
@@ -165,6 +166,7 @@ def api_games_people(request, game_id):
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
 def api_games_companies(request, game_id):
+	response = ""
 	response_code = 400
 	try:
 		response = serializers.serialize("json", [Game.objects.get(pk = int(game_id)).company], fields=("name"))
