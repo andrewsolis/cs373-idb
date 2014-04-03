@@ -43,6 +43,14 @@ def validate_game_data(request_data):
 		raise
 	if (len(request_data["genre"]) == 0):
 		raise
+	if request_data["company"] is None:
+		raise
+	else:
+		Company.objects.get(pk = int(request_data["company"]))
+	if request_data["system"] is None:
+		raise
+	else:
+		System.objects.get(platform = request_data["system"])
 
 @csrf_exempt
 def api_games(request):
@@ -113,6 +121,8 @@ def api_games_id(request, game_id):
 			game_object = Game.objects.get(pk =int(game_id))
 			game = literal_eval(serializers.serialize("json",[game_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
+			# validates game and throws exception
+			validate_game_data(request_data)
 			request_data["system"] = game_object.system.pk
 			request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in request_data["genre"]]
 			for k in request_data:
