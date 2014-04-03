@@ -19,10 +19,16 @@ updated_company_input = {"mapimage": "http:/map2.com", "description": "descripti
 updated_company = updated_company_input.copy()
 updated_company.pop("images")
 
-base_person_input = {"name": "person", "videos": ["http://video.com"], "DOB": "1959-07-23T00:00:00Z", "residence": "TX", "twitter": "twitter", "companies": [1], "images": ["http://image.com"], "description": "description"}
+base_person_input =    {"name": "person", "videos": ["http://video.com"], "DOB": "1959-07-23T00:00:00Z", "residence": "TX", "twitter": "twitter", "companies": [1], "images": ["http://image.com"], "description": "description"}
+updated_person_input = {"name": "person2", "videos": ["http://video2.com"], "DOB": "2010-07-23T00:00:00Z", "residence": "TX2", "twitter": "twitter2", "companies": [1], "images": ["http://image2.com"], "description": "description2"}
+updated_person = updated_person_input.copy()
+updated_person.pop("images")
+updated_person.pop("videos")
+
 base_person = base_person_input.copy()
 base_person.pop("images")
 base_person.pop("videos")
+base_person_post = base_person.copy() 
 base_person_companies = base_person.pop("companies")
 
 base_system = {"platform" : "NES"}
@@ -332,7 +338,231 @@ class TestGames (TestCase):
 
 
 class TestPeople (TestCase):
-    pass
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_POST_person(self):
+        new_company = Company(**base_company).save()
+        request = self.factory.post('api/people/', base_person_input, content_type='application/json')
+        response = api_people(request)
+        response_content = literal_eval(response.content.decode('utf-8'))
+        db_query = literal_eval(serializers.serialize("json",[Person.objects.get(pk = 1)]))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response_content, id_1)
+        self.assertDictEqual(db_query[0]["fields"], base_person_post)
+
+    def test_POST_person_with_no_image_key(self):
+        new_company = Company(**base_company).save()
+        request = self.factory.post('api/people/', base_person_post, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_person_with_empty_image_key(self):
+        new_company = Company(**base_company).save()
+        person_data = base_person_input.copy()
+        person_data["images"] = []
+        request = self.factory.post('api/people/', base_person_post, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_person_with_no_name(self):
+        new_company = Company(**base_company).save()
+        person_data = base_person_input.copy()
+        person_data.pop("name")
+        request = self.factory.post('api/person/', person_data, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_person_with_empty_name(self):
+        new_company = Company(**base_company).save()
+        person_data = base_person_input.copy()
+        person_data["name"] = " "
+        request = self.factory.post('api/person/', person_data, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_person_with_no_company(self):
+        new_company = Company(**base_company).save()
+        person_data = base_person_input.copy()
+        person_data.pop("companies")
+        request = self.factory.post('api/person/', person_data, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_person_with_empty_company(self):
+        new_company = Company(**base_company).save()
+        person_data = base_person_input.copy()
+        person_data["companies"] = []
+        request = self.factory.post('api/person/', person_data, content_type='application/json')
+        response = api_people(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_get_all_people(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.get('api/person/', content_type='application/json')
+        response = api_people(request)
+        #response_content = response.content.decode('utf-8')
+        #shouldn't we do:
+        response_content = [{"pk": 1, "model": "videogames.person", "fields": {"name": "person"}}]
+        db_query = literal_eval(serializers.serialize("json",Person.objects.all(), fields=("name")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(db_query, response_content)
+
+    def test_PUT_person(self):
+        new_company = Company(**base_company).save()
+        request = self.factory.post('api/people/', base_person_input, content_type='application/json')
+        response = api_people(request)
+        request = self.factory.put('api/people/1/', updated_person_input, content_type='application/json')
+        response = api_people_id(request, '1')
+        response_content = response.content.decode('utf-8')
+        person_object = Person.objects.get(pk=1)
+        db_query = literal_eval(serializers.serialize("json",[person_object]))
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(db_query[0]["fields"], updated_person)
+        self.assertEqual(person_object.images()[0].link, updated_person_input["images"][0])
+
+    def test_PUT_person_with_bad_id(self):
+        request = self.factory.put('api/people/1/', updated_person_input, content_type='application/json')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_PUT_person_with_no_image_key(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.put('api/people/1/', updated_person, content_type='application/json')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_PUT_person_with_empty_image(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        person_data = base_person_input.copy()
+        person_data["images"] = []
+        request = self.factory.put('api/people/1/', person_data, content_type='application/json')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_PUT_person_with_no_name(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        person_data = base_person_input.copy()
+        person_data.pop("name")
+        request = self.factory.put('api/people/1/', person_data, content_type='application/json')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_PUT_person_with_empty_name(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.post('api/people/', base_person_input, content_type='application/json')
+        response = api_people(request)
+        person_data = base_person_input.copy()
+        person_data["name"] = " "
+        request = self.factory.put('api/people/1/', person_data, content_type='application/json')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_GET_people(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.get('api/people/1/')
+        response = api_people_id(request, '1')
+        person_object = Person.objects.get(pk=1)
+        db_query = literal_eval(serializers.serialize("json",[person_object]))
+        response_content = literal_eval(response.content.decode('utf-8'))
+        image_link = response_content[0]["fields"].pop("images")
+        video_link = response_content[0]["fields"].pop("videos")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(db_query, response_content)
+        self.assertEqual(len(image_link), 0)
+        self.assertEqual(len(video_link), 0)
+
+    def test_GET_with_bad_id(self):
+        request = self.factory.get('api/people/1/')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_DELETE_person(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.delete('api/people/1/')
+        response = api_people_id(request, '1')
+        self.assertEqual(len(Images.objects.filter(other_id = 1, other_type = 'CP')), 0)
+        self.assertEqual(len(Person.objects.filter(pk = 1)), 0)
+        self.assertEqual(response.status_code, 204)
+
+    def test_DELETE_with_bad_id(self):
+        request = self.factory.delete('api/people/1/')
+        response = api_people_id(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_GET_intersection_people_games(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        api_games(request)
+        request = self.factory.get('api/people/1/games/')
+        response = api_people_games(request, 1)
+        response_content = response.content.decode('utf-8')
+        db_query = serializers.serialize("json", Game.objects.filter(people = 1), fields=("name"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_content, db_query)
+
+    def test_GET_intersection_people_games_with_bad_id(self):
+        request = self.factory.get('api/people/1/games/')
+        response = api_people_games(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_GET_intersection_people_company(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        request = self.factory.get('api/people/1/companies/')
+        response = api_people_companies(request, 1)
+        response_content = response.content.decode('utf-8')
+        db_query = serializers.serialize("json", Company.objects.filter(person = 1), fields=("name"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_content, db_query)
+
+    def test_GET_intersection_people_companies_with_bad_id(self):
+        request = self.factory.get('api/people/1/companies/')
+        response = api_people_companies(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
 
 class TestCompany (TestCase):
     def setUp(self):

@@ -252,8 +252,12 @@ def api_people_id(request, people_id):
 
 def api_people_games(request, people_id):
 	response_code = 400
+	response = ""
 	try:
-		response = serializers.serialize("json", Game.objects.filter(people = people_id).all(), fields=("name"))
+		result = serializers.serialize("json", Game.objects.filter(people = people_id).all(), fields=("name"))
+		if (result == "[]"):
+				raise
+		response = result
 		response_code = 200
 	except:
 		response_code = 404
@@ -261,8 +265,12 @@ def api_people_games(request, people_id):
 
 def api_people_companies(request, people_id):
 	response_code = 400
+	response = ""
 	try:
-		response = serializers.serialize("json", Person.objects.get(pk = int(people_id)).companies.all(), fields=("name"))
+		result = serializers.serialize("json", Person.objects.get(pk = int(people_id)).companies.all(), fields=("name"))
+		if (result == "[]"):
+				raise
+		response = result
 		response_code = 200
 	except:
 		response_code = 404
