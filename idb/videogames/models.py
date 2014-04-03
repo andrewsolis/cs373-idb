@@ -53,7 +53,7 @@ class Game(models.Model):
 	"""
 	# name, id, system, release_date, genre, publisher, 
 	# developer, synopsis, copies_sold, images, videos, People, Companies.
-	name = models.CharField(max_length=25)
+	name = models.CharField(max_length=100)
 	system = models.ForeignKey('System')
 	genre = models.ManyToManyField('Genre')
 	synopsis = models.CharField(max_length=1000)
@@ -74,7 +74,7 @@ class Person(models.Model):
 	A store for holding info for a Person
 	"""
 	# name, id, DOB, location, job, description, images, Games, Companies
-	name = models.CharField(max_length=25)
+	name = models.CharField(max_length=100)
 	DOB = models.DateTimeField('date born')
 	twitter = models.CharField(max_length=50)
 	description = models.CharField(max_length=1000)
@@ -93,7 +93,7 @@ class Company(models.Model):
 	"""
 	# name, id, founded, location, kind, description, 
 	# images, maps, external_links, contact_info, Games. 
-	name = models.CharField(max_length=25)
+	name = models.CharField(max_length=100)
 	founded = models.DateTimeField('date founded')
 	description = models.CharField(max_length=1000)
 	location = models.CharField(max_length=50)
