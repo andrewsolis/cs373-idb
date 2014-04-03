@@ -28,6 +28,8 @@ def games_id(request, id):
 	game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
 	if len(content['images']) != 0:
 		content['images'] = content['images'][0]
+	if len(content['videos']) != 0:
+		content['videos'] = content['videos'][0]
 
 	company_content = api_games_companies(request, id)
 	company_content = serializers.deserialize("json", company_content.content)
@@ -57,6 +59,8 @@ def people_id(request, id):
 	content = person_content[0]["fields"]
 	if len(content['images']) != 0:
 		content['images'] = content['images'][0]
+	if len(content['videos']) != 0:
+		content['videos'] = content['videos'][0]
 	person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
 	
 	company_content = api_people_companies(request, id)
