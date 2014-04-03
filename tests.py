@@ -461,6 +461,85 @@ class TestGames (TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b'')
 
+    def test_GET_game(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('api/games/1/')
+        response = api_games_id(request, '1')
+        game_object = Game.objects.get(pk=1)
+        db_query = literal_eval(serializers.serialize("json",[game_object]))
+        response_content = literal_eval(response.content.decode('utf-8'))
+        image_link = response_content[0]["fields"].pop("images")
+        video_link = response_content[0]["fields"].pop("videos")
+        response_content[0]["fields"]["genre"] = [1]
+        response_content[0]["fields"]["system"] = 1
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(db_query, response_content)
+        self.assertEqual(game_object.images()[0].link, image_link[0])
+        self.assertEqual(game_object.videos()[0].link, video_link[0])
+
+    def test_GET_game_with_bad_id(self):
+        request = self.factory.get('api/games/1/')
+        response = api_companies_id(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_DELETE_games(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.delete('api/games/1/')
+        response = api_games_id(request, '1')
+        self.assertEqual(len(Images.objects.filter(other_id = 1, other_type = 'GM')), 0)
+        self.assertEqual(len(Images.objects.filter(other_id = 1, other_type = 'GM')), 0)
+        self.assertEqual(len(Game.objects.filter(pk = 1)), 0)
+        self.assertEqual(response.status_code, 204)
+
+    def test_DELETE_game_with_bad_id(self):
+        request = self.factory.delete('api/games/1/')
+        response = api_companies_id(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_GET_intersection_games_people(self):
+        setup_db_for_game()
+        new_game = Game(**base_game)
+        new_game.save()
+        new_game.genre.add(1)
+        new_game.people.add(1)
+        request = self.factory.get('api/games/1/people/')
+        response = api_games_people(request, 1)
+        response_content = response.content.decode('utf-8')
+        db_query = serializers.serialize("json", Game.objects.get(pk = 1).people.all(), fields=("name"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_content, db_query)
+
+    def test_GET_intersection_games_people_with_bad_id(self):
+        request = self.factory.get('api/games/1/people/')
+        response = api_games_people(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_GET_intersection_games_companies(self):
+        setup_db_for_game()
+        new_game = Game(**base_game)
+        new_game.save()
+        new_game.genre.add(1)
+        new_game.people.add(1)
+        request = self.factory.get('api/games/1/companies/')
+        response = api_games_companies(request, 1)
+        response_content = response.content.decode('utf-8')
+        db_query = serializers.serialize("json", [Game.objects.get(pk = 1).company], fields=("name"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_content, db_query)
+
+    def test_GET_intersection_games_companies_with_bad_id(self):
+        request = self.factory.get('api/games/1/companies/')
+        response = api_games_people(request, '1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
 class TestPeople (TestCase):
     def setUp(self):
         self.factory = RequestFactory()
@@ -852,7 +931,6 @@ class TestCompany (TestCase):
     def test_GET_intersection_company_games_with_bad_id(self):
         request = self.factory.get('api/companies/1/games/')
         response = api_companies_games(request, '1')
-        # print(response.content)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b'')
 
