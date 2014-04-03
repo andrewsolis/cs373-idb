@@ -311,6 +311,26 @@ class TestGames (TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b'')
 
+    def test_GET_all_games(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('api/games/')
+        response = api_games(request)
+        response_content = response.content.decode('utf-8')
+        db_query = serializers.serialize("json", Game.objects.all(), fields=("name"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(db_query, response_content)
+
+
+
 class TestPeople (TestCase):
     pass
 
