@@ -59,6 +59,258 @@ class TestGames (TestCase):
         self.assertEqual(response_content, id_1)
         self.assertEqual(db_query[0]["fields"], base_game_output)
 
+    def test_POST_game_with_no_image_key(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("images")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_image(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["images"] = []
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_name(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("name")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_name(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["name"] = " "
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_video(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("videos")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_video(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["videos"] = []
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_company(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("company")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_company(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["company"] = None
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_invalid_company(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["company"] = 2
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_people(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("people")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_people(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["people"] = []
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_invalid_people(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["people"] = [2]
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_genre(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("genre")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_genre(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["genre"] = []
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_invalid_genre(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["genre"] = [2]
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_no_system(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data.pop("system")
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_empty_system(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["system"] = None
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
+    def test_POST_game_with_invalid_system(self):
+        new_company = Company(**base_company).save()
+        new_person = Person(**base_person)
+        new_person.save()
+        new_person.companies.add(1)
+        System(**base_system).save()
+        Genre(**base_genre).save()
+        game_data = base_game_input.copy()
+        game_data["system"] = 3
+        request = self.factory.post('api/games/', game_data, content_type='application/json')
+        response = api_games(request)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b'')
+
 class TestPeople (TestCase):
     pass
 
