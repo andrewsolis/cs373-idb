@@ -95,7 +95,6 @@ class Company(models.Model):
 	# images, maps, external_links, contact_info, Games. 
 	name = models.CharField(max_length=100)
 	founded = models.DateTimeField('date founded')
-	twitter = models.CharField(max_length=200)
 	description = models.CharField(max_length=1000)
 	location = models.CharField(max_length=50)
 	mapimage = models.URLField()
