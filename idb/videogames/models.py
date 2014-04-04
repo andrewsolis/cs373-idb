@@ -76,7 +76,7 @@ class Person(models.Model):
 	# name, id, DOB, location, job, description, images, Games, Companies
 	name = models.CharField(max_length=100)
 	DOB = models.DateTimeField('date born')
-	twitter = models.CharField(max_length=50)
+	twitter = models.CharField(max_length=200)
 	description = models.CharField(max_length=1000)
 	residence = models.CharField(max_length=50)
 	companies = models.ManyToManyField('Company')
@@ -95,6 +95,7 @@ class Company(models.Model):
 	# images, maps, external_links, contact_info, Games. 
 	name = models.CharField(max_length=100)
 	founded = models.DateTimeField('date founded')
+	twitter = models.CharField(max_length=200)
 	description = models.CharField(max_length=1000)
 	location = models.CharField(max_length=50)
 	mapimage = models.URLField()
