@@ -1,8 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="content-section-a">
+    <style type="text/css">
+        body .intro-header {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            color: #f8f8f8;
+            margin-top: 50px;
+            background: url({{images}}) repeat-x;
+            background-size: contain;
+            text-align: center;
+            min-height: 300px;
+        }
+    </style>
+
+    <div class="content-section-a">
         <div class="container">
             <div class="row">
+                <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+                    <h2>{{name}}</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -10,6 +26,41 @@
     <div class="content-section-b">
         <div class="container">
             <div class="row">
+                <div class="col-md-3">
+                    <h3>Details</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <ul class="list-unstyled lead">
+                        <li>DOB: {{ DOB }}</li>
+                        <li>residence: {{ residence }}</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3>Description</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <p class ="lead">{{ description }}</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>Games</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <ul class="list-unstyled lead">
+                        {% for item in games %}
+                            <li><a href="/games/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3>Companies</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <ul class="list-unstyled lead">
+                        {% for item in companies %}
+                            <li><a href="/companies/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
