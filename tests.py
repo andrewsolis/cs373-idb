@@ -12,10 +12,10 @@ from json import dumps
 from ast import literal_eval
 from idb.api.views import *
 
-base_company_input = {"mapimage": "http:/map.com", "description": "description", "webpage": "http://company.com/", "founded": "1889-01-01T00:00:00Z", "location": "TX", "images": ["http://image.com"], "name": "Company"}
+base_company_input = {"mapimage": "http:/map.com", "description": "description", "twitter" : "twitter", "webpage": "http://company.com/", "founded": "1889-01-01T00:00:00Z", "location": "TX", "images": ["http://image.com"], "name": "Company"}
 base_company = base_company_input.copy()
 base_company.pop("images")
-updated_company_input = {"mapimage": "http:/map2.com", "description": "description2", "webpage": "http://company2.com/", "founded": "2001-01-01T00:00:00Z", "location": "TX2", "images": ["http://image2.com"], "name": "Company2"}
+updated_company_input = {"mapimage": "http:/map2.com", "description": "description2", "twitter" : "twitter", "webpage": "http://company2.com/", "founded": "2001-01-01T00:00:00Z", "location": "TX2", "images": ["http://image2.com"], "name": "Company2"}
 updated_company = updated_company_input.copy()
 updated_company.pop("images")
 

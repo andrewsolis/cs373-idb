@@ -73,7 +73,7 @@ def people_id(request, id):
 	person_content[0]["fields"]["games"] = list(game_content)
 
 	return render_to_response('person.html', content)
-	# return HttpResponse(content["companies"], content_type="application/json")
+	# return HttpResponse(game_content, content_type="application/json")
 
 
 def people_games(request, id):
