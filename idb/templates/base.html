@@ -1,89 +1,120 @@
-{% load staticfiles %}
+{%load staticfiles%}
 
-<html>
-  <head>
-    <link href="{% static 'bootstrap/css/bootstrap.css' %}"
-          rel="stylesheet" media="screen">
-    <!-- this code between <header> ... </header> -->
-	<link rel="stylesheet" href='/static/startup/Developer/flat-ui/bootstrap/css/bootstrap.css'>
-	<link rel="stylesheet" href='/static/startup/Developer/flat-ui/bootstrap/css/bootstrap-responsive.css'>
-	<link rel="stylesheet" href='/static/startup/Developer/flat-ui/css/flat-ui.css'>
-	<!-- Using only with Flat-UI (free)-->
-	<link rel="stylesheet" href='/static/startup/Developer/common-files/css/icon-font.css'>
-	<!-- end -->
-	<link rel="stylesheet" href='/static/startup/Developer/common-files/css/animations.css'>
-	<!-- this code directly before </body> -->
-	<!-- header -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-header/css/style.css'>
-	<!-- content -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-content/css/style.css'>
-	<!-- blog -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-blog/css/style.css'>
-	<!-- contacts -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-contacts/css/style.css'>
-	<!-- crew -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-crew/css/style.css'>
-	<!-- price -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-price/css/style.css'>
-	<!-- projects -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-projects/css/style.css'>
-	<!-- footer -->
-	<link rel="stylesheet" href='/static/startup/Developer/ui-kit/ui-kit-footer/css/style.css'>
-	<script src='/static/startup/Developer/common-files/js/jquery-1.10.2.min.js'></script>
-	<script src='/static/startup/Developer/flat-ui/js/bootstrap.min.js'></script>
-	<script src='/static/startup/Developer/common-files/js/jquery.scrollTo-1.4.3.1-min.js'></script>
-	<script src='/static/startup/Developer/common-files/js/modernizr.custom.js'></script>
-	<script src='/static/startup/Developer/common-files/js/page-transitions.js'></script>
-	<script src='/static/startup/Developer/common-files/js/easing.min.js'></script>
-	<script src='/static/startup/Developer/common-files/js/jquery.svg.js'></script>
-	<script src='/static/startup/Developer/common-files/js/jquery.svganim.js'></script>
-	<script src='/static/startup/Developer/common-files/js/jquery.parallax.min.js'></script>
-	<script src='/static/startup/Developer/common-files/js//static/startup-kit.js'></script>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  </head>
+    <title>Landing Page Template for Bootstrap</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
 
-  <body>
-  	<style>
-		html, body, h1,h2,h3,h4{
-			font-family: Helvetica;
+    <!-- Custom Google Web Font -->
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
-			}
-		html,body {
-			background: url("/static/images/bg.jpg") no-repeat center center fixed;
-		}
-	</style>
-	
-	  	<nav class="navbar navbar-pills navbar-default" role="navigation" style="height: 60px;background-color: rgba(176,176,176,1.0);">
-	  		<div class="container-fluid">
-	  			<h3 class="col-md-1" style="margin: 15 auto; float: left;"><a style="color: #" href="{% url 'home' %}"> RETROGAMES </a></h3>
+    <!-- Add custom CSS here -->
+    <link href="/static/css/landing-page.css" rel="stylesheet">
 
-	  			<div class="col-md-6" style="float: right;" id="">
-		  			<ul class="nav navbar-nav" style= "text-align: center;list-style: none; float: right; margin: 10px;">
-		  				<div class="row">
-			  				<li class="btn btn-primary" > <a style="color: #ffffff" href="{% url 'home' %}"> Home </a> </li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'people' %}"> People </a> </li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'games' %}"> Games </a></li>
-			  				<li class="btn btn-primary"><a style="color: #ffffff"href="{% url 'companies' %}"> Companies </a></li>
-		  				</div>
-		  			</ul>
-		  		</div>
-	  		</div>
-	  		
+</head>
 
-	  	</nav>
+<body>
 
-	  	<div class="" style="background-color: rgba(255,255,255,0.0); height: 400px; margin-top: -100px;">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'home' %}">Retro Games</a>
+            </div>
 
-		</div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'games' %}">Games</a>
+                    </li>
+                    <li><a href="{% url 'people' %}">People</a>
+                    </li>
+                    <li><a href="{% url 'companies' %}">Companies</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-		<div class="" style="background-color: rgba(176,176,176,1.0); height: 83%;overflow: hidden;margin-top: -50px;">
-			{% block content %}
-	    	{% endblock %}
-		</div>
-    
-    
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <div class="intro-header">
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    {% block content %}
+    {% endblock %}
+
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Connect to Start Bootstrap:</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                        <li><a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        </li>
+                        <li><a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        </li>
+                        <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="#home">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Your Company 2013. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+
 </body>
+
 </html>
