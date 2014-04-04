@@ -3,15 +3,18 @@
 {% block content %}
 <div class="content-section-a">
 	<div class="container">
-
 		<div class="row">
-        	<ul class="col-md-6 col-md-offset-5" style="list-style-type: none">
-	        	{% for item in items %}
-					<li><a href="{{ item.object.pk }}/"><h2> {{ item.object.name }} </h2></a></li>
-				{% endfor %}
-			</ul>
+        	<div class="col-md-6 col-md-offset-5 no_bullet">
+                <h2>List of {{ collections }}:</h2>
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                {% for item in items %}
+                    <p class="lead"><a href="{{ item.object.pk }}/">{{ item.object.name }}</a></p>
+		        {% endfor %}
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+            </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

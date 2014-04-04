@@ -14,8 +14,7 @@ def games(request):
 	games_list = api_games(request)
 	result = serializers.deserialize("json", games_list.content)
 	result = list(result)
-	return render_to_response('cgp_index.html', {'items': result})
-	# return HttpResponse(type(result[0].object), content_type="application/json")
+	return render_to_response('cgp_index.html', {'items': result, 'collection': 'Game', 'collections': 'Games'})
 
 def games_id(request, id):
 	game = api_games_id(request,id)
@@ -51,7 +50,7 @@ def games_companies(request, id):
 def people(request):
 	people_list = api_people(request)
 	result = serializers.deserialize("json", people_list.content)
-	return render_to_response('cgp_index.html', {'items': result})
+	return render_to_response('cgp_index.html', {'items': result, 'collection': 'People', 'collections': 'People'})
 
 def people_id(request, id):
 	person = api_people_id(request,id)
@@ -86,7 +85,7 @@ def people_companies(request, id):
 def companies(request):
 	companies_list = api_companies(request)
 	result = serializers.deserialize("json", companies_list.content)
-	return render_to_response('cgp_index.html', {'items': result})
+	return render_to_response('cgp_index.html', {'items': result, 'collection': 'Company', 'collections': 'Companies'})
 
 
 def companies_id(request, id):

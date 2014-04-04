@@ -45,6 +45,10 @@ body, h1, h2, h3, h4, h5, h6 {
 	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 
+.ul.no_bullet {
+	list-style-type: none;
+}
+
 @media (max-width: 767px) {
 	.intro-message {
 		padding-bottom: 15%;
