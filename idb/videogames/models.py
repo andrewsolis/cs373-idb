@@ -96,6 +96,7 @@ class Company(models.Model):
 	name = models.CharField(max_length=100)
 	founded = models.DateTimeField('date founded')
 	description = models.CharField(max_length=1000)
+	twitter = models.CharField(max_length=200)
 	location = models.CharField(max_length=50)
 	mapimage = models.URLField()
 	webpage = models.URLField()
