@@ -384,3 +384,16 @@ def api_companies_people(request, company_id):
 	except:
 		response_code = 404
 	return HttpResponse(response, content_type = "application/json", status = response_code)
+
+def api_genre(request):
+	response = ""
+	response_code = 200
+	response = serializers.serialize("json", Genre.objects.all())
+	return HttpResponse(response, content_type = "application/json", status = response_code)
+
+
+def api_system(request):
+	response = ""
+	response_code = 200
+	response = serializers.serialize("json", System.objects.all())
+	return HttpResponse(response, content_type = "application/json", status = response_code)
