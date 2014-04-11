@@ -139,20 +139,20 @@ def api_games_id(request, game_id):
 			for k in request_data:
 				if k in game[0]["fields"]:
 					game[0]["fields"][k] = request_data[k]
-			# validates game and throws exception
 			validate_game_data(game[0]["fields"])
-			validate_images(request_data)
-			validate_videos(request_data)
 			game = dumps(game)
 			for deserialized_object in serializers.deserialize("json", game):
 				deserialized_object.save()
-
-			image_object = game_object.images()[0]
-			image_object.link = request_data["images"][0]
-			image_object.save()
-			video_object = game_object.videos()[0]
-			video_object.link = request_data["videos"][0]
-			video_object.save()
+			if request_data.get("images") is not None:
+				validate_images(request_data)
+				image_object = game_object.images()[0]
+				image_object.link = request_data["images"][0]
+				image_object.save()
+			if request_data.get("videos") is not None:
+				validate_videos(request_data)
+				video_object = game_object.videos()[0]
+				video_object.link = request_data["videos"][0]
+				video_object.save()
 			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
@@ -406,7 +406,6 @@ def api_genre(request):
 	response_code = 200
 	response = serializers.serialize("json", Genre.objects.all())
 	return HttpResponse(response, content_type = "application/json", status = response_code)
-
 
 def api_system(request):
 	response = ""

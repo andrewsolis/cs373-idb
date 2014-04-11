@@ -263,17 +263,6 @@ class TestGames (TestCase):
         self.assertEqual(game_object.images()[0].link, updated_game_input["images"][0])
         self.assertEqual(game_object.videos()[0].link, updated_game_input["videos"][0])
 
-    def test_PUT_game_with_no_image(self):
-        setup_db_for_game()
-        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
-        response = api_games(request)
-        game_data = base_game_input.copy()
-        game_data.pop("images")
-        request = self.factory.put('api/games/1/', game_data, content_type='application/json')
-        response = api_games_id(request, 1)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.content, b'')
-
     def test_PUT_game_with_empty_image(self):
         setup_db_for_game()
         request = self.factory.post('api/games/', base_game_input, content_type='application/json')
@@ -291,17 +280,6 @@ class TestGames (TestCase):
         response = api_games(request)
         game_data = base_game_input.copy()
         game_data["name"] = []
-        request = self.factory.put('api/games/1/', game_data, content_type='application/json')
-        response = api_games_id(request, 1)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.content, b'')
-
-    def test_PUT_game_with_no_video(self):
-        setup_db_for_game()
-        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
-        response = api_games(request)
-        game_data = base_game_input.copy()
-        game_data.pop("videos")
         request = self.factory.put('api/games/1/', game_data, content_type='application/json')
         response = api_games_id(request, 1)
         self.assertEqual(response.status_code, 400)
