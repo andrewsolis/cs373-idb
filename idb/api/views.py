@@ -30,27 +30,36 @@ def validate_person_data(request_data):
 	if (len(request_data["videos"]) == 0):
 		raise
 
+def validate_images(request_data):
+	if (len(request_data["images"]) == 0):
+		raise
+	for image in request_data["images"]:
+		if not non_empty_string(image):
+			raise
+
+def validate_videos(request_data):
+	if (len(request_data["videos"]) == 0):
+		raise
+	for video in request_data["videos"]:
+		if not non_empty_string(video):
+			raise
+
 def validate_game_data(request_data):
+	# print(request_data)
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
 		raise
 	if (len(request_data["people"]) == 0):
 		raise
 	for person in request_data["people"]:
 		Person.objects.get(pk = int(person))
-	if (len(request_data["images"]) == 0):
-		raise
-	if (len(request_data["videos"]) == 0):
-		raise
 	if (len(request_data["genre"]) == 0):
 		raise
-	if request_data["company"] is None:
+	if request_data.get("company") is None:
 		raise
 	else:
 		Company.objects.get(pk = int(request_data["company"]))
-	if request_data["system"] is None:
+	if request_data.get("system") is None:
 		raise
-	else:
-		System.objects.get(platform = request_data["system"])
 
 @csrf_exempt
 def api_games(request):
@@ -66,13 +75,15 @@ def api_games(request):
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates game and throws exception
 			validate_game_data(request_data)
+			validate_images(request_data)
+			validate_videos(request_data)
 			people_list = request_data.pop("people")
 			image_link = request_data.pop("images")[0]
 			video_link = request_data.pop("videos")[0]
 			genre_list = request_data.pop("genre")
+			genre_list = [Genre.objects.get(types = genre).pk for genre in genre_list]
 			request_data["company"] = Company.objects.get(pk=int(request_data["company"]))
 			request_data["system"] = System.objects.get(platform=request_data["system"])
-			genre_list = [Genre.objects.get(types = genre).pk for genre in genre_list]
 			new_game = Game(**request_data)
 			new_game.save()
 			new_game_saved = True
@@ -118,19 +129,24 @@ def api_games_id(request, game_id):
 			response_code = 404
 	elif(request.method == 'PUT'):
 		try:
-			game_object = Game.objects.get(pk =int(game_id))
+			game_object = Game.objects.get(pk = int(game_id))
 			game = literal_eval(serializers.serialize("json",[game_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
-			# validates game and throws exception
-			validate_game_data(request_data)
-			request_data["system"] = game_object.system.pk
-			request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in request_data["genre"]]
+			if request_data.get("system") is not None:
+				request_data["system"] = System.objects.get(platform=request_data["system"]).pk
+			if request_data.get("genre") is not None:
+				request_data["genre"] = [Genre.objects.get(types = genre).pk for genre in request_data["genre"]]
 			for k in request_data:
 				if k in game[0]["fields"]:
 					game[0]["fields"][k] = request_data[k]
+			# validates game and throws exception
+			validate_game_data(game[0]["fields"])
+			validate_images(request_data)
+			validate_videos(request_data)
 			game = dumps(game)
 			for deserialized_object in serializers.deserialize("json", game):
 				deserialized_object.save()
+
 			image_object = game_object.images()[0]
 			image_object.link = request_data["images"][0]
 			image_object.save()
