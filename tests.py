@@ -393,14 +393,14 @@ class TestGames (TestCase):
         game_object = Game.objects.get(pk=1)
         db_query = literal_eval(serializers.serialize("json",[game_object]))
         response_content = literal_eval(response.content.decode('utf-8'))
-        image_link = response_content[0]["fields"].pop("images")
-        video_link = response_content[0]["fields"].pop("videos")
+        image_list = response_content[0]["fields"].pop("images")
+        video_list = response_content[0]["fields"].pop("videos")
         response_content[0]["fields"]["genre"] = [1]
         response_content[0]["fields"]["system"] = 1
         self.assertEqual(response.status_code, 200)
         self.assertEqual(db_query, response_content)
-        self.assertEqual(game_object.images()[0].link, image_link[0])
-        self.assertEqual(game_object.videos()[0].link, video_link[0])
+        self.assertEqual(game_object.images()[0].link, image_list[0])
+        self.assertEqual(game_object.videos()[0].link, video_list[0])
 
     def test_GET_game_with_bad_id(self):
         request = self.factory.get('api/games/1/')

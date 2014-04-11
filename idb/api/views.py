@@ -73,13 +73,12 @@ def api_games(request):
 	elif(request.method == 'POST'):
 		try:
 			request_data = literal_eval(request.read().decode('utf-8'))
-			# validates game and throws exception
 			validate_game_data(request_data)
 			validate_images(request_data)
 			validate_videos(request_data)
 			people_list = request_data.pop("people")
-			image_link = request_data.pop("images")[0]
-			video_link = request_data.pop("videos")[0]
+			image_list = request_data.pop("images")
+			video_list = request_data.pop("videos")
 			genre_list = request_data.pop("genre")
 			genre_list = [Genre.objects.get(types = genre).pk for genre in genre_list]
 			request_data["company"] = Company.objects.get(pk=int(request_data["company"]))
@@ -91,22 +90,19 @@ def api_games(request):
 				new_game.people.add(int(person))
 			for genre in genre_list:
 				new_game.genre.add(genre)
-			new_image = Images(link=image_link, other_id=new_game.pk, other_type='GM').save()
-			new_image_saved = True
-			Videos(link=video_link, other_id=new_game.pk, other_type='GM').save()
+			for image in image_list:
+				Images(link=image, other_id=new_game.pk, other_type='GM').save()
+			for video in video_list:
+				Videos(link=video, other_id=new_game.pk, other_type='GM').save()
 			response = dumps({"id" : new_game.pk})
 			response_code = 201
 		except ObjectDoesNotExist:
 			if new_game_saved:
 				new_game.delete()
-			if new_image_saved:
-				new_image.delete()
 			response_code = 404
 		except:
 			if new_game_saved:
 				new_game.delete()
-			if new_image_saved:
-				new_image.delete()
 			response_code = 400
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
@@ -140,19 +136,23 @@ def api_games_id(request, game_id):
 				if k in game[0]["fields"]:
 					game[0]["fields"][k] = request_data[k]
 			validate_game_data(game[0]["fields"])
+			if request_data.get("images") is not None:
+				validate_images(request_data)
+			if request_data.get("videos") is not None:
+				validate_videos(request_data)
 			game = dumps(game)
 			for deserialized_object in serializers.deserialize("json", game):
 				deserialized_object.save()
 			if request_data.get("images") is not None:
-				validate_images(request_data)
-				image_object = game_object.images()[0]
-				image_object.link = request_data["images"][0]
-				image_object.save()
+				for image in game_object.images():
+					image.delete()
+				for image in request_data["images"]:
+					Images(link=image, other_id=int(game_id), other_type='GM').save()
 			if request_data.get("videos") is not None:
-				validate_videos(request_data)
-				video_object = game_object.videos()[0]
-				video_object.link = request_data["videos"][0]
-				video_object.save()
+				for video in game_object.videos():
+					video.delete()
+				for video in request_data["videos"]:
+					Videos(link=video, other_id=int(game_id), other_type='GM').save()
 			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
