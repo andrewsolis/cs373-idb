@@ -562,16 +562,6 @@ class TestPeople (TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b'')
 
-    def test_PUT_person_with_no_image_key(self):
-        new_company = Company(**base_company).save()
-        new_person = Person(**base_person)
-        new_person.save()
-        new_person.companies.add(1)
-        request = self.factory.put('api/people/1/', updated_person, content_type='application/json')
-        response = api_people_id(request, '1')
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.content, b'')
-
     def test_PUT_person_with_empty_image(self):
         new_company = Company(**base_company).save()
         new_person = Person(**base_person)
@@ -584,13 +574,13 @@ class TestPeople (TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.content, b'')
 
-    def test_PUT_person_with_no_name(self):
+    def test_PUT_person_with_empty_video(self):
         new_company = Company(**base_company).save()
         new_person = Person(**base_person)
         new_person.save()
         new_person.companies.add(1)
         person_data = base_person_input.copy()
-        person_data.pop("name")
+        person_data["videos"] = []
         request = self.factory.put('api/people/1/', person_data, content_type='application/json')
         response = api_people_id(request, '1')
         self.assertEqual(response.status_code, 400)
@@ -766,7 +756,7 @@ class TestCompany (TestCase):
         response = api_companies(request)
         request = self.factory.put('api/companies/1/', updated_company, content_type='application/json')
         response = api_companies_id(request, '1')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 204)
         self.assertEqual(response.content, b'')
 
     def test_PUT_company_with_empty_image(self):
@@ -774,16 +764,6 @@ class TestCompany (TestCase):
         response = api_companies(request)
         company_data = base_company_input.copy()
         company_data["images"] = []
-        request = self.factory.put('api/companies/1/', company_data, content_type='application/json')
-        response = api_companies_id(request, '1')
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.content, b'')
-
-    def test_PUT_company_with_no_name(self):
-        request = self.factory.post('api/companies/', base_company_input, content_type='application/json')
-        response = api_companies(request)
-        company_data = base_company_input.copy()
-        company_data.pop("name")
         request = self.factory.put('api/companies/1/', company_data, content_type='application/json')
         response = api_companies_id(request, '1')
         self.assertEqual(response.status_code, 400)

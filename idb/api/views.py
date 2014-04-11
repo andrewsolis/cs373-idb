@@ -15,20 +15,14 @@ def non_empty_string(string):
 def validate_company_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
 		raise
-	if (len(request_data["images"]) == 0):
-		raise
 
 def validate_person_data(request_data):
 	if (not(("name" in request_data) and non_empty_string(request_data["name"]))):
 		raise
-	if len(request_data["companies"]) == 0:
+	if (len(request_data.get("companies")) == 0):
 		raise
 	for company in request_data["companies"]:
 		Company.objects.get(pk = int(company))
-	if (len(request_data["images"]) == 0):
-		raise
-	if (len(request_data["videos"]) == 0):
-		raise
 
 def validate_images(request_data):
 	if (len(request_data["images"]) == 0):
@@ -205,30 +199,29 @@ def api_people(request):
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates person and throws exception
 			validate_person_data(request_data)
+			validate_images(request_data)
+			validate_videos(request_data)
 			company_list = request_data.pop("companies")
-			image_link = request_data.pop("images")
-			video_link = request_data.pop("videos")
+			image_list = request_data.pop("images")
+			video_list = request_data.pop("videos")
 			new_person = Person(**request_data)
 			new_person.save()
 			new_person_saved = True
 			for company in company_list:
 				new_person.companies.add(int(company))
-			new_image = Images(link=image_link, other_id=new_person.pk, other_type='PPL').save()
-			new_image_saved = True
-			Videos(link=video_link, other_id=new_person.pk, other_type='PPL').save()
+			for image in image_list:
+				Images(link=image, other_id=new_person.pk, other_type='PPL').save()
+			for video in video_list:
+				Videos(link=video, other_id=new_person.pk, other_type='PPL').save()
 			response = dumps({"id" : new_person.pk})
 			response_code = 201
 		except ObjectDoesNotExist:
 			if new_person_saved:
 				new_person.delete()
-			if new_image_saved:
-				new_image.delete()
 			response_code = 404
 		except:
 			if new_person_saved:
 				new_person.delete()
-			if new_image_saved:
-				new_image.delete()
 			response_code = 400
 	return HttpResponse(response, content_type = "application/json", status = response_code)
 
@@ -252,19 +245,27 @@ def api_people_id(request, people_id):
 			person_object = Person.objects.get(pk =int(people_id))
 			person = literal_eval(serializers.serialize("json",[person_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
-			validate_person_data(request_data)
 			for k in request_data:
 				if k in person[0]["fields"]:
 					person[0]["fields"][k] = request_data[k]
+			validate_person_data(person[0]["fields"])
+			if request_data.get("images") is not None:
+				validate_images(request_data)
+			if request_data.get("videos") is not None:
+				validate_videos(request_data)
 			person = dumps(person)
 			for deserialized_object in serializers.deserialize("json", person): 
 				deserialized_object.save()
-			image_object = person_object.images()[0]
-			image_object.link = request_data["images"][0]
-			image_object.save()
-			video_object = person_object.videos()[0]
-			video_object.link = request_data["videos"][0]
-			video_object.save()
+			if request_data.get("images") is not None:
+				for image in person_object.images():
+					image.delete()
+				for image in request_data["images"]:
+					Images(link=image, other_id=int(people_id), other_type='PPL').save()
+			if request_data.get("videos") is not None:
+				for video in person_object.videos():
+					video.delete()
+				for video in request_data["videos"]:
+					Videos(link=video, other_id=int(people_id), other_type='PPL').save()
 			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
@@ -317,11 +318,14 @@ def api_companies(request):
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates company and throws exception
 			validate_company_data(request_data)
-			image_link = request_data.pop("images")
+			validate_images(request_data)
+			image_list = request_data.pop("images")
 			new_company = Company(**request_data)
 			new_company.save()
 			new_company_saved = True
-			Images(link=image_link, other_id=new_company.pk, other_type='CP').save()
+			for image in image_list:
+				Images(link=image, other_id=new_company.pk, other_type='CP').save()
+			# Images(link=image_link, other_id=new_company.pk, other_type='CP').save()
 			response = dumps({"id" : new_company.pk})
 			response_code = 201
 		except:
@@ -349,16 +353,20 @@ def api_companies_id(request, company_id):
 			company = literal_eval(serializers.serialize("json",[company_object]))
 			request_data = literal_eval(request.read().decode('utf-8'))
 			# validates company and throws exception
-			validate_company_data(request_data)
 			for k in request_data:
 				if k in company[0]["fields"]:
 					company[0]["fields"][k] = request_data[k]
+			validate_company_data(company[0]["fields"])
+			if request_data.get("images") is not None:
+				validate_images(request_data)
 			company = dumps(company)
 			for deserialized_object in serializers.deserialize("json", company):
 				deserialized_object.save()
-			image_object = company_object.images()[0]
-			image_object.link = request_data["images"][0]
-			image_object.save()
+			if request_data.get("images") is not None:
+				for image in company_object.images():
+					image.delete()
+				for image in request_data["images"]:
+					Images(link=image, other_id=int(company_id), other_type='CP').save()
 			response_code = 204
 		except ObjectDoesNotExist:
 			response_code = 404
