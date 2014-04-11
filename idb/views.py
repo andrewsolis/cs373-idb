@@ -69,7 +69,7 @@ def people_id(request, id):
 		return render_to_response('person.html', content)
 	except:
 		return render_to_response('home.html', {}, RequestContext(request))
-	
+
 def companies(request):
 	companies_list = api_companies(request)
 	result = serializers.deserialize("json", companies_list.content)

@@ -33,4 +33,7 @@ urlpatterns = patterns('',
     url(r'^api/games/?', 'idb.api.views.api_games', name='api_games'),
     url(r'^api/people/?', 'idb.api.views.api_people', name='api_people'),
     url(r'^api/companies/?', 'idb.api.views.api_companies', name='api_comanies'),
+    url(r'^api/genre/?', 'idb.api.views.api_genre', name='api_genre'),
+    url(r'^api/system/?', 'idb.api.views.api_system', name='api_system'),
+
 )
