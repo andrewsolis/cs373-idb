@@ -1,3 +1,7 @@
+from django.shortcuts import *
+from django.core import serializers
+from django.template import RequestContext
+from django.http import HttpResponse
 import re # regular expressions
 
 from django.db.models import Q # query objects
@@ -11,7 +15,7 @@ def normalize_query(query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').finda
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     
     '''
-	return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
+    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
 
 def get_query(query_string, search_fields):
     ''' Returns a query, that is a combination of Q objects. That combination

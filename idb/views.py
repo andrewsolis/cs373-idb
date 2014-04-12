@@ -5,6 +5,7 @@ from django.http import HttpResponse
 import json
 from idb.videogames.models import *
 from idb.api.views import *
+from idb.search import *
 import time
 
 def home(request):
@@ -95,14 +96,32 @@ def companies_id(request, id):
 	except:
 		return render_to_response('notFound.html', {}, RequestContext(request))
 
+def stats(request):
+	copies = []
+	names = []
+	games_list = api_games(request)
+	result = serializers.deserialize("json", games_list.content)
+	result = list(result)
+	numGames = len(result)
+	for i in result:
+		game = api_games_id(request,i.object.pk)
+		game_content = json.loads(game.content.decode("utf-8"))
+		content = game_content[0]["fields"]
+		copies.append(content["copies"])
+		names.append(content["name"])
+
+	copies = json.dumps(copies)
+	names = json.dumps(names)
+	return render_to_response('stats.html', {"copies":copies, "names":names}, RequestContext(request))
+
 def search(request):
     query_string = ''
     found_entries = None
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         
-        entry_query = get_query(query_string, ['title', 'body',])
+        entry_query = get_query(query_string, ['name','system',])
         
-        found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
-
+        # found_entries = Game.objects.filter(entry_query)
+    # return HttpResponse(found_entries, content_type = "application/json")
     return render_to_response('search.html', {}, RequestContext(request))
