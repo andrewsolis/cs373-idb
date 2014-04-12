@@ -50,7 +50,28 @@
         // Set chart options
         var options = {'title':'Copies of games sold',
                        'width':800,
-                       'height':500};
+                       'height':500,
+                       'fontName': 'Lato',
+                       'backgroundColor': '#272b30',
+                       'vAxis': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'hAxis': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'legend': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'titleTextStyle': {
+                       		'color': '#ffffff'
+                       	}
+                   	};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -61,7 +82,7 @@
 
   <body>
     <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <div id="chart_div" style=""></div>
   </body>
 </html>
 
