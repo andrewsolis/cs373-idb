@@ -2,12 +2,13 @@
 
 {% block content %}
 <div class="content-section-a">
-	<div class="container">
-		<div class="row">
-        	<div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
                 <h2>{{ collections }} in RGdb:</h2>
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="I like to party!">oh herro little baaahhhdy</button>
                 {% for item in items %}
                     <p class="lead"><a href="{{ item.object.pk }}/">{{ item.object.name }}</a></p>
 		        {% endfor %}
@@ -17,4 +18,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+    });
+</script>
 {% endblock %}
