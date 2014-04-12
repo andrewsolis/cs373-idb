@@ -17,12 +17,13 @@
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
+      google.setOnLoadCallback(drawChart1);
+      // google.setOnLoadCallback(drawChart2);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-      function drawChart() {
+      function drawChart1() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
@@ -36,16 +37,6 @@
         	}
         	
         }
-     //    data.addRows([
-     //      ['Mushrooms', 3],
-     //      ['Onions', 1],
-     //      ['Olives', 1],
-     //      ['Zucchini', 1],
-     //      ['Pepperoni', 2]
-     //    ]);
-    	// data.addRows([
-    	// 	['Jalapenos', 2]
-    	// ]);
 
         // Set chart options
         var options = {'title':'Copies of games sold',
@@ -74,7 +65,53 @@
                    	};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div1'));
+        chart.draw(data, options);
+      }
+
+      function drawChart2() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Copies');
+        for (i = 0; i < copies.length; i++){
+        	if (copies[i] != 0){
+        		data.addRows([
+        			[names[i], copies[i]]
+        		]);
+        	}
+        	
+        }
+
+        // Set chart options
+        var options = {'title':'Copies of games sold',
+                       'width':800,
+                       'height':500,
+                       'fontName': 'Lato',
+                       'backgroundColor': '#272b30',
+                       'vAxis': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'hAxis': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'legend': {
+                       		'textStyle': {
+                       			'color': '#ffffff'
+                       		}
+                       },
+                       'titleTextStyle': {
+                       		'color': '#ffffff'
+                       	}
+                   	};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
         chart.draw(data, options);
       }
     </script>
@@ -82,7 +119,10 @@
 
   <body>
     <!--Div that will hold the pie chart-->
-    <div id="chart_div" style=""></div>
+    <div style="width: 40%;margin: 0 auto">
+    	<div id="chart_div1"> </div>
+    	<div id="chart_div2"> </div>
+    </div>
   </body>
 </html>
 
