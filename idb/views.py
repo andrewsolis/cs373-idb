@@ -94,3 +94,15 @@ def companies_id(request, id):
 		return render_to_response('company.html', content)
 	except:
 		return render_to_response('home.html', {}, RequestContext(request))
+
+def search(request):
+    query_string = ''
+    found_entries = None
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        
+        entry_query = get_query(query_string, ['title', 'body',])
+        
+        found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
+
+    return render_to_response('search.html', {}, RequestContext(request))
