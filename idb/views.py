@@ -5,6 +5,7 @@ from django.http import HttpResponse
 import json
 from idb.videogames.models import *
 from idb.api.views import *
+from idb.search import *
 import time
 
 def home(request):
@@ -112,3 +113,15 @@ def stats(request):
 	copies = json.dumps(copies)
 	names = json.dumps(names)
 	return render_to_response('stats.html', {"copies":copies, "names":names}, RequestContext(request))
+
+def search(request):
+    query_string = ''
+    found_entries = None
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        
+        entry_query = get_query(query_string, ['name','system',])
+        
+        # found_entries = Game.objects.filter(entry_query)
+    # return HttpResponse(found_entries, content_type = "application/json")
+    return render_to_response('search.html', {}, RequestContext(request))
