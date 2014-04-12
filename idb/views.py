@@ -6,6 +6,7 @@ import json
 from idb.videogames.models import *
 from idb.api.views import *
 from idb.search import *
+from itertools import chain
 import time
 
 def home(request):
@@ -98,12 +99,23 @@ def companies_id(request, id):
 
 def search(request):
     query_string = ''
-    found_entries = None
+   
+    games_list = []
+    companies_list = []
+    people_list = []
+
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         
-        entry_query = get_query(query_string, ['name','system',])
-        
-        # found_entries = Game.objects.filter(entry_query)
-    # return HttpResponse(found_entries, content_type = "application/json")
-    return render_to_response('search.html', {}, RequestContext(request))
+        entry_query = get_query(query_string, ['synopsis','name',])
+        games_list = Game.objects.filter(entry_query)
+    
+        entry_query = get_query(query_string, ['name','description','location',])
+        companies_list = Company.objects.filter(entry_query)
+
+        entry_query = get_query(query_string, ['name','description', 'residence',])
+        people_list = Person.objects.filter(entry_query)
+
+    result_list = list(chain(games_list, companies_list, people_list))
+
+    return render_to_response('search.html', {'items': result_list})
