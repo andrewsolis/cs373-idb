@@ -40,7 +40,7 @@ def games_id(request, id):
 		game_content[0]["fields"]["people"] = list(people_content)
 		return render_to_response('game.html', content)
 	except:
-		return render_to_response('home.html', {}, RequestContext(request))
+		return render_to_response('notFound.html', {}, RequestContext(request))
 
 def people(request):
 	people_list = api_people(request)
@@ -68,7 +68,7 @@ def people_id(request, id):
 		person_content[0]["fields"]["games"] = list(game_content)
 		return render_to_response('person.html', content)
 	except:
-		return render_to_response('home.html', {}, RequestContext(request))
+		return render_to_response('notFound.html', {}, RequestContext(request))
 
 def companies(request):
 	companies_list = api_companies(request)
@@ -93,7 +93,7 @@ def companies_id(request, id):
 		company_content[0]["fields"]["games"] = list(game_content)
 		return render_to_response('company.html', content)
 	except:
-		return render_to_response('home.html', {}, RequestContext(request))
+		return render_to_response('notFound.html', {}, RequestContext(request))
 
 def search(request):
     query_string = ''
