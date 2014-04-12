@@ -94,3 +94,21 @@ def companies_id(request, id):
 		return render_to_response('company.html', content)
 	except:
 		return render_to_response('home.html', {}, RequestContext(request))
+
+def stats(request):
+	copies = []
+	names = []
+	games_list = api_games(request)
+	result = serializers.deserialize("json", games_list.content)
+	result = list(result)
+	numGames = len(result)
+	for i in result:
+		game = api_games_id(request,i.object.pk)
+		game_content = json.loads(game.content.decode("utf-8"))
+		content = game_content[0]["fields"]
+		copies.append(content["copies"])
+		names.append(content["name"])
+
+	copies = json.dumps(copies)
+	names = json.dumps(names)
+	return render_to_response('stats.html', {"copies":copies, "names":names}, RequestContext(request))
