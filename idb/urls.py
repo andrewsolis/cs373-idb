@@ -30,10 +30,10 @@ urlpatterns = patterns('',
     url(r'^games/', 'idb.views.games', name='games'),
     url(r'^people/', 'idb.views.people', name='people'),
     url(r'^companies/', 'idb.views.companies', name='companies'),
+    url(r'^search/$', 'idb.views.search', name='search'),
     url(r'^api/games/?', 'idb.api.views.api_games', name='api_games'),
     url(r'^api/people/?', 'idb.api.views.api_people', name='api_people'),
     url(r'^api/companies/?', 'idb.api.views.api_companies', name='api_comanies'),
     url(r'^api/genre/?', 'idb.api.views.api_genre', name='api_genre'),
     url(r'^api/system/?', 'idb.api.views.api_system', name='api_system'),
-
 )
