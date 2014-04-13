@@ -6,7 +6,7 @@
             padding-bottom: 50px;
             color: #f8f8f8;
             margin-top: 50px;
-            background: url({{images}}) repeat-x;
+            background: url({{images.0}}) repeat-x;
             background-size: contain;
             text-align: center;
             min-height: 300px;
@@ -70,7 +70,7 @@
                 {% if videos %}
                 <div class="col-md-6 col-sm-6">
                     <div class="video-container">
-                        <iframe width="420" height="315" src="//{{ videos }}" frameborder="0" allowfullscreen></iframe> 
+                        <iframe width="420" height="315" src="//{{ videos.0 }}" frameborder="0" allowfullscreen></iframe> 
                     </div>
                 </div>
                 {% endif %}

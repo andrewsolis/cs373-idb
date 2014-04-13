@@ -28,10 +28,6 @@ def games_id(request, id):
 			genres = genres + genre + ", "
 		content['genre'] = genres[:-2]
 		game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
-		if len(content['images']) != 0:
-			content['images'] = content['images'][0]
-		if len(content['videos']) != 0:
-			content['videos'] = content['videos'][0]
 
 		company_content = api_games_companies(request, id)
 		company_content = serializers.deserialize("json", company_content.content)
@@ -54,10 +50,6 @@ def people_id(request, id):
 		person = api_people_id(request,id)
 		person_content = json.loads(person.content.decode("utf-8"))
 		content = person_content[0]["fields"]
-		if len(content['images']) != 0:
-			content['images'] = content['images'][0]
-		if len(content['videos']) != 0:
-			content['videos'] = content['videos'][0]
 		content['twitter'] = person_content[0]["fields"]["twitter"]
 		person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
 		
@@ -82,8 +74,6 @@ def companies_id(request, id):
 		company = api_companies_id(request,id)
 		company_content = json.loads(company.content.decode("utf-8"))
 		content = company_content[0]["fields"]
-		if len(content['images']) != 0: 
-			content['images'] = content['images'][0]
 		company_content[0]["fields"]["founded"] = company_content[0]["fields"]["founded"][:10]
 		
 		people_content = api_companies_people(request, id)
