@@ -8,9 +8,17 @@
                 <h2>{{ collections }} in RGdb:</h2>
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
-                {% for item in items %}
-                    <p class="lead"><a href="{{ item.object.pk }}/" rel="popover" data-content="{{ item.object.name }}" data-original-title="{{ collection }} Information:">{{ item.object.name }}</a></p>
-		        {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            {% for item in items %}
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <a href="{{ item.object.pk }}/"><img src="/static/img/nintendo.jpg" class="img-responsive pad" rel="popover" data-content="{{ item.object.name }}" data-original-title="{{ collection }} Information:"></a>
+                </div>
+	        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
             </div>
