@@ -123,17 +123,25 @@ def search(request):
 
 	if ('q' in request.GET) and request.GET['q'].strip():
 			query_string = request.GET['q']
+			
 			entry_query = get_query(query_string, ['synopsis','name',])
 			games_list = Game.objects.filter(entry_query)
+			for g in games_list:
+				g.type = 'games'
+			
 			entry_query = get_query(query_string, ['name','description','location',])
 			companies_list = Company.objects.filter(entry_query)
+			for c in companies_list:
+				c.type = 'companies'
 
 			entry_query = get_query(query_string, ['name','description', 'residence',])
 			people_list = Person.objects.filter(entry_query)
+			for p in people_list:
+				p.type = 'people'
 
 	result_list = list(chain(games_list, companies_list, people_list))
 
-	return render_to_response('search.html', {'items': result_list})
+	return render_to_response('search.html', {'items': result_list, 'query' : query_string})
 
 def error404(request):
 	return render_to_response('notFound.html')

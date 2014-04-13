@@ -5,11 +5,11 @@
 	<div class="container">
 		<div class="row">
         	<div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
-                <h2>Search Results</h2>
+                <h2>Search Results for: {{ query }}</h2>
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
                 {% for item in items %}
-                    <p class="lead"><a href="#">{{ item.name }}</a></p>
+                    <p class="lead"><a href="/{{item.type}}/{{item.pk}}/">{{ item.name }}</a></p>
 		        {% endfor %}
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
