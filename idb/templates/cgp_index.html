@@ -9,7 +9,7 @@
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
                 {% for item in items %}
-                    <p class="lead"><a href="{{ item.object.pk }}/">{{ item.object.name }}</a></p>
+                    <p class="lead"><a href="{{ item.object.pk }}/" rel="popover" data-content="{{ item.object.name }}" data-original-title="Optional title">{{ item.object.name }}</a></p>
 		        {% endfor %}
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
@@ -17,4 +17,12 @@
         </div>
     </div>
 </div>
+
+<script>  
+    $(function () { 
+        $("[rel='popover']").popover({trigger: 'hover', placement: 'top'});
+
+    });  
+</script>  
+
 {% endblock %}
