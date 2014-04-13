@@ -4,13 +4,22 @@
 <html>
   <head>
     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+       'version':'1','packages':['timeline']}]}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
-      var names = "{{names}}"
-      names = names.replace(/&quot;/g, '"');
-      names = names.replace(/&#39;/g, "'");
-      names = $.parseJSON(names);
+      var game_names = "{{game_names}}"
+      game_names = game_names.replace(/&quot;/g, '"');
+      game_names = game_names.replace(/&#39;/g, "'");
+      game_names = $.parseJSON(game_names);
+
+      var company_names = "{{company_names}}"
+      company_names = company_names.replace(/&quot;/g, '"');
+      company_names = company_names.replace(/&#39;/g, "'");
+      company_names = $.parseJSON(company_names);
+
+      var games_per_company = $.parseJSON("{{games_per_company}}");
+
       var copies = jQuery.parseJSON('{{copies}}');
       // var items = jQuery.parseJSON('{{items}}');
       // Load the Visualization API and the piechart package.
@@ -18,7 +27,7 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart1);
-      // google.setOnLoadCallback(drawChart2);
+      google.setOnLoadCallback(drawChart2);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
@@ -32,7 +41,7 @@
         for (i = 0; i < copies.length; i++){
         	if (copies[i] != 0){
         		data.addRows([
-        			[names[i], copies[i]]
+        			[game_names[i], copies[i]]
         		]);
         	}
         	
@@ -72,20 +81,23 @@
       function drawChart2() {
 
         // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Copies');
-        for (i = 0; i < copies.length; i++){
-        	if (copies[i] != 0){
-        		data.addRows([
-        			[names[i], copies[i]]
-        		]);
-        	}
-        	
-        }
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          [company_names.shift(),     games_per_company.shift()],
+        ]);
 
+        for (i = 0; i < company_names.length; i++){
+            if (company_names[i] != 0){
+                data.addRows([
+                    [company_names[i], games_per_company[i]]
+                ]);
+            }
+            
+        }
+        
+        
         // Set chart options
-        var options = {'title':'Copies of games sold',
+        var options = {'title':'Share of Games in Database',
                        'width':800,
                        'height':500,
                        'fontName': 'Lato',
@@ -110,9 +122,10 @@
                        	}
                    	};
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
+        // // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
         chart.draw(data, options);
+
       }
     </script>
   </head>

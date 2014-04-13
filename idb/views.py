@@ -99,8 +99,13 @@ def companies_id(request, id):
 
 def stats(request):
 	copies = []
-	names = []
+	game_names = []
+	games_per_company = []
+	company_names = []
+
 	games_list = api_games(request)
+	companies_list = api_companies(request)
+
 	result = serializers.deserialize("json", games_list.content)
 	result = list(result)
 	numGames = len(result)
@@ -109,11 +114,23 @@ def stats(request):
 		game_content = json.loads(game.content.decode("utf-8"))
 		content = game_content[0]["fields"]
 		copies.append(content["copies"])
-		names.append(content["name"])
+		game_names.append(content["name"])
+
+	result = serializers.deserialize("json", companies_list.content)
+	result = list(result)
+	for i in result:
+		company = api_companies_id(request, i.object.pk)
+		company_content = json.loads(company.content.decode("utf-8"))
+		content = company_content[0]["fields"]
+		company_content[0]["fields"]["games"] = list(serializers.deserialize("json", api_companies_games(request, i.object.pk).content))
+		games_per_company.append(len(content["games"]))
+		company_names.append(content["name"])
 
 	copies = json.dumps(copies)
-	names = json.dumps(names)
-	return render_to_response('stats.html', {"copies":copies, "names":names}, RequestContext(request))
+	game_names = json.dumps(game_names)
+	company_names = json.dumps(company_names)
+	games_per_company = json.dumps(games_per_company)
+	return render_to_response('stats.html', {"copies":copies,"numGames": numGames, "game_names":game_names, "games_per_company":games_per_company, "company_names":company_names}, RequestContext(request))
 
 def search(request):
 	query_string = ''
