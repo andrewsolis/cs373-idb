@@ -37,14 +37,6 @@
                         <li> Copies sold: {{ copies }} </li>
                         <li> <a href={{ gamefaq }}>GameFAQ</a> </li>
                     </ul>
-                </div>
-                <div class="col-md-3">
-                    <h3>Synopsis</h3>
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <p class ="lead">{{ synopsis }}</p>
-                </div>
-                <div class="col-md-3">
                     <h3>People</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
@@ -53,14 +45,18 @@
                             <li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
                         {% endfor %}
                     </ul>
-                </div>
-                <div class="col-md-3">
                     <h3>Companies</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <ul class="list-unstyled lead">
                         <li> <a href="/companies/{{company.object.pk}}/">{{ company.object.name }}</a> </li>
                     </ul>
+                </div>
+                <div class="col-md-9">
+                    <h3>Synopsis</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <p class ="lead">{{ synopsis }}</p>
                 </div>
             </div>
         </div>
