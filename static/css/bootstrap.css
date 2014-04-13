@@ -5410,6 +5410,9 @@ button.close {
 }
 .carousel {
   position: relative;
+  max-width: 420px;
+  max-height: 420px;
+  overflow: hidden;
 }
 .carousel-inner {
   position: relative;
