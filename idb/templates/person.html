@@ -34,14 +34,6 @@
                         <li>DOB: {{ DOB }}</li>
                         <li>Residence: {{ residence }}</li>
                     </ul>
-                </div>
-                <div class="col-md-3">
-                    <h3>Description</h3>
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <p class ="lead">{{ description }}</p>
-                </div>
-                <div class="col-md-3">
                     <h3>Games</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
@@ -50,8 +42,6 @@
                             <li><a href="/games/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
                         {% endfor %}
                     </ul>
-                </div>
-                <div class="col-md-3">
                     <h3>Companies</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
@@ -60,6 +50,12 @@
                             <li><a href="/companies/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
                         {% endfor %}
                     </ul>
+                </div>
+                <div class="col-md-9">
+                    <h3>Description</h3>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <p class ="lead">{{ description }}</p>
                 </div>
             </div>
         </div>
