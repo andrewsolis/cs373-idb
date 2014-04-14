@@ -92,10 +92,13 @@ def stats(request):
 	game_names = []
 	games_per_company = []
 	company_names = []
+	genre_names = []
+	genres = []
 
 	games_list = api_games(request)
 	companies_list = api_companies(request)
-
+	genres_list = api_genre(request)
+	genre_dict = {"Side Scroller":0, "Platforming":0, "Racing":0, "Party":0, "Arcade":0,"Strategy":0,"Fighting":0,"Action-Adventure":0, "Role-Playing Game":0, "Sports":0, "Shooter":0, "Beat 'em up":0, "FPS":0, "Simulation":0, "Strategy":0, "Puzzle":0, "Card":0, "Board":0}
 	result = serializers.deserialize("json", games_list.content)
 	result = list(result)
 	numGames = len(result)
@@ -105,6 +108,11 @@ def stats(request):
 		content = game_content[0]["fields"]
 		copies.append(content["copies"])
 		game_names.append(content["name"])
+		for i in content["genre"]:
+			genre_dict[i] += 1
+	for key in genre_dict:
+		genre_names.append(key)
+		genres.append(genre_dict[key])	
 
 	result = serializers.deserialize("json", companies_list.content)
 	result = list(result)
@@ -120,7 +128,9 @@ def stats(request):
 	game_names = json.dumps(game_names)
 	company_names = json.dumps(company_names)
 	games_per_company = json.dumps(games_per_company)
-	return render_to_response('stats.html', {"copies":copies,"numGames": numGames, "game_names":game_names, "games_per_company":games_per_company, "company_names":company_names}, RequestContext(request))
+	genre_names = json.dumps(genre_names)
+	genres = json.dumps(genres)
+	return render_to_response('stats.html', {"copies":copies,"numGames": numGames, "game_names":game_names, "games_per_company":games_per_company, "company_names":company_names, "genre_names":genre_names, "genres":genres}, RequestContext(request))
 
 def search(request):
 	query_string = ''

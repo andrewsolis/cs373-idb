@@ -21,6 +21,15 @@
       var games_per_company = $.parseJSON("{{games_per_company}}");
 
       var copies = jQuery.parseJSON('{{copies}}');
+      var genre_names = '{{genre_names}}'
+      genre_names = genre_names.replace(/u&#39;/g, '"');
+      genre_names = genre_names.replace(/&#39;/g, '"');
+      genre_names = genre_names.replace(/u&quot;/g, '"');
+      genre_names = genre_names.replace(/&quot;/g, '"');
+      genre_names = genre_names.replace(/Beat "em up/, "Beat 'em up");    
+      genre_names = $.parseJSON(genre_names);
+
+      var genres = $.parseJSON('{{genres}}')
       // var items = jQuery.parseJSON('{{items}}');
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
@@ -28,6 +37,7 @@
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart1);
       google.setOnLoadCallback(drawChart2);
+      google.setOnLoadCallback(drawChart3);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
@@ -101,6 +111,7 @@
                        'width':800,
                        'height':500,
                        'fontName': 'Lato',
+
                        'backgroundColor': '#272b30',
                        'vAxis': {
                        		'textStyle': {
@@ -127,6 +138,57 @@
         chart.draw(data, options);
 
       }
+
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+          ['Genre', 'Number of games in database'],
+          [genre_names.shift(),     genres.shift()],
+        ]);
+
+        for (i = 0; i < genre_names.length; i++){
+            if (genre_names[i] != 0){
+                data.addRows([
+                    [genre_names[i], genres[i]]
+                ]);
+            }
+            
+        }
+        
+        
+        // Set chart options
+        var options = {'title':'Share of Games in Database',
+                       'width':800,
+                       'height':500,
+                       'fontName': 'Lato',
+                       "colors": ["green"],
+                       'backgroundColor': '#272b30',
+                       'vAxis': {
+                          'textStyle': {
+                            'color': '#ffffff'
+                          }
+                       },
+                       'hAxis': {
+                          'textStyle': {
+                            'color': '#ffffff'
+                          }
+                       },
+                       'legend': {
+                          'textStyle': {
+                            'color': '#ffffff'
+                          }
+                       },
+                       'titleTextStyle': {
+                          'color': '#ffffff'
+                        }
+                    };
+
+        // // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+
+      }
     </script>
   </head>
 
@@ -135,6 +197,7 @@
     <div style="width: 40%;margin: 0 auto">
     	<div id="chart_div1"> </div>
     	<div id="chart_div2"> </div>
+      <div id="chart_div3"> </div>
     </div>
   </body>
 </html>
