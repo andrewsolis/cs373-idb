@@ -89,9 +89,39 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <div class="video-container">
-                        <iframe width="420" height="315" src="//{{ videos.0 }}" frameborder="0" allowfullscreen></iframe> 
+
+
+
+
+
+
+                    <div id="video-carousel" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <embed src="//{{ videos.0 }}" alt="" width="420" height="315" />
+                            </div>
+                            {% for video in videos %}
+                                {%  if video != videos.0 %}
+                                    <div class="item">
+                                        <embed src="//{{ video }}" alt="" width="420" height="315" />
+                                    </div>
+                                {%  endif %}
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control left" href="#video-carousel" data-slide="prev">&lsaquo;</a>
+                        <a class="carousel-control right" href="#video-carousel" data-slide="next">&rsaquo;</a>
                     </div>
+
+
+
+
+
+
+
+
+                  <!--  <div class="video-container">
+                        <iframe width="420" height="315" src="//{{ videos.0 }}" frameborder="0" allowfullscreen></iframe> 
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -107,6 +137,13 @@
     <script>  
     $(function () { 
         $("#game-carousel").carousel({
+            interval: 5000,
+            pause: 'hover'
+        });
+    });
+
+    $(function () { 
+        $("#video-carousel").carousel({
             interval: 5000,
             pause: 'hover'
         });
