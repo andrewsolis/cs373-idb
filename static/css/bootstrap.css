@@ -315,6 +315,12 @@ img {
   max-width: 100%;
   height: auto;
 }
+.img-responsive-listing {
+  display: block;
+  max-width: 225px;
+  max-height: 225px;
+  height: auto;
+}
 .img-rounded {
   border-radius: 6px;
 }

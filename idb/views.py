@@ -7,16 +7,15 @@ from idb.videogames.models import *
 from idb.api.views import *
 from idb.search import *
 from itertools import chain
+from ast import literal_eval
 import time
 
 def home(request):
 	return render_to_response('home.html', {}, RequestContext(request))
 
 def games(request):
-	games_list = api_games(request)
-	result = serializers.deserialize("json", games_list.content)
-	result = list(result)
-	return render_to_response('cgp_index.html', {'items': result, 'collection': 'Game', 'collections': 'Games'})
+	games_list = json.loads(api_games(request).content.decode("utf-8"))
+	return render_to_response('cgp_index.html', {'items': games_list, 'collection': 'Game', 'collections': 'Games'})
 
 def games_id(request, id):
 	try: 
@@ -41,9 +40,8 @@ def games_id(request, id):
 		return render_to_response('notFound.html', {}, RequestContext(request))
 
 def people(request):
-	people_list = api_people(request)
-	result = serializers.deserialize("json", people_list.content)
-	return render_to_response('cgp_index.html', {'items': result, 'collection': 'People', 'collections': 'People'})
+	people_list = json.loads(api_people(request).content.decode("utf-8"))
+	return render_to_response('cgp_index.html', {'items': people_list, 'collection': 'Person', 'collections': 'People'})
 
 def people_id(request, id):
 	try:
@@ -65,9 +63,8 @@ def people_id(request, id):
 		return render_to_response('notFound.html', {}, RequestContext(request))
 
 def companies(request):
-	companies_list = api_companies(request)
-	result = serializers.deserialize("json", companies_list.content)
-	return render_to_response('cgp_index.html', {'items': result, 'collection': 'Company', 'collections': 'Companies'})
+	companies_list = json.loads(api_companies(request).content.decode("utf-8"))
+	return render_to_response('cgp_index.html', {'items': companies_list, 'collection': 'Company', 'collections': 'Companies'})
 
 def companies_id(request, id):
 	try:
