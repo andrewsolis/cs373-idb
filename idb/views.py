@@ -88,7 +88,7 @@ def stats(request):
 	result = list(result)
 	numGames = len(result)
 	for i in result:
-		game = api_games_id(request,i.object.pk)
+		game = api_games_id(request,i["pk"])
 		game_content = json.loads(game.content.decode("utf-8"))
 		content = game_content[0]["fields"]
 		copies.append(content["copies"])
@@ -102,10 +102,10 @@ def stats(request):
 		result = json.loads(companies_list.content.decode("utf-8"))
 	result = list(result)
 	for i in result:
-		company = api_companies_id(request, i.object.pk)
+		company = api_companies_id(request, i["pk"])
 		company_content = json.loads(company.content.decode("utf-8"))
 		content = company_content[0]["fields"]
-		company_content[0]["fields"]["games"] = list(json.loads(api_companies_games(request, i.object.pk).content.decode("utf-8")))
+		company_content[0]["fields"]["games"] = list(json.loads(api_companies_games(request, i["pk"]).content.decode("utf-8")))
 		games_per_company.append(len(content["games"]))
 		company_names.append(content["name"])
 
