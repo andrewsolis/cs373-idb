@@ -56,7 +56,9 @@
                     <h3>Synopsis</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <p class ="lead">{{ synopsis }}</p>
+                    <article>
+                        <p class ="lead">{{ synopsis }}</p>
+                    </article>
                 </div>
             </div>
         </div>
@@ -94,12 +96,20 @@
             </div>
         </div>
     </div>
+    <!-- JavaScript -->
+    <script src="/static/js/readmore.js"></script>
+    <script>
+        $('article').readmore({
+            maxHeight: 350,
+            lessLink: '<a href="#">Hide</a>'
+        });
+    </script>
     <script>  
     $(function () { 
         $("#game-carousel").carousel({
             interval: 5000,
             pause: 'hover'
         });
-    });  
-    </script>  
+    }); 
+    </script>
 {% endblock %}

@@ -55,7 +55,9 @@
                     <h3>Description</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <p class ="lead">{{ description }}</p>
+                    <article>
+                        <p class ="lead">{{ description }}</p>
+                    </article>
                 </div>
             </div>
         </div>
@@ -83,4 +85,12 @@
             </div>
         </div>
     </div>
+    <!-- JavaScript -->
+    <script src="/static/js/readmore.js"></script>
+    <script>
+        $('article').readmore({
+            maxHeight: 350,
+            lessLink: '<a href="#">Hide</a>'
+        });
+    </script>
 {% endblock %}
