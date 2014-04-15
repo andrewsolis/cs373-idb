@@ -63,15 +63,11 @@ def companies_id(request, id):
 		company = api_companies_id(request,id)
 		company_content = json.loads(company.content.decode("utf-8"))
 		content = company_content[0]["fields"]
-		company_content[0]["fields"]["founded"] = company_content[0]["fields"]["founded"][:10]
+		content["founded"] = content["founded"][:10]
 		
-		people_content = api_companies_people(request, id)
-		people_content = serializers.deserialize("json", people_content.content)
-		company_content[0]["fields"]["people"] = list(people_content)
+		content["people"] = literal_eval(api_companies_people(request, id).content.decode("utf-8"))
+		content["games"] = literal_eval(api_companies_games(request, id).content.decode("utf-8"))
 
-		game_content = api_companies_games(request, id)
-		game_content = serializers.deserialize("json", game_content.content)
-		company_content[0]["fields"]["games"] = list(game_content)
 		return render_to_response('company.html', content)
 	except:
 		return render_to_response('notFound.html', {}, RequestContext(request))
