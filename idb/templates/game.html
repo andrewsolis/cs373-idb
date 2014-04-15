@@ -41,15 +41,15 @@
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <ul class="list-unstyled lead">
-                        {% for item in people %}
-                            <li><a href="/people/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+                        {% for person in people %}
+                            <li><a href="/people/{{ person.pk }}/"> {{ person.fields.name }}</a></li>
                         {% endfor %}
                     </ul>
                     <h3>Companies</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <ul class="list-unstyled lead">
-                        <li> <a href="/companies/{{company.object.pk}}/">{{ company.object.name }}</a> </li>
+                        <li> <a href="/companies/{{company.pk}}/">{{ company.fields.name }}</a> </li>
                     </ul>
                 </div>
                 <div class="col-md-9">

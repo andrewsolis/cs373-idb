@@ -26,15 +26,11 @@ def games_id(request, id):
 		for genre in content['genre']:
 			genres = genres + genre + ", "
 		content['genre'] = genres[:-2]
-		game_content[0]["fields"]["release_date"] = game_content[0]["fields"]["release_date"][:10]
+		content["release_date"] = content["release_date"][:10]
 
-		company_content = api_games_companies(request, id)
-		company_content = serializers.deserialize("json", company_content.content)
-		game_content[0]["fields"]["company"] = list(company_content)[0]
+		content["company"] = literal_eval(api_games_companies(request, id).content.decode("utf-8"))[0]
+		content["people"] = literal_eval(api_games_people(request, id).content.decode("utf-8"))
 		
-		people_content = api_games_people(request, id)
-		people_content = serializers.deserialize("json", people_content.content)
-		game_content[0]["fields"]["people"] = list(people_content)
 		return render_to_response('game.html', content)
 	except:
 		return render_to_response('notFound.html', {}, RequestContext(request))
