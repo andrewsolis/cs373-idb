@@ -39,6 +39,7 @@ urlpatterns = patterns('',
 
     # Interactive API page
     url(r'^stats/?', 'idb.views.stats', name='stats'),
+    url(r'^sql/?', 'idb.views.sql', name='sql'),
     url(r'^search/$', 'idb.views.search', name='search'),
     url('', 'idb.views.error404', name='error')
 )

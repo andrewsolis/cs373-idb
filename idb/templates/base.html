@@ -43,10 +43,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'games' %}">Games</a></li>
                     <li><a href="{% url 'companies' %}">Companies</a></li>
                     <li><a href="{% url 'people' %}">People</a></li>
-                    <li><a href="{% url 'stats' %}">Stats</a></li>                    
+                    <li><a href="{% url 'stats' %}">Stats</a></li>
+                    <li><a href="{% url 'sql' %}">SQL Interesting Queries By Ethan "Poultergiest" Poulter</a></li>                    
                 </ul>
                 <form class="navbar-form navbar-left" role="search" method="GET" action="{% url 'search' %}">
                     <div class="form-group">
@@ -98,12 +100,15 @@
                         <li><a href="{% url 'companies' %}">Companies</a></li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li><a href="{% url 'people' %}">People</a></li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="{% url 'stats' %}">Stats</a></li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="{% url 'sql' %}">SQL</a></li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; Retro Games Database (RGdb) 2014. All Rights Reserved</p>
                 </div>
             </div>
         </div>
     </footer>
-
 </body>
 </html>

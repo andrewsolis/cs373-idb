@@ -1,0 +1,12 @@
+Top 5 selling games 
+SELECT name
+FROM game
+ORDER BY copies desc
+LIMIT 5
+
+Oldest game in database
+SELECT name, release_date
+FROM Game 
+WHERE release_date = min(release_date)
+
+
