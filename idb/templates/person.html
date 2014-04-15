@@ -38,16 +38,16 @@
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <ul class="list-unstyled lead">
-                        {% for item in games %}
-                            <li><a href="/games/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+                        {% for game in games %}
+                            <li><a href="/games/{{ game.pk }}/"> {{ game.fields.name }}</a></li>
                         {% endfor %}
                     </ul>
                     <h3>Companies</h3>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <ul class="list-unstyled lead">
-                        {% for item in companies %}
-                            <li><a href="/companies/{{ item.object.pk }}/"> {{ item.object.name }}</a></li>
+                        {% for company in companies %}
+                            <li><a href="/companies/{{ company.pk }}/"> {{ company.fields.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -30,7 +30,7 @@ def games_id(request, id):
 
 		content["company"] = literal_eval(api_games_companies(request, id).content.decode("utf-8"))[0]
 		content["people"] = literal_eval(api_games_people(request, id).content.decode("utf-8"))
-		
+
 		return render_to_response('game.html', content)
 	except:
 		return render_to_response('notFound.html', {}, RequestContext(request))
@@ -45,15 +45,11 @@ def people_id(request, id):
 		person_content = json.loads(person.content.decode("utf-8"))
 		content = person_content[0]["fields"]
 		content['twitter'] = person_content[0]["fields"]["twitter"]
-		person_content[0]["fields"]["DOB"] = person_content[0]["fields"]["DOB"][:10]
+		content["DOB"] = content["DOB"][:10]
 		
-		company_content = api_people_companies(request, id)
-		company_content = serializers.deserialize("json", company_content.content)
-		person_content[0]["fields"]["companies"] = list(company_content)
+		content["companies"] = literal_eval(api_people_companies(request, id).content.decode("utf-8"))
+		content["games"] = literal_eval(api_people_games(request, id).content.decode("utf-8"))
 
-		game_content = api_people_games(request, id)
-		game_content = serializers.deserialize("json", game_content.content)
-		person_content[0]["fields"]["games"] = list(game_content)
 		return render_to_response('person.html', content)
 	except:
 		return render_to_response('notFound.html', {}, RequestContext(request))
