@@ -151,5 +151,8 @@ def search(request):
 	# return HttpResponse(query_string, content_type = "application/json")
 	return render_to_response('search.html', {'items': result_list, 'query' : query_string})
 
+def sql(request):
+	return render_to_response('sql.html', {}, RequestContext(request))
+
 def error404(request):
 	return render_to_response('notFound.html')
