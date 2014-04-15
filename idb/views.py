@@ -120,37 +120,15 @@ def stats(request):
 def search(request):
 	query_string = ''
 	query_string_lowercase = ''
-	games_list = []
-	companies_list = []
-	people_list = []
 
 	if ('q' in request.GET) and request.GET['q'].strip():
-			query_string = request.GET['q']
-			query_string_lowercase = query_string.lower()
-			query_string_lowercase = query_string_lowercase.split("or")
-			for q in query_string_lowercase:
-				
-				entry_query = get_query(q, ['synopsis','name',])
+		query_string = request.GET['q']
+		query_string_lowercase = query_string.lower()
+		query_string_lowercase = query_string_lowercase.split(" ")
 
-				games_list.extend(Game.objects.filter(entry_query))
-				for g in games_list:
-					g.type = 'games'
-				
-				entry_query = get_query(q, ['name','description','location',])
-				companies_list.extend(Company.objects.filter(entry_query))
-				for c in companies_list:
-					c.type = 'companies'
-
-				entry_query = get_query(q, ['name','description', 'residence',])
-				people_list.extend(Person.objects.filter(entry_query))
-				for p in people_list:
-					p.type = 'people'
-
-	result_list = list(chain(games_list, companies_list, people_list))
-	result_list =list(set(result_list))
-	# return HttpResponse(query_string, content_type = "application/json")
-	return render_to_response('search.html', {'items': result_list, 'query' : query_string})
-
+	result_list =search_crawl(request, query_string)
+	return HttpResponse(result_list, content_type = "application/json")
+	
 def sql(request):
 	return render_to_response('sql.html', {}, RequestContext(request))
 
