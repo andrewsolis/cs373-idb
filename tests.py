@@ -244,8 +244,10 @@ class TestGames (TestCase):
         response = api_games(request)
         request = self.factory.get('api/games/')
         response = api_games(request)
-        response_content = response.content.decode('utf-8')
-        db_query = serializers.serialize("json", Game.objects.all(), fields=("name"))
+        response_content = literal_eval(response.content.decode('utf-8'))
+        db_query = literal_eval(serializers.serialize("json", Game.objects.all(), fields=("name")))
+        db_query[0]["fields"]["images"] = ["http://image.com"]
+        db_query[1]["fields"]["images"] = ["http://image.com"]
         self.assertEqual(response.status_code, 200)
         self.assertEqual(db_query, response_content)
 
@@ -536,10 +538,9 @@ class TestPeople (TestCase):
         new_person.companies.add(1)
         request = self.factory.get('api/person/', content_type='application/json')
         response = api_people(request)
-        #response_content = response.content.decode('utf-8')
-        #shouldn't we do:
-        response_content = [{"pk": 1, "model": "videogames.person", "fields": {"name": "person"}}]
-        db_query = literal_eval(serializers.serialize("json",Person.objects.all(), fields=("name")))
+        response_content = literal_eval(response.content.decode('utf-8'))
+        db_query = literal_eval(serializers.serialize("json", Person.objects.all(), fields=("name")))
+        db_query[0]["fields"]["images"] = []
         self.assertEqual(response.status_code, 200)
         self.assertEqual(db_query, response_content)
 
@@ -728,8 +729,10 @@ class TestCompany (TestCase):
         new_company = Company(**base_company).save()
         request = self.factory.get('api/companies/')
         response = api_companies(request)
-        response_content = response.content.decode('utf-8')
-        db_query = serializers.serialize("json",Company.objects.all(), fields=("name"))
+        response_content = literal_eval(response.content.decode('utf-8'))
+        db_query = literal_eval(serializers.serialize("json", Company.objects.all(), fields=("name")))
+        db_query[0]["fields"]["images"] = []
+        db_query[1]["fields"]["images"] = []
         self.assertEqual(response.status_code, 200)
         self.assertEqual(db_query, response_content)
 

@@ -62,7 +62,14 @@ def api_games(request):
 	new_game_saved = False
 	new_image_saved = False
 	if(request.method == 'GET'):
-		response = serializers.serialize('json', Game.objects.all(), fields=('name'))
+		game_objects = Game.objects.all()
+		game_list = []
+		for game in game_objects:
+			game_dict = literal_eval(serializers.serialize('json', [game], fields=('name')))[0]
+			image_list = [image.link for image in game.images()]
+			game_dict["fields"]["images"] = image_list
+			game_list.append(game_dict)
+		response = dumps(game_list)
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
@@ -192,7 +199,14 @@ def api_people(request):
 	new_person_saved = False
 	new_image_saved = False
 	if(request.method == 'GET'):
-		response = serializers.serialize("json", Person.objects.all(), fields=("name"))
+		person_objects = Person.objects.all()
+		person_list = []
+		for person in person_objects:
+			person_dict = literal_eval(serializers.serialize('json', [person], fields=('name')))[0]
+			image_list = [image.link for image in person.images()]
+			person_dict["fields"]["images"] = image_list
+			person_list.append(person_dict)
+		response = dumps(person_list)
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
@@ -311,7 +325,14 @@ def api_companies(request):
 	response_code = 400
 	new_company_saved = False
 	if(request.method == 'GET'):
-		response = serializers.serialize("json",Company.objects.all(), fields=("name"))
+		company_objects = Company.objects.all()
+		company_list = []
+		for company in company_objects:
+			company_dict = literal_eval(serializers.serialize('json', [company], fields=('name')))[0]
+			image_list = [image.link for image in company.images()]
+			company_dict["fields"]["images"] = image_list
+			company_list.append(company_dict)
+		response = dumps(company_list)
 		response_code = 200
 	elif(request.method == 'POST'):
 		try:
