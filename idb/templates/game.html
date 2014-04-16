@@ -144,5 +144,17 @@
             pause: 'hover'
         });
     }); 
+    $('#leftImageButton').click(function () {
+        $('#game-carousel').carousel('prev');
+    });
+    $('#rightImageButton').click(function () {
+        $('#game-carousel').carousel('next');
+    });
+    $('#leftVideoButton').click(function () {
+        $('#video-carousel').carousel('prev');
+    });
+    $('#rightVideoButton').click(function () {
+        $('#video-carousel').carousel('next');
+    });
     </script>
 {% endblock %}
