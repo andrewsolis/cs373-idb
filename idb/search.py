@@ -11,11 +11,10 @@ import json
 from django.db.models import Q # query objects
 
 def search_crawl(request, query_string):
-    query_string = query_string.split(" ")
     games_list = []
     companies_list = []
     people_list = []
-    
+
     result_list = []
 
     base_url = 'http://retro-video-games-373.herokuapp.com/'
@@ -24,13 +23,25 @@ def search_crawl(request, query_string):
     companies = json.loads(api_companies(request).content.decode("utf-8"))
     people = json.loads(api_people(request).content.decode("utf-8"))
 
+    
     for game in games:
-    	games_list.append(game['pk'])
-    
+        g = {}
+        g['pk'] = game['pk']
+        u = urllib.request.urlopen(base_url + "games/" + str(g['pk']) + "/")
+        soup = BeautifulSoup(u.read())
+        gfound = soup.findAll(text = re.compile(query_string, re.IGNORECASE))
+        games_list.append(gfound)
+
     for company in companies:
-    	companies_list.append(company['pk'])
-    
+        c = {}
+        c['pk'] = company['pk']
+        u = urllib.request.urlopen(base_url + "companies/" + str(c['pk']) + "/")
+        companies_list.append(c)
+
     for person in people:
-    	people_list.append(person['pk'])
-    
-    return result_list
+        p = {}
+        p['pk'] = person['pk']
+        u = urllib.request.urlopen(base_url + "people/" + str(p['pk']) + "/")
+        people_list.append(p)
+
+    return games_list
