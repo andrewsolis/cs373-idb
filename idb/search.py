@@ -12,22 +12,25 @@ from django.db.models import Q # query objects
 
 def search_crawl(request, query_string):
     query_string = query_string.split(" ")
-   
+    games_list = []
+    companies_list = []
+    people_list = []
+    
     result_list = []
 
     base_url = 'http://retro-video-games-373.herokuapp.com/'
 
-    games_list = json.loads(api_games(request).content.decode("utf-8"))
-    companies_list = json.loads(api_companies(request).content.decode("utf-8"))
-    people_list = json.loads(api_people(request).content.decode("utf-8"))
+    games = json.loads(api_games(request).content.decode("utf-8"))
+    companies = json.loads(api_companies(request).content.decode("utf-8"))
+    people = json.loads(api_people(request).content.decode("utf-8"))
 
-    for game in games_list:
-    	result_list.append(game['pk'])
+    for game in games:
+    	games_list.append(game['pk'])
     
-    for company in companies_list:
-    	result_list.append(company['pk'])
+    for company in companies:
+    	companies_list.append(company['pk'])
     
-    for person in people_list:
-    	result_list.append(person['pk'])
+    for person in people:
+    	people_list.append(person['pk'])
     
     return result_list
