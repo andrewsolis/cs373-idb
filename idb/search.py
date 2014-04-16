@@ -27,6 +27,7 @@ def search_crawl(request, query_string):
     
     for game in games:
         g = {}
+        g['name'] = game['fields']['name']
         g['pk'] = game['pk']
         g['url'] = base_url + "games/" + str(g['pk']) + "/"
         g['total'] = 0
@@ -42,6 +43,7 @@ def search_crawl(request, query_string):
 
     for company in companies:
         c = {}
+        c['name'] = company['fields']['name']
         c['pk'] = company['pk']
         c['url'] = base_url + "companies/" + str(c['pk']) + "/"
         c['total'] = 0
@@ -57,6 +59,7 @@ def search_crawl(request, query_string):
 
     for person in people:
         p = {}
+        p['name'] = person['fields']['name']
         p['pk'] = person['pk']
         p['url'] = base_url + "people/" + str(p['pk']) + "/"
         p['total'] = 0
