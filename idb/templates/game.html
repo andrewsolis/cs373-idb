@@ -106,13 +106,21 @@
            
             <div class="row">
                 <div class="col-md-6 col-sm-6" id="carouselButtons">
-                    <button id="leftImageButton" type="button" class="btn btn-default btn-m floatright">Prev</button>
-                    <button id="rightImageButton" type="button" class="btn btn-default btn-m floatright">Next</button>
+                    <button id="leftImageButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button id="rightImageButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
                 </div>
 
                 <div class="col-md-6 col-sm-6" id="carouselButtons">
-                    <button id="leftVideoButton" type="button" class="btn btn-default btn-m floatright">Prev</button>
-                    <button id="rightVideoButton" type="button" class="btn btn-default btn-m floatright">Next</button>
+                    <button id="leftVideoButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button id="rightVideoButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
                 </div>
             </div>
             
@@ -136,7 +144,7 @@
 
     $(function () { 
         $("#video-carousel").carousel({
-            interval: 5000,
+            interval: false,
             pause: 'hover'
         });
     }); 
