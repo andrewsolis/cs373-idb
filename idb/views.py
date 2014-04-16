@@ -9,6 +9,7 @@ from idb.search import *
 from itertools import chain
 from ast import literal_eval
 import time
+from types import *
 
 def home(request):
 	return render_to_response('home.html', {}, RequestContext(request))
@@ -119,14 +120,11 @@ def stats(request):
 
 def search(request):
 	query_string = ''
-	query_string_lowercase = ''
 
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
-		query_string_lowercase = query_string.lower()
-		query_string_lowercase = query_string_lowercase.split(" ")
 
-	result_list =search_crawl(request, query_string)
+	result_list = search_crawl(request, str(query_string))
 	return HttpResponse(result_list, content_type = "application/json")
 	
 def sql(request):
