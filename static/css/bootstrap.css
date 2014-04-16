@@ -6134,3 +6134,24 @@ legend {
 .panel-info .panel-heading {
   border-color: #000;
 }
+.floatright
+{
+  float: left;
+  width: 210px;
+}
+.floatleft
+{
+  float:right;
+  width: 210px;
+}
+.floatleft2
+{
+  float:right;
+  width: 300px;
+}
+.carouselButtons
+{
+  margin-left: 100px;
+  position: absolute;
+  bottom: 0px;
+}
