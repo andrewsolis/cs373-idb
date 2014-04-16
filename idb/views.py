@@ -8,6 +8,7 @@ from idb.api.views import *
 from idb.search import *
 from itertools import chain
 from ast import literal_eval
+from django.db import connection
 import time
 from types import *
 
@@ -128,7 +129,13 @@ def search(request):
 	return render_to_response('search.html', {"query": query_string, "items":result_list})
 	
 def sql(request):
-	return render_to_response('sql.html', {}, RequestContext(request))
+	results = {}
+	cursor = connection.cursor()
+	cursor.execute('SELECT name FROM videogames_game')
+	results["names"] = [x[0] for x in cursor.fetchall()]
+
+
+	return render_to_response('sql.html', results)
 
 def error404(request):
 	return render_to_response('notFound.html')
