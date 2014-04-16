@@ -128,7 +128,9 @@ def search(request):
 	return render_to_response('search.html', {"query": query_string, "items":result_list})
 	
 def sql(request):
-	return render_to_response('sql.html', {}, RequestContext(request))
+	name_list = {}
+	name_list["names"] = Game.objects.raw('SELECT name FROM VideogamesGame')
+	return render_to_response('sql.html', {"names": name_list})
 
 def error404(request):
 	return render_to_response('notFound.html')
