@@ -314,6 +314,7 @@ img {
   display: block;
   max-width: 100%;
   max-height: auto;
+  margin: 0 auto;
 }
 .img-responsive-listing {
   display: block;
@@ -6138,16 +6139,6 @@ legend {
 {
   float: left;
   width: 210px;
-}
-.floatleft
-{
-  float:right;
-  width: 210px;
-}
-.floatleft2
-{
-  float:right;
-  width: 300px;
 }
 .carouselButtons
 {
