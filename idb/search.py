@@ -28,6 +28,7 @@ def search_crawl(request, query_string):
     for g in games:
         valid_result = {}
         valid_result['id'] = g['pk']
+        valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "games/" + str(valid_result['id']) + "/"
 
@@ -46,34 +47,43 @@ def search_crawl(request, query_string):
         valid_result['name'] = content['name']
 
         for s in query_string_list:
+
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 7
+                valid_result['rank'] += 7
+                valid_result['total'] += content['name'].lower().count(s.lower())
 
             for person in content['people']:
                 if s.lower() in person['fields']['name'].lower():
-                    valid_result['total'] += 1
+                    valid_result['rank'] += 1
+                    valid_result['total'] += person['fields']['name'].lower().count(s.lower())
             
             if s.lower() in content['system'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['system'].lower().count(s.lower())
 
             if s.lower() in content['gamefaq'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['gamefaq'].lower().count(s.lower())
 
             if s.lower() in content['synopsis'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['synopsis'].lower().count(s.lower())
 
             if s.lower() in content['genre'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['genre'].lower().count(s.lower())
 
             if s.lower() in content['company']['fields']['name'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['company']['fields']['name'].lower().count(s.lower())
 
-        if valid_result['total'] > 0:
+        if valid_result['rank'] > 0:
             games_list.append(valid_result)        
 
     for c in companies:
         valid_result = {}
         valid_result['id'] = c['pk']
+        valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "companies/" + str(valid_result['id']) + "/"
 
@@ -88,30 +98,37 @@ def search_crawl(request, query_string):
         valid_result['name'] = content['name']
 
         for s in query_string_list:
+
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 6
+                valid_result['rank'] += 6
+                valid_result['total'] += content['name'].lower().count(s.lower())
 
             for person in content['people']:
                 if s.lower() in person['fields']['name']:
-                    valid_result['total'] += 1
+                    valid_result['rank'] += 1
+                    valid_result['total'] += person['fields']['name'].lower().count(s.lower())
 
             for game in content['games']:
                 if s.lower() in game['fields']['name']:
-                    valid_result['total'] += 1
+                    valid_result['rank'] += 1
+                    valid_result['total'] += game['fields']['name'].lower().count(s.lower())
 
             if s.lower() in content['description']:
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['description'].lower().count(s.lower())
 
             if s.lower() in content['location'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['location'].lower().count(s.lower())
 
-        if valid_result['total'] > 0:
+        if valid_result['rank'] > 0:
             companies_list.append(valid_result)
 
 
     for p in people:
         valid_result = {}
         valid_result['id'] = p['pk']
+        valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "people/" + str(valid_result['id']) + "/"
 
@@ -127,27 +144,33 @@ def search_crawl(request, query_string):
         valid_result['name'] = content['name']
 
         for s in query_string_list:
+            
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 5
+                valid_result['rank'] += 5
+                valid_result['total'] += content['name'].lower().count(s.lower())
 
             if s.lower() in content['residence'].lower():
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['residence'].lower().count(s.lower())
 
             for company in content['companies']:
                 if s.lower() in company['fields']['name'].lower():
-                    valid_result['total'] += 1
+                    valid_result['rank'] += 1
+                    valid_result['total'] += company['fields']['name'].lower().count(s.lower())
 
             for game in content['games']:
                 if s.lower() in game['fields']['name']:
-                    valid_result['total'] += 1
+                    valid_result['rank'] += 1
+                    valid_result['total'] += game['fields']['name'].lower().count(s.lower())
 
             if s.lower() in content['description']:
-                valid_result['total'] += 1
+                valid_result['rank'] += 1
+                valid_result['total'] += content['description'].lower().count(s.lower())
 
-        if valid_result['total'] > 0:
+        if valid_result['rank'] > 0:
             people_list.append(valid_result)
 
 
     result_list = games_list + companies_list + people_list
-    result_list = sorted(result_list, key = lambda x: x['total'], reverse = True)
+    result_list = sorted(result_list, key = lambda x: (x['rank'], x['total']), reverse = True)
     return result_list
