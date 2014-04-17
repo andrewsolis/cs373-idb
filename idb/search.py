@@ -185,6 +185,7 @@ def search_crawl(request, query_string):
         valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "people/" + str(valid_result['id']) + "/"
+        valid_result['found_strings'] = []
 
         person = api_people_id(request,valid_result['id'])
         person_content = json.loads(person.content.decode("utf-8"))
@@ -200,26 +201,46 @@ def search_crawl(request, query_string):
         for s in query_string_list:
             
             if s.lower() in content['name'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 5
                 valid_result['total'] += content['name'].lower().count(s.lower())
+                valid_result_dict['place'] = "Title"
+                valid_result_dict['string'] = content['name']
+                valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['residence'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['residence'].lower().count(s.lower())
+                valid_result_dict['place'] = "Residence"
+                valid_result_dict['string'] = content['residence']
+                valid_result['found_strings'].append(valid_result_dict)
 
             for company in content['companies']:
                 if s.lower() in company['fields']['name'].lower():
+                    valid_result_dict = {}
                     valid_result['rank'] += 1
                     valid_result['total'] += company['fields']['name'].lower().count(s.lower())
+                    valid_result_dict['place'] = "Companies"
+                    valid_result_dict['string'] = company['fields']['name']
+                    valid_result['found_strings'].append(valid_result_dict)
 
             for game in content['games']:
                 if s.lower() in game['fields']['name'].lower():
+                    valid_result_dict = {}
                     valid_result['rank'] += 1
                     valid_result['total'] += game['fields']['name'].lower().count(s.lower())
+                    valid_result_dict['place'] = "Games"
+                    valid_result_dict['string'] = game['fields']['name']
+                    valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['description'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['description'].lower().count(s.lower())
+                valid_result_dict['place'] = "Description"
+                valid_result_dict['string'] = content['description']
+                valid_result['found_strings'].append(valid_result_dict)
 
         if valid_result['rank'] > 0:
             people_list.append(valid_result)
