@@ -10,20 +10,117 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="row">
-            {% for name in names %}
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <p class="lead">
-                        {{ name }}</p>
-                </div>
-            {% endfor %}
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>Top 5 Selling Games</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q1_query }}</p>
+            </div>
+            <div>
+                {% for name in q1_names %}
+                    <div>
+                        <p>
+                            {{ name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
-                <hr class="section-heading-spacer">
-                <div class="clearfix"></div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>Oldest Game Stored</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q2_query }}</p>
+            </div>
+            <div>
+                {% for name in q2_names %}
+                    <div>
+                        <p>
+                            {{ name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>People Ordered by Oldest to Youngest</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q3_query }}</p>
+            </div>
+            <div>
+                {% for name in q3_names %}
+                    <div>
+                        <p>
+                            {{ name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>Websites For All Companies</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q4_query }}</p>
+            </div>
+            <div>
+                {% for name in q4_names %}
+                    <div>
+                        <p><a href="{{ url }}">
+                        {{ name }}</a></p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>Gamefaq Pages For Games</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q5_query }}</p>
+            </div>
+            <div>
+                {% for name in q5_names %}
+                    <div>
+                        <p><a href="{{ url }}">
+                        {{ name }}</a></p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <h3>Most Popular Game Genre</h3>
+            </div>
+            <div>
+                <p>
+                    {{ q6_query }}</p>
+            </div>
+            <div>
+                {% for name in q6_names %}
+                    <div>
+                        <p>
+                            {{ name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+            <div>
+                <div>
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<!--- JavaScript -->
 {% endblock %}

@@ -9,7 +9,10 @@ SELECT name, release_date
 FROM Game 
 WHERE release_date = min(release_date)
 
-Group games by decade
+People orderd by oldest to youngest
+SELECT name FROM Videogames_people ORDER BY DOB
+
+
 
 All people sorted from oldest to youngest
 Select name, dob
@@ -17,3 +20,8 @@ order by dob
 
 
 select item with longest description
+
+company id
+game companyid
+
+SELECT name FROM company WHERE id IN (SELECT count(companyid) FROM game = max(count(companyid)))
