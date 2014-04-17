@@ -3,6 +3,7 @@ from django.core import serializers
 from django.template import RequestContext
 from django.http import HttpResponse
 import json
+from django.db import connection
 from idb.videogames.models import *
 from idb.api.views import *
 from idb.search import *
@@ -156,9 +157,9 @@ def sql(request):
 	queries["q5_query"] = "Query: SELECT gamfaq FROM Videogames_game"
 	queries["q5_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT max(genre) FROM Videogames_game')
-	queries["q6_query"] = "SELECT max(genre) FROM Videogames_game"
-	queries["q6_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT max(genre) FROM Videogames_game')
+	# queries["q6_query"] = "SELECT max(genre) FROM Videogames_game"
+	# queries["q6_names"] = [x[0] for x in cursor.fetchall()]
 
 
 	return render_to_response('sql.html', queries)
