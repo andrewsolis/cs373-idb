@@ -858,5 +858,19 @@ class TestCompany (TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.content, b'')
 
+# -----------
+# Test Search
+# -----------
+
+
+    # def test_search_company(self):
+    #     pass
+    
+    # def test_search_game():
+    #     pass
+
+    # def test_search_person():
+    #     pass
+
 print("tests.py")
 print("Done.")

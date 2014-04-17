@@ -19,12 +19,14 @@
                     {{ q1_query }}</p>
             </div>
             <div>
-                {% for name in q1_names %}
-                    <div>
-                        <p>
-                            {{ name }}</p>
-                    </div>
-                {% endfor %}
+                <result>
+                    {% for name in q1_names %}
+                        <div>
+                            <p>
+                                {{ name }}</p>
+                        </div>
+                    {% endfor %}
+                </result>
             </div>
         </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
@@ -32,16 +34,18 @@
                 <h3>Oldest Game Stored</h3>
             </div>
             <div>
-                <p>
-                    {{ q2_query }}</p>
+                 <p>
+                    {{ q2_query }}</p> 
             </div>
             <div>
-                {% for name in q2_names %}
-                    <div>
-                        <p>
-                            {{ name }}</p>
-                    </div>
-                {% endfor %}
+                <result>
+                    {% for name in q2_names %}
+                        <div>
+                            <p>
+                                {{ name }}</p>
+                        </div>
+                    {% endfor %}
+                </result>
             </div>
         </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
@@ -53,12 +57,14 @@
                     {{ q3_query }}</p>
             </div>
             <div>
-                {% for name in q3_names %}
-                    <div>
-                        <p>
-                            {{ name }}</p>
-                    </div>
-                {% endfor %}
+                <result>
+                    {% for name in q3_names %}
+                        <div>
+                            <p>
+                                {{ name }}</p>
+                        </div>
+                    {% endfor %}
+                </result>
             </div>
         </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
@@ -70,12 +76,14 @@
                     {{ q4_query }}</p>
             </div>
             <div>
-                {% for name in q4_names %}
-                    <div>
-                        <p><a href="{{ url }}">
-                        {{ name }}</a></p>
-                    </div>
-                {% endfor %}
+                <result>
+                    {% for name in q4_names %}
+                        <div>
+                            <p><a href="{{ url }}">
+                            {{ name }}</a></p>
+                        </div>
+                    {% endfor %}
+                </result>
             </div>
         </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
@@ -87,12 +95,14 @@
                     {{ q5_query }}</p>
             </div>
             <div>
-                {% for name in q5_names %}
-                    <div>
-                        <p><a href="{{ url }}">
-                        {{ name }}</a></p>
-                    </div>
-                {% endfor %}
+                <result>
+                    {% for name in q5_names %}
+                        <div>
+                            <p><a href="{{ url }}">
+                            {{ name }}</a></p>
+                        </div>
+                    {% endfor %}
+                <result>
             </div>
         </div>
         <!-- <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
@@ -122,5 +132,14 @@
         </div>
     </div>
 </div>
+
 <!--- JavaScript -->
+<script src="/static/js/readmore.js"></script>
+    <script>
+        $('result').readmore({
+            maxHeight: 0,
+            lessLink: '<a href="#">Hide</a>',
+            moreLink: '<a href="#">See Result</a>'
+        });
+    </script>
 {% endblock %}
