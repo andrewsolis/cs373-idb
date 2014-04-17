@@ -906,5 +906,13 @@ class TestSearch (TestCase):
         request = self.factory.get('search/?q=')
         response = search_query(request, '')
         self.assertEqual(response, [])
+
+    def test_search_not_found(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('search/?q=silly')
+        response = search_query(request, '')
+        self.assertEqual(response, [])
 print("tests.py")
 print("Done.")
