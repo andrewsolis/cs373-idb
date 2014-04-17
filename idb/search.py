@@ -29,7 +29,7 @@ def search_crawl(request, query_string):
         valid_result = {}
         valid_result['id'] = g['pk']
         valid_result['total'] = 0
-        valid_result['url'] = base_url + "games/" + str(valid_result['id'])
+        valid_result['url'] = base_url + "games/" + str(valid_result['id']) + "/"
 
         game = api_games_id(request,g['pk'])
         game_content = json.loads(game.content.decode("utf-8"))
@@ -68,41 +68,82 @@ def search_crawl(request, query_string):
             if s.lower() in content['company']['fields']['name'].lower():
                 valid_result['total'] += 1
 
-            if valid_result['total'] > 0:
-                games_list.append(valid_result)        
+        if valid_result['total'] > 0:
+            games_list.append(valid_result)        
 
-    # for company in companies:
-    #     c = {}
-    #     c['name'] = company['fields']['name']
-    #     c['pk'] = company['pk']
-    #     c['url'] = base_url + "companies/" + str(c['pk']) + "/"
-    #     c['total'] = 0
-    #     u = urllib.request.urlopen(c['url'])
-    #     soup = BeautifulSoup(u.read())
-    #     for s in query_string_list:
-    #         cfound = soup.findAll(text = re.compile(s, re.IGNORECASE))
-    #         c[s] = len(cfound)
-    #         if(c[s] > 0): 
-    #             c['total'] = c['total'] + 1
-    #     if(c['total'] > 0):
-    #         companies_list.append(c)
+    for c in companies:
+        valid_result = {}
+        valid_result['id'] = c['pk']
+        valid_result['total'] = 0
+        valid_result['url'] = base_url + "companies/" + str(valid_result['id']) + "/"
 
-    # for person in people:
-    #     p = {}
-    #     p['name'] = person['fields']['name']
-    #     p['pk'] = person['pk']
-    #     p['url'] = base_url + "people/" + str(p['pk']) + "/"
-    #     p['total'] = 0
-    #     u = urllib.request.urlopen(p['url'])
-    #     soup = BeautifulSoup(u.read())
-    #     for s in query_string_list:
-    #         pfound = soup.findAll(text = re.compile(s, re.IGNORECASE))
-    #         p[s] = len(pfound)
-    #         if(p[s] > 0): 
-    #             p['total'] = p['total'] + 1
-    #     if(p['total'] > 0):
-    #         people_list.append(p)
+        company = api_companies_id(request,c['pk'])
+        company_content = json.loads(company.content.decode("utf-8"))
+        content = company_content[0]["fields"]
+        content["founded"] = content["founded"][:10]
+        
+        content["people"] = literal_eval(api_companies_people(request, c['pk']).content.decode("utf-8"))
+        content["games"] = literal_eval(api_companies_games(request, c['pk']).content.decode("utf-8"))
 
-    # result_list = games_list + companies_list + people_list
-    # result_list = sorted(result_list, key = lambda x: x['total'], reverse = True)
-    return games_list
+        for s in query_string_list:
+            if s.lower() in content['name'].lower():
+                valid_result['total'] += 1
+
+            for person in content['people']:
+                if s.lower() in person['fields']['name']:
+                    valid_result['total'] += 1
+
+            for game in content['games']:
+                if s.lower() in game['fields']['name']:
+                    valid_result['total'] += 1
+
+            if s.lower() in content['description']:
+                valid_result['total'] += 1
+
+            if s.lower() in content['location'].lower():
+                valid_result['total'] += 1
+
+        if valid_result['total'] > 0:
+            companies_list.append(valid_result)
+
+
+    for p in people:
+        valid_result = {}
+        valid_result['id'] = p['pk']
+        valid_result['total'] = 0
+        valid_result['url'] = base_url + "people/" + str(valid_result['id']) + "/"
+
+        person = api_people_id(request,valid_result['id'])
+        person_content = json.loads(person.content.decode("utf-8"))
+        content = person_content[0]["fields"]
+        content['twitter'] = person_content[0]["fields"]["twitter"]
+        content["DOB"] = content["DOB"][:10]
+        
+        content["companies"] = literal_eval(api_people_companies(request, valid_result['id']).content.decode("utf-8"))
+        content["games"] = literal_eval(api_people_games(request, valid_result['id']).content.decode("utf-8"))
+
+        for s in query_string_list:
+            if s.lower() in content['name'].lower():
+                valid_result['total'] += 1
+
+            if s.lower() in content['residence'].lower():
+                valid_result['total'] += 1
+
+            for company in content['companies']:
+                if s.lower() in company['fields']['name'].lower():
+                    valid_result['total'] += 1
+
+            for game in content['games']:
+                if s.lower() in game['fields']['name']:
+                    valid_result['total'] += 1
+
+            if s.lower() in content['description']:
+                valid_result['total'] += 1
+
+        if valid_result['total'] > 0:
+            people_list.append(valid_result)
+
+
+    result_list = games_list + companies_list + people_list
+    result_list = sorted(result_list, key = lambda x: x['total'], reverse = True)
+    return result_list

@@ -125,8 +125,8 @@ def search(request):
 		query_string = request.GET['q']
 
 	result_list = search_crawl(request, str(query_string))
-	return HttpResponse(result_list, content_type="application/json")
-	# return render_to_response('search.html', {"items":result_list, "query": query_string})
+	query_string_list = query_string.split(" ")
+	return render_to_response('search.html', {"items":result_list, "query": query_string })
 	
 def sql(request):
 	return render_to_response('sql.html', {}, RequestContext(request))
