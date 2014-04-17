@@ -47,7 +47,7 @@ def search_crawl(request, query_string):
 
         for s in query_string_list:
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 1
+                valid_result['total'] += 7
 
             for person in content['people']:
                 if s.lower() in person['fields']['name'].lower():
@@ -85,9 +85,11 @@ def search_crawl(request, query_string):
         content["people"] = literal_eval(api_companies_people(request, c['pk']).content.decode("utf-8"))
         content["games"] = literal_eval(api_companies_games(request, c['pk']).content.decode("utf-8"))
 
+        valid_result['name'] = content['name']
+
         for s in query_string_list:
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 1
+                valid_result['total'] += 6
 
             for person in content['people']:
                 if s.lower() in person['fields']['name']:
@@ -122,9 +124,11 @@ def search_crawl(request, query_string):
         content["companies"] = literal_eval(api_people_companies(request, valid_result['id']).content.decode("utf-8"))
         content["games"] = literal_eval(api_people_games(request, valid_result['id']).content.decode("utf-8"))
 
+        valid_result['name'] = content['name']
+
         for s in query_string_list:
             if s.lower() in content['name'].lower():
-                valid_result['total'] += 1
+                valid_result['total'] += 5
 
             if s.lower() in content['residence'].lower():
                 valid_result['total'] += 1
