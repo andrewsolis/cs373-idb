@@ -31,6 +31,7 @@ def search_crawl(request, query_string):
         valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "games/" + str(valid_result['id']) + "/"
+        valid_result['found_strings'] = []
 
         game = api_games_id(request,g['pk'])
         game_content = json.loads(game.content.decode("utf-8"))
@@ -49,33 +50,62 @@ def search_crawl(request, query_string):
         for s in query_string_list:
 
             if s.lower() in content['name'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 7
                 valid_result['total'] += content['name'].lower().count(s.lower())
+                valid_result_dict['place'] = "Title"
+                valid_result_dict['string'] = content['name']
+                valid_result['found_strings'].append(valid_result_dict)
 
             for person in content['people']:
                 if s.lower() in person['fields']['name'].lower():
+                    valid_result_dict = {}
                     valid_result['rank'] += 1
                     valid_result['total'] += person['fields']['name'].lower().count(s.lower())
+                    valid_result_dict['place'] = "People"
+                    valid_result_dict['string'] = person['fields']['name']
+                    valid_result['found_strings'].append(valid_result_dict)
             
             if s.lower() in content['system'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['system'].lower().count(s.lower())
+                valid_result_dict['place'] = "System"
+                valid_result_dict['string'] = content['system']
+                valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['gamefaq'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['gamefaq'].lower().count(s.lower())
+                valid_result_dict['place'] = "GameFAQ"
+                valid_result_dict['string'] = content['gamefaq']
+                valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['synopsis'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['synopsis'].lower().count(s.lower())
+                valid_result_dict['place'] = "Synopsis"
+                valid_result_dict['string'] = content['synopsis']
+                valid_result['found_strings'].append(valid_result_dict)
 
-            if s.lower() in content['genre'].lower():
-                valid_result['rank'] += 1
-                valid_result['total'] += content['genre'].lower().count(s.lower())
+            for genre in content['genre']:
+                if s.lower() in genre.lower():
+                    valid_result_dict = {}
+                    valid_result['rank'] += 1
+                    valid_result['total'] += genre.lower().count(s.lower())
+                    valid_result_dict['place'] = "genre"
+                    valid_result_dict['string'] = genre
+                    valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['company']['fields']['name'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['company']['fields']['name'].lower().count(s.lower())
+                valid_result_dict['place'] = "Companies"
+                valid_result_dict['string'] = content['company']['fields']['name']
+                valid_result['found_strings'].append(valid_result_dict)
 
         if valid_result['rank'] > 0:
             games_list.append(valid_result)        
@@ -86,6 +116,7 @@ def search_crawl(request, query_string):
         valid_result['rank'] = 0
         valid_result['total'] = 0
         valid_result['url'] = base_url + "companies/" + str(valid_result['id']) + "/"
+        valid_result['found_strings'] = []
 
         company = api_companies_id(request,c['pk'])
         company_content = json.loads(company.content.decode("utf-8"))
@@ -100,26 +131,49 @@ def search_crawl(request, query_string):
         for s in query_string_list:
 
             if s.lower() in content['name'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 6
                 valid_result['total'] += content['name'].lower().count(s.lower())
+                valid_result_dict['place'] = "Title"
+                valid_result_dict['string'] = content['name']
+                valid_result['found_strings'].append(valid_result_dict)
+
 
             for person in content['people']:
-                if s.lower() in person['fields']['name']:
+                if s.lower() in person['fields']['name'].lower():
+                    valid_result_dict = {}
                     valid_result['rank'] += 1
                     valid_result['total'] += person['fields']['name'].lower().count(s.lower())
+                    valid_result_dict['place'] = "People"
+                    valid_result_dict['string'] = person['fields']['name']
+                    valid_result['found_strings'].append(valid_result_dict)
 
             for game in content['games']:
-                if s.lower() in game['fields']['name']:
+                if s.lower() in game['fields']['name'].lower():
+                    valid_result_dict = {}
                     valid_result['rank'] += 1
                     valid_result['total'] += game['fields']['name'].lower().count(s.lower())
+                    valid_result_dict['place'] = "Games"
+                    valid_result_dict['string'] = game['fields']['name']
+                    valid_result['found_strings'].append(valid_result_dict)
 
-            if s.lower() in content['description']:
+
+            if s.lower() in content['description'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['description'].lower().count(s.lower())
+                valid_result['description_lower'] = content['description'].lower()
+                valid_result_dict['place'] = "Description"
+                valid_result_dict['string'] = content['description']
+                valid_result['found_strings'].append(valid_result_dict)
 
             if s.lower() in content['location'].lower():
+                valid_result_dict = {}
                 valid_result['rank'] += 1
                 valid_result['total'] += content['location'].lower().count(s.lower())
+                valid_result_dict['place'] = "Location"
+                valid_result_dict['string'] = content['location']
+                valid_result['found_strings'].append(valid_result_dict)
 
         if valid_result['rank'] > 0:
             companies_list.append(valid_result)
@@ -159,11 +213,11 @@ def search_crawl(request, query_string):
                     valid_result['total'] += company['fields']['name'].lower().count(s.lower())
 
             for game in content['games']:
-                if s.lower() in game['fields']['name']:
+                if s.lower() in game['fields']['name'].lower():
                     valid_result['rank'] += 1
                     valid_result['total'] += game['fields']['name'].lower().count(s.lower())
 
-            if s.lower() in content['description']:
+            if s.lower() in content['description'].lower():
                 valid_result['rank'] += 1
                 valid_result['total'] += content['description'].lower().count(s.lower())
 
