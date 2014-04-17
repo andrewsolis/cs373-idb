@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-
+  
     <div class="content-section-b">
         <div class="container">
             <div class="row">
@@ -74,7 +74,7 @@
                     <div id="game-carousel" class="carousel slide">
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img src="{{ images.0 }}" alt="" width="420" height="315" />
+                                <img src="{{ images.0 }}" class="img-responsive" alt="" />
                             </div>
                             {% for image in images %}
                                 {%  if image != images.0 %}
@@ -84,8 +84,6 @@
                                 {%  endif %}
                             {% endfor %}
                         </div>
-                        <a class="carousel-control left" href="#game-carousel" data-slide="prev">&lsaquo;</a>
-                        <a class="carousel-control right" href="#game-carousel" data-slide="next">&rsaquo;</a>
                     </div>
                 </div>
                 <!-- <div class="col-md-6 col-sm-6">
@@ -102,11 +100,30 @@
                                 {%  endif %}
                             {% endfor %}
                         </div>
-                        <a class="carousel-control left" href="#video-carousel" data-slide="prev">&lsaquo;</a>
-                        <a class="carousel-control right" href="#video-carousel" data-slide="next">&rsaquo;</a>
                     </div>
                 </div> -->
             </div>
+           
+            <div class="row">
+                <div class="col-md-6 col-sm-6" id="carouselButtons">
+                    <button id="leftImageButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button id="rightImageButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+
+                <div class="col-md-6 col-sm-6" id="carouselButtons">
+                    <button id="leftVideoButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button id="rightVideoButton" type="button" class="btn btn-default btn-m floatright">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+            
         </div>
     </div>
     <!-- JavaScript -->
@@ -127,9 +144,21 @@
 
     $(function () { 
         $("#video-carousel").carousel({
-            interval: 5000,
+            interval: false,
             pause: 'hover'
         });
     }); 
+    $('#leftImageButton').click(function () {
+        $('#game-carousel').carousel('prev');
+    });
+    $('#rightImageButton').click(function () {
+        $('#game-carousel').carousel('next');
+    });
+    $('#leftVideoButton').click(function () {
+        $('#video-carousel').carousel('prev');
+    });
+    $('#rightVideoButton').click(function () {
+        $('#video-carousel').carousel('next');
+    });
     </script>
 {% endblock %}

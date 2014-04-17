@@ -314,6 +314,7 @@ img {
   display: block;
   max-width: 100%;
   max-height: auto;
+  margin: 0 auto;
 }
 .img-responsive-listing {
   display: block;
@@ -2009,6 +2010,7 @@ select[multiple].input-lg {
   font-size: 14px;
   line-height: 1.42857143;
   border-radius: 4px;
+  width:100%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -6133,4 +6135,18 @@ legend {
 .panel-warning .panel-heading,
 .panel-info .panel-heading {
   border-color: #000;
+}
+.floatright
+{
+
+  float: left;
+  width: 50%;
+  min-width: 30px;
+  max-width: 210px;
+}
+.carouselButtons
+{
+  margin-left: 100px;
+  position: absolute;
+  bottom: 0px;
 }

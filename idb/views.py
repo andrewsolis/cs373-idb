@@ -8,7 +8,6 @@ from idb.api.views import *
 from idb.search import *
 from itertools import chain
 from ast import literal_eval
-from django.db import connection
 import time
 from types import *
 
@@ -126,9 +125,11 @@ def search(request):
 		query_string = request.GET['q']
 
 	result_list = search_crawl(request, str(query_string))
-	return render_to_response('search.html', {"query": query_string, "items":result_list})
+	return HttpResponse(result_list, content_type="application/json")
+	# return render_to_response('search.html', {"items":result_list, "query": query_string})
 	
 def sql(request):
+
 	queries = {}
 	cursor = connection.cursor()
 	cursor.execute('SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5')
