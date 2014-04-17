@@ -3,6 +3,7 @@ from django.core import serializers
 from django.template import RequestContext
 from django.http import HttpResponse
 import json
+from django.db import connection
 from idb.videogames.models import *
 from idb.api.views import *
 from idb.search import *
@@ -129,7 +130,39 @@ def search(request):
 	return render_to_response('search.html', {"items":result_list, "query": query_string })
 	
 def sql(request):
-	return render_to_response('sql.html', {}, RequestContext(request))
+
+	queries = {}
+	cursor = connection.cursor()
+	cursor.execute('SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5')
+	queries["q1_query"] = "Query: SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5"
+	queries["q1_names"] = [x[0] for x in cursor.fetchall()]
+
+	cursor.execute('SELECT name, min(release_date) FROM videogames_game ')
+	queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
+	queries["q2_names"] = [x[0] for x in cursor.fetchall()]
+
+	cursor.execute('SELECT name FROM Videogames_person ORDER BY DOB')
+	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
+	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
+
+	cursor.execute('SELECT name FROM Videogames_person ORDER BY DOB')
+	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
+	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
+
+	cursor.execute('SELECT webpage FROM Videogames_company')
+	queries["q4_query"] = "Query: SELECT webpage FROM Videogames_company"
+	queries["q4_names"] = [x[0] for x in cursor.fetchall()]
+
+	cursor.execute('SELECT gamefaq FROM Videogames_game')
+	queries["q5_query"] = "Query: SELECT gamfaq FROM Videogames_game"
+	queries["q5_names"] = [x[0] for x in cursor.fetchall()]
+
+	# cursor.execute('SELECT max(genre) FROM Videogames_game')
+	# queries["q6_query"] = "SELECT max(genre) FROM Videogames_game"
+	# queries["q6_names"] = [x[0] for x in cursor.fetchall()]
+
+
+	return render_to_response('sql.html', queries)
 
 def error404(request):
 	return render_to_response('notFound.html')
