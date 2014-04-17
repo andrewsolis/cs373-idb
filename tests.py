@@ -6,6 +6,7 @@ from django.utils import unittest
 from django.test.client import RequestFactory
 
 from idb.videogames.models import *
+from idb.search import *
 from django.http import HttpResponse, HttpRequest
 
 from json import dumps
@@ -861,16 +862,49 @@ class TestCompany (TestCase):
 # -----------
 # Test Search
 # -----------
+class TestSearch (TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
 
+    def test_search_game(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('search/?q=game')
+        response = search_query(request, 'game')
+        name = response[0]['name']
+        rank = response[0]['rank']
+        self.assertEqual(name, 'game')
+        self.assertEqual(rank, 8)
+        
+    def test_search_company(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('search/?q=Company')
+        response = search_query(request, 'Company')
+        name = response[0]['name']
+        rank = response[0]['rank']
+        self.assertEqual(name, 'Company')
+        self.assertEqual(rank, 6)
 
-    # def test_search_company(self):
-    #     pass
-    
-    # def test_search_game():
-    #     pass
+    def test_search_people(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('search/?q=person')
+        response = search_query(request, 'person')
+        name = response[0]['name']
+        rank = response[0]['rank']
+        self.assertEqual(name, 'person')
+        self.assertEqual(rank, 5)
 
-    # def test_search_person():
-    #     pass
-
+    def test_search_empty(self):
+        setup_db_for_game()
+        request = self.factory.post('api/games/', base_game_input, content_type='application/json')
+        response = api_games(request)
+        request = self.factory.get('search/?q=')
+        response = search_query(request, '')
+        self.assertEqual(response, [])
 print("tests.py")
 print("Done.")
