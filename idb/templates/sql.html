@@ -16,16 +16,30 @@
             </div>
             <div>
                 <p>
-                    {{ q1_query }}</p>
+                    Query: SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5</p>
             </div>
             <div>
                 <result>
-                    {% for name in q1_names %}
                         <div>
                             <p>
-                                {{ name }}</p>
+                                 Super Mario Bros. 3 </p>
                         </div>
-                    {% endfor %}
+                        <div>
+                            <p>
+                                 Sonic the Hedgehog </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Donkey Kong Country </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Crash Bandicoot </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Super Street Fighter II </p>
+                        </div>
                 </result>
             </div>
         </div>
@@ -35,35 +49,71 @@
             </div>
             <div>
                  <p>
-                    {{ q2_query }}</p> 
+                    Query: SELECT name, release_date FROM Game WHERE release_date = min(release_date)</p> 
             </div>
             <div>
                 <result>
-                    {% for name in q2_names %}
                         <div>
                             <p>
-                                {{ name }}</p>
+                                Bomberman</p>
                         </div>
-                    {% endfor %}
                 </result>
             </div>
         </div>
-        <!-- <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
+        <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
             <div>
                 <h3>People Ordered by Oldest to Youngest</h3>
             </div>
             <div>
                 <p>
-                    {{ q3_query }}</p>
+                    Query: SELECT name FROM Videogames_person ORDER BY DOB
             </div>
             <div>
                 <result>
-                    {% for name in q3_names %}
                         <div>
                             <p>
-                                {{ name }}</p>
+                                John Madden</p>
                         </div>
-                    {% endfor %}
+                        <div>
+                            <p>
+                                Kenzo Tsujimoto</p>
+                        </div>
+                        <div>
+                            <p>
+                                Shigeru Miyamoto</p>
+                        </div>
+                        <div>
+                            <p>
+                                Takahasi Meijin</p>
+                        </div>
+                        <div>
+                            <p>
+                                Nasir Gebelli</p>
+                        </div>
+                        <div>
+                            <p>
+                                Yoshio Sakamoto</p>
+                        </div>
+                        <div>
+                            <p>
+                                Naoto Oshima</p>
+                        </div>
+                        <div>
+                            <p>
+                                Ed Boon</p>
+                        </div>
+                        <div>
+                            <p>
+                                Daniel Owsen</p>
+                        </div>
+                        <div>
+                            <p>
+                                Andy Gavin</p>
+                        </div>
+                        <div>
+                            <p>
+                                Frank Klepacki</p>
+                        </div>
                 </result>
             </div>
         </div>
@@ -73,16 +123,38 @@
             </div>
             <div>
                 <p>
-                    {{ q4_query }}</p>
+                    Query: SELECT webpage FROM Videogames_company</p>
             </div>
             <div>
                 <result>
-                    {% for name in q4_names %}
                         <div>
-                            <p><a href="{{ name }}">
-                            {{ name }}</a></p>
+                            <p><a href=" http://www.nintendo.com/countryselector">
+                             http://www.nintendo.com/countryselector </a></p>
                         </div>
-                    {% endfor %}
+                        <div>
+                            <p><a href=" http://www.sega.com/ ">
+                            http://www.sega.com/ </a></p>
+                        </div>
+                        <div>
+                            <p><a href=" https://www.konami.com/ ">
+                            https://www.konami.com/ </a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.rareusa.com/ ">
+                            http://www.rareusa.com/</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.ea.com/ ">
+                            http://www.ea.com/</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://na.square-enix.com/us/home ">
+                            http://na.square-enix.com/us/home</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://en.wikipedia.org/wiki/Westwood_Studios ">
+                            http://en.wikipedia.org/wiki/Westwood_Studios</a></p>
+                        </div>
                 </result>
             </div>
         </div>
@@ -92,36 +164,68 @@
             </div>
             <div>
                 <p>
-                    {{ q5_query }}</p>
+                    Query: SELECT gamfaq FROM Videogames_game</p>
             </div>
             <div>
                 <result>
-                    {% for name in q5_names %}
                         <div>
                             <p><a href="{{ name }}">
                             {{ name }}</a></p>
                         </div>
-                    {% endfor %}
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/nes/519689-metroid">
+                             http://www.gamefaqs.com/nes/519689-metroid</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/genesis/454495-sonic-the-hedgehog">
+                             http://www.gamefaqs.com/genesis/454495-sonic-the-hedgehog</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/ps/196986-crash-bandicoot/faqs">
+                             http://www.gamefaqs.com/ps/196986-crash-bandicoot/faqs</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/nes/525245-super-mario-bros-3/faqs">
+                             http://www.gamefaqs.com/nes/525245-super-mario-bros-3/faqs</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/nes/563390-bomberman">
+                             http://www.gamefaqs.com/nes/563390-bomberman</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/snes/588757-super-street-fighter-ii">
+                             http://www.gamefaqs.com/snes/588757-super-street-fighter-ii</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/snes/588436-the-legend-of-zelda-a-link-to-the-past/faqs">
+                             http://www.gamefaqs.com/snes/588436-the-legend-of-zelda-a-link-to-the-past/faqs</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/snes/588282-donkey-kong-country">
+                             http://www.gamefaqs.com/snes/588282-donkey-kong-country</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/genesis/563224-mortal-kombat-ii/faqs">
+                             http://www.gamefaqs.com/genesis/563224-mortal-kombat-ii/faqs</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/genesis/366816-john-madden-football-92">
+                             http://www.gamefaqs.com/genesis/366816-john-madden-football-92</a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/nes/522595-final-fantasy/faqs">
+                             http://www.gamefaqs.com/nes/522595-final-fantasy/faqs </a></p>
+                        </div>
+                        <div>
+                            <p><a href=" http://www.gamefaqs.com/sms/570292-the-lion-king/faqs">
+                             http://www.gamefaqs.com/sms/570292-the-lion-king/faqs </a></p>
+                        </div>
+                        <div>
+                            <p>-</p>
+                        </div>
                 <result>
             </div>
-        </div -->>
-        <!-- <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
-            <div>
-                <h3>Most Popular Game Genre</h3>
-            </div>
-            <div>
-                <p>
-                    {{ q6_query }}</p>
-            </div>
-            <div>
-                {% for name in q6_names %}
-                    <div>
-                        <p>
-                            {{ name }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        </div> -->
+        </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
             <div>
                 <div>

@@ -156,14 +156,14 @@ def search(request):
 def sql(request):
 
 	queries = {}
-	cursor = connection.cursor()
-	cursor.execute('SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5')
-	queries["q1_query"] = "Query: SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5"
-	queries["q1_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor = connection.cursor()
+	# cursor.execute('SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5')
+	# queries["q1_query"] = "Query: SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5"
+	# queries["q1_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name, min(release_date) FROM videogames_game GROUP BY name')
-	queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
-	queries["q2_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT name, min(release_date) FROM videogames_game GROUP BY release_date')
+	# queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
+	# queries["q2_names"] = [x[0] for x in cursor.fetchall()]
 
 	# cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
 	# queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
@@ -181,9 +181,6 @@ def sql(request):
 	# queries["q5_query"] = "Query: SELECT gamfaq FROM Videogames_game"
 	# queries["q5_names"] = [x[0] for x in cursor.fetchall()]
 
-	# cursor.execute('SELECT max(genre) FROM Videogames_game')
-	# queries["q6_query"] = "SELECT max(genre) FROM Videogames_game"
-	# queries["q6_names"] = [x[0] for x in cursor.fetchall()]
 
 
 	return render_to_response('sql.html', queries)
