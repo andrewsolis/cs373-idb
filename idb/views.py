@@ -125,7 +125,7 @@ def search(request):
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
 
-	result_list = search_crawl(request, str(query_string))
+	result_list = search_query(request, str(query_string))
 	query_string_list = query_string.split(" ")
 	# return HttpResponse(result_list, content_type="application/json")
 	return render_to_response('search.html', { "items":result_list, "query": query_string })

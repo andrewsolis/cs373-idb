@@ -10,7 +10,9 @@ from ast import literal_eval
 
 from django.db.models import Q # query objects
 
-def search_crawl(request, query_string):
+ignore = ["", "and", "if", "but"]
+
+def search_query(request, query_string):
     games_list = []
     companies_list = []
     people_list = []
@@ -48,6 +50,9 @@ def search_crawl(request, query_string):
         valid_result['name'] = content['name']
 
         for s in query_string_list:
+
+            if s in ignore:
+                continue
 
             if s.lower() in content['name'].lower():
                 valid_result_dict = {}
@@ -130,6 +135,9 @@ def search_crawl(request, query_string):
 
         for s in query_string_list:
 
+            if s in ignore:
+                continue
+
             if s.lower() in content['name'].lower():
                 valid_result_dict = {}
                 valid_result['rank'] += 6
@@ -199,6 +207,9 @@ def search_crawl(request, query_string):
         valid_result['name'] = content['name']
 
         for s in query_string_list:
+
+            if s in ignore:
+                continue
             
             if s.lower() in content['name'].lower():
                 valid_result_dict = {}
