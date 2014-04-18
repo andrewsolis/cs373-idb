@@ -190,3 +190,9 @@ p.copyright {
 .row-round{
 	padding-bottom: 30px;
 }
+
+.carousel-button{
+	width:100%;
+	padding:0px;
+
+}
