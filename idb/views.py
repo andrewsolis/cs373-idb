@@ -138,7 +138,7 @@ def sql(request):
 	queries["q1_query"] = "Query: SELECT name FROM videogames_game ORDER BY copies desc LIMIT 5"
 	queries["q1_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name, min(release_date) FROM videogames_game ')
+	cursor.execute('SELECT name, min(release_date) FROM videogames_game GROUP BY name')
 	queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
 	queries["q2_names"] = [x[0] for x in cursor.fetchall()]
 
