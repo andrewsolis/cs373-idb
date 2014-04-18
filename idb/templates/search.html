@@ -11,11 +11,48 @@
                 {% for item in items %}
                     <p class="lead"><a href="{{ item.url }}">
                         {{ item.name }}</a></p>
+                        {% if item.found_strings.0.place != "Description" %}
+                            <p class="lead"> {{item.found_strings.0.place}}: <span class="replace1"> {{item.found_strings.0.string}} </span> </p>
+                        {% else %}
+                            <p class="lead"> {{item.found_strings.0.place}}: <span class="replace2"> {{item.found_strings.0.string}} </span> </p>
+                        {% endif %}
 		        {% endfor %}
                 <hr class="section-heading-spacer">
                 <div class="clearfix"></div>
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready( function() {
+        var query = "{{query}}";
+        var query_string_list = "{{query}}".split(" ");
+
+        String.format = function() {
+          var s = arguments[0];
+          for (var i = 0; i < arguments.length - 1; i++) {       
+            var reg = new RegExp("\\{" + i + "\\}", "gm");             
+            s = s.replace(reg, arguments[i + 1]);
+          }
+
+          return s;
+        }
+        // alert(query_string_list);
+        
+        // var index = html.toLowerCase().search(query) 
+        for (i=0; i<query_string_list.length; i++){
+            // $('.replace').html(html.replace(query_string_list[i], 'ASDFASDFASDFASDF'));
+            var str1 = $('.replace1').html();
+            var str2 = $('.replace2').html();
+            if (str1){
+                $(".replace1").html(str1.replace(new RegExp(query_string_list[i],"gi"), String.format("<span style='font-weight: bold; color: #FFF236;'>{0}</span>", query_string_list[i])));
+            }
+            if (str2) {
+                $(".replace2").html(str2.replace(new RegExp(query_string_list[i],"gi"), String.format("<span style='font-weight: bold; color: #FFF236;'>{0}</span>", query_string_list[i])));
+        }
+        }
+    });
+</script>
 {% endblock %}

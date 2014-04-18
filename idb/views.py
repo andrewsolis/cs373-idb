@@ -126,6 +126,26 @@ def search(request):
 		query_string = request.GET['q']
 
 	result_list = search_query(request, str(query_string))
+
+	for result in result_list:
+		string = result["found_strings"][0]["string"]
+		if result["found_strings"][0]["place"] == "Description":
+			replace = "..."
+		else:
+			replace = ""
+		for x in str(query_string).split(" "):
+			index = string.lower().find(x.lower())
+			if index != -1:
+				replace += string[index-120:index]
+				replace += string[index:index+120]
+				if result["found_strings"][0]["place"] == "Description":
+					replace += "..."
+				else:
+					replace += ""
+				break
+
+		result["found_strings"][0]["string"] = replace
+
 	query_string_list = query_string.split(" ")
 	# return HttpResponse(result_list, content_type="application/json")
 	return render_to_response('search.html', { "items":result_list, "query": query_string })
