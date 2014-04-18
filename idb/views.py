@@ -142,11 +142,11 @@ def sql(request):
 	queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
 	queries["q2_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name FROM Videogames_person ORDER BY DOB')
+	cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
 	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
 	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name FROM Videogames_person ORDER BY DOB')
+	cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
 	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
 	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
 
