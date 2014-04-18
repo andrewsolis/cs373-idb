@@ -11,6 +11,7 @@ from itertools import chain
 from ast import literal_eval
 import time
 from types import *
+import re
 
 def home(request):
 	return render_to_response('home.html', {}, RequestContext(request))
@@ -125,7 +126,9 @@ def search(request):
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
 
-	result_list = search_query(request, str(query_string))
+	query_string = str(query_string)
+	query_string = re.sub(' +',' ',query_string)	
+	result_list = search_query(request, query_string)
 
 	for result in result_list:
 		string = result["found_strings"][0]["string"]
