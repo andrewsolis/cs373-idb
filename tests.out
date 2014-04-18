@@ -1,4 +1,24 @@
-tests.py
-Done.
-Creating test database for alias 'default'...
-Destroying test database for alias 'default'...
+Traceback (most recent call last):
+  File "./manage.py", line 10, in <module>
+    execute_from_command_line(sys.argv)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/__init__.py", line 399, in execute_from_command_line
+    utility.execute()
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/__init__.py", line 392, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/commands/test.py", line 50, in run_from_argv
+    super(Command, self).run_from_argv(argv)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/base.py", line 242, in run_from_argv
+    self.execute(*args, **options.__dict__)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/commands/test.py", line 71, in execute
+    super(Command, self).execute(*args, **options)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/base.py", line 285, in execute
+    output = self.handle(*args, **options)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/core/management/commands/test.py", line 88, in handle
+    failures = test_runner.run_tests(test_labels)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/test/runner.py", line 144, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/v/filer4b/v38q001/word/swe/cs373-idb/venv/lib/python3.2/site-packages/django/test/runner.py", line 63, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/usr/lib/python3.2/unittest/loader.py", line 91, in loadTestsFromName
+    module = __import__('.'.join(parts_copy))
+ImportError: No module named 2
