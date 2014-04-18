@@ -66,10 +66,10 @@
 
     <div class="content-section-a">
         <div class="container">
-            <div class="row">
                 <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
                     <h3 class="section-heading">Media</h3>
                 </div>
+            <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div id="game-carousel" class="carousel slide carousel-size">
                         <div class="carousel-inner">
@@ -85,11 +85,24 @@
                                 {%  endif %}
                             {% endfor %}
                         </div>
+                        <div class="carousel-button" id="carouselButtons">
+                            <button id="leftImageButton" type="button" class="btn btn-default btn-m floatright">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </button>
+                            <button id="rightImageButton" type="button" class="btn btn-default btn-m floatright">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+
+
+
+
                 <div class="col-md-6 col-sm-6">
                     <div id="video-carousel" class="carousel slide">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner padding-fix">
                             <div class="item active">
                                 <embed src="//{{ videos.0 }}" alt="" width="420" height="315" />
                             </div>
@@ -101,28 +114,18 @@
                                 {%  endif %}
                             {% endfor %}
                         </div>
+                        <div class="carousel-button" id="carouselButtons">
+                            <button id="leftVideoButton" type="button" class="btn btn-default btn-m floatright">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </button>
+                            <button id="rightVideoButton" type="button" class="btn btn-default btn-m floatright">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-           
-            <div class="row">
-                <div class="col-md-6 col-sm-6" id="carouselButtons">
-                    <button id="leftImageButton" type="button" class="btn btn-default btn-m floatright">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <button id="rightImageButton" type="button" class="btn btn-default btn-m floatright">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
+            
 
-                <div class="col-md-6 col-sm-6" id="carouselButtons">
-                    <button id="leftVideoButton" type="button" class="btn btn-default btn-m floatright">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <button id="rightVideoButton" type="button" class="btn btn-default btn-m floatright">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
             </div>
             
         </div>
