@@ -142,21 +142,21 @@ def sql(request):
 	queries["q2_query"] = "Query: SELECT name, release_date FROM Game  WHERE release_date = min(release_date)"
 	queries["q2_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
-	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
-	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
+	# queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
+	# queries["q3_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
-	queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
-	queries["q3_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT name FROM Videogames_person ORDER BY dob')
+	# queries["q3_query"] = "Query: SELECT name FROM Videogames_person ORDER BY DOB"
+	# queries["q3_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT webpage FROM Videogames_company')
-	queries["q4_query"] = "Query: SELECT webpage FROM Videogames_company"
-	queries["q4_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT webpage FROM Videogames_company')
+	# queries["q4_query"] = "Query: SELECT webpage FROM Videogames_company"
+	# queries["q4_names"] = [x[0] for x in cursor.fetchall()]
 
-	cursor.execute('SELECT gamefaq FROM Videogames_game')
-	queries["q5_query"] = "Query: SELECT gamfaq FROM Videogames_game"
-	queries["q5_names"] = [x[0] for x in cursor.fetchall()]
+	# cursor.execute('SELECT gamefaq FROM Videogames_game')
+	# queries["q5_query"] = "Query: SELECT gamfaq FROM Videogames_game"
+	# queries["q5_names"] = [x[0] for x in cursor.fetchall()]
 
 	# cursor.execute('SELECT max(genre) FROM Videogames_game')
 	# queries["q6_query"] = "SELECT max(genre) FROM Videogames_game"
