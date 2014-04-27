@@ -42,6 +42,37 @@
                         </div>
                 </result>
             </div>
+            <div>
+                <h3>Names of All Platforming Games</h3>
+            </div>
+            <div>
+                <p>
+                    Query: SELECT name FROM videogames_game WHERE id IN (SELECT game_id FROM videogames_game_genre WHERE genre_id IN (SELECT id FROM videogames_genre WHERE types = 'Platforming'));</p>
+            </div>
+            <div>
+                <result>
+                        <div>
+                            <p>
+                                 Sonic the Hedgehog </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Crash Bandicoot </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Super Mario Bros. 3 </p>
+                        </div>
+                        <div>
+                            <p>
+                                 Donkey Kong Country </p>
+                        </div>
+                        <div>
+                            <p>
+                                 The Lion King </p>
+                        </div>
+                </result>
+            </div>
         </div>
         <div class="col-lg-6 col-lg-offset-5 col-sm-6 col-sm-offset-5">
             <div>
