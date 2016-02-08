@@ -1,7 +1,6 @@
 /*!
  * Readmore.js jQuery plugin
  * Author: @jed_foster
- * Project home: jedfoster.github.io/Readmore.js
  * Licensed under the MIT license
  */
 
